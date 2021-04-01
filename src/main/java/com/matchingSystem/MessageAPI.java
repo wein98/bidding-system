@@ -2,7 +2,7 @@ package com.matchingSystem;
 
 import org.json.JSONObject;
 
-public class MessageAPI {
+public class MessageAPI implements APIBehaviour{
     public JSONObject getAll(){
 
         return new JSONObject();
@@ -22,9 +22,5 @@ public class MessageAPI {
 
     public JSONObject updatePartialById(String id){
         return new JSONObject();
-    }
-
-    public String something() {
-        return "S";
     }
 }
