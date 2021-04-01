@@ -2,8 +2,9 @@ package com.matchingSystem;
 
 import org.json.JSONObject;
 
+import java.lang.Object;
 public interface APIBehaviour {
-    JSONObject getAll();
+    Object getAll();
     JSONObject create();
     JSONObject getById(String id);
     JSONObject deleteById(String id);
