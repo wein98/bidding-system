@@ -1,4 +1,4 @@
-package com.matchingSystem;
+package com.matchingSystem.API;
 
 import org.json.JSONObject;
 

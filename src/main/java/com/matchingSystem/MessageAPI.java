@@ -2,14 +2,12 @@ package com.matchingSystem;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.matchingSystem.API.APIBehaviour;
 import org.json.JSONObject;
-import com.matchingSystem.Message;
 
 import java.util.ArrayList;
 
-import static com.matchingSystem.APIManager.POSTRequest;
-import static com.matchingSystem.APIManager.GETRequest;
-public class MessageAPI implements APIBehaviour{
+public class MessageAPI implements APIBehaviour {
     public ArrayList<Message> getAll(){
         String route = "/message";
         ArrayList<Message> messages = new ArrayList<Message>();
