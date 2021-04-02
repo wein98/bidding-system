@@ -4,25 +4,12 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aaa730d7-2809-4d55-a239-d919d3906f94" name="Default Changelist" comment="commit">
+    <list default="true" id="aaa730d7-2809-4d55-a239-d919d3906f94" name="Default Changelist" comment="ADDED: loginform, userLogin request. CHANGED: APImanager postrequest">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bidding/APIManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bidding/HomeForm.form" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bidding/HomeForm.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bidding/Login.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bidding/LoginForm.form" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bidding/LoginForm.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bidding/UserCookie.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/bidding/Utility.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/matchingSystem/API/APIManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/matchingSystem/API/APIManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/matchingSystem/API/UserAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/matchingSystem/API/UserAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/matchingSystem/MyApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/matchingSystem/MyApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/matchingSystem/UI/LoginForm.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/matchingSystem/UI/LoginForm.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/matchingSystem/UI/LoginForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/matchingSystem/UI/LoginForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/matchingSystem/API/APIManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/matchingSystem/API/APIManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/matchingSystem/API/UserAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/matchingSystem/API/UserAPI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/matchingSystem/MyApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/matchingSystem/MyApp.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/matchingSystem/UI/LoginForm.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/matchingSystem/UI/LoginForm.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/matchingSystem/MessageAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/matchingSystem/MessageAPI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/matchingSystem/MessageAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/matchingSystem/MessageAPI.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -263,7 +250,14 @@
       <option name="project" value="LOCAL" />
       <updated>1617270328325</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="ADDED: loginform, userLogin request. CHANGED: APImanager postrequest">
+      <created>1617331122767</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1617331122767</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -341,7 +335,8 @@
     <MESSAGE value="added APIBehaviour interface" />
     <MESSAGE value="added Message and Poster Entity class" />
     <MESSAGE value="added testing call in myApp for MessageAPI getAll()" />
-    <option name="LAST_COMMIT_MESSAGE" value="added testing call in myApp for MessageAPI getAll()" />
+    <MESSAGE value="ADDED: loginform, userLogin request. CHANGED: APImanager postrequest" />
+    <option name="LAST_COMMIT_MESSAGE" value="ADDED: loginform, userLogin request. CHANGED: APImanager postrequest" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />

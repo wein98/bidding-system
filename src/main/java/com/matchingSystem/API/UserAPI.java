@@ -7,6 +7,7 @@ public class UserAPI implements APIBehaviour {
     private static String route = "/user";
     private static APIManager apiManager = new APIManager();
 
+    // call get all users request
     @Override
     public JSONArray getAll() {
         return new JSONArray(apiManager.GETRequest(route));
@@ -37,6 +38,7 @@ public class UserAPI implements APIBehaviour {
         return null;
     }
 
+    // call user login request with username and password
     public JSONObject userLogin(String username, String password) {
         String urlRoute = route + "/login?jwt=true";
         StringBuilder jsonParam = new StringBuilder();
@@ -49,4 +51,6 @@ public class UserAPI implements APIBehaviour {
         String response = apiManager.POSTRequest(urlRoute, jsonParam);
         return new JSONObject(response);
     }
+
+//    public JSONObject userVerifyToken()
 }

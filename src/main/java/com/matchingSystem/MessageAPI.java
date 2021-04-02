@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class MessageAPI implements APIBehaviour {
+
     public ArrayList<Message> getAll(){
         String route = "/message";
         ArrayList<Message> messages = new ArrayList<Message>();
