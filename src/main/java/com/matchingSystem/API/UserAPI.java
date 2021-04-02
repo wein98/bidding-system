@@ -50,5 +50,15 @@ public class UserAPI implements APIBehaviour {
         return new JSONObject(response);
     }
 
-//    public JSONObject userVerifyToken()
+    public JSONObject userVerifyToken(String jwt) {
+        String urlRoute = route + "/verify-token";
+        StringBuilder jsonParam = new StringBuilder();
+        jsonParam.append("{");
+        jsonParam.append(String.format("\"jwt\": \"%s\",", jwt));
+        jsonParam.append("}");
+
+        // call request
+        String response = apiManager.POSTRequest(urlRoute, jsonParam);
+        return new JSONObject(response);
+    }
 }
