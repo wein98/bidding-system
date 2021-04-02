@@ -18,6 +18,8 @@ public class MyApp {
 
         JFrame frame = new JFrame("Testing");
         frame.setContentPane(new LoginForm().loginForm);
+//        frame.setContentPane(new TestingForm().TestingFormPanel);
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
