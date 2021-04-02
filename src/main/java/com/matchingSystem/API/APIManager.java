@@ -40,10 +40,10 @@ public class APIManager {
             try {
 
                 // Get HttpResponse Status
-                System.out.println(response.getProtocolVersion());              // HTTP/1.1
-                System.out.println(response.getStatusLine().getStatusCode());   // 200
-                System.out.println(response.getStatusLine().getReasonPhrase()); // OK
-                System.out.println(response.getStatusLine().toString());        // HTTP/1.1 200 OK
+//                System.out.println(response.getProtocolVersion());              // HTTP/1.1
+//                System.out.println(response.getStatusLine().getStatusCode());   // 200
+//                System.out.println(response.getStatusLine().getReasonPhrase()); // OK
+//                System.out.println(response.getStatusLine().toString());        // HTTP/1.1 200 OK
 
                 HttpEntity entity = response.getEntity();
                 if (entity != null) {
@@ -88,7 +88,7 @@ public class APIManager {
         }else{
             request = new HttpPost(HOST + url);
         }
-        System.out.println(request.getClass().getName());
+//        System.out.println(request.getClass().getName());
         // add request headers
         request.addHeader("Authorization", API_KEY);
         request.addHeader("accept", "*/*");
@@ -116,7 +116,7 @@ public class APIManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        System.out.println(result);
         return result;
     }
 
