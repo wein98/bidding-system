@@ -13,6 +13,7 @@ import static com.matchingSystem.API.APIManager.*;
 public class MessageAPI implements APIBehaviour {
     ObjectMapper objMapper = new ObjectMapper();
     private static final String APIPATH = "/message";
+
     /**
      * Get all messages
      * @return list of messages
@@ -22,16 +23,15 @@ public class MessageAPI implements APIBehaviour {
         try {
             String response = GETRequest(APIPATH);
             // split returned string into array of strings (multiple object)
-            // for testing purposes only
-            //String response = "[{\"id\":\"f9aab64d-d0e5-486d-bb5c-30d3014dasds\",\"bidId\":\"bc06e9ad-5d20-4dce-a176-a6ac73bdsasd\",\"poster\":{\"id\":\"4ad8f1ed-4883-4c44-a9ab-a50bdee96ff9\",\"givenName\":\"Dmitri\",\"familyName\":\"Antonovich\",\"userName\":\"danto87\",\"isStudent\":false,\"isTutor\":true},\"datePosted\":\"2021-03-30T20:04:07.244Z\",\"dateLastEdited\":null,\"content\":\"Sample content\",\"additionalInfo\":{}},{\"id\":\"f9aab64d-d0e5-486d-bb5c-30d3014ddf1e\",\"bidId\":\"bc06e9ad-5d20-4dce-a176-a6ac73b26b35\",\"poster\":{\"id\":\"4ad8f1ed-4883-4c44-a9ab-a50bdee96ff9\",\"givenName\":\"something\",\"familyName\":\"something\",\"userName\":\"danto87\",\"isStudent\":false,\"isTutor\":true},\"datePosted\":\"2021-03-30T20:04:07.244Z\",\"dateLastEdited\":null,\"content\":\"Sample content\",\"additionalInfo\":{}}]";
             response = response.replace("[","");
             response = response.replace("]","");
             response = response.replace("},{","}  {");
-            String[] resArr = response.split("  ",0);
-            for(int i=0; i<resArr.length; i++) {
-                //ObjectMapper objMapper = new ObjectMapper();
-                Message message = objMapper.readValue(resArr[i], Message.class);
-                messages.add(message);
+            if(response.length() > 0) {
+                String[] resArr = response.split("  ", 0);
+                for (int i = 0; i < resArr.length; i++) {
+                    Message message = objMapper.readValue(resArr[i], Message.class);
+                    messages.add(message);
+                }
             }
             return messages;
         }catch (JsonProcessingException e){
@@ -57,10 +57,10 @@ public class MessageAPI implements APIBehaviour {
             StringBuilder jsonParam = new StringBuilder();
             jsonParam.append("{");
             jsonParam.append(String.format("\"bidId\": \"%s\",", bidId));
-            jsonParam.append(String.format("\"posterId\": \"%s\"", posterId));
-            jsonParam.append(String.format("\"datePosted\": \"%s\"", sdf2.format(now)));
-            jsonParam.append(String.format("\"content\": \"%s\"", content));
-            jsonParam.append(String.format("\"additionalInfo\": \"%s\"", "{}"));
+            jsonParam.append(String.format("\"posterId\": \"%s\",", posterId));
+            jsonParam.append(String.format("\"datePosted\": \"%s\",", sdf2.format(now)));
+            jsonParam.append(String.format("\"content\": \"%s\",", content));
+            jsonParam.append(String.format("\"additionalInfo\": {}"));
             jsonParam.append("}");
             String response = UpdateRequest(APIPATH, jsonParam, APIManager.POST);
             Message message = objMapper.readValue(response, Message.class);
@@ -120,7 +120,7 @@ public class MessageAPI implements APIBehaviour {
             StringBuilder jsonParam = new StringBuilder();
             jsonParam.append("{");
             jsonParam.append(String.format("\"content\": \"%s\",", content));
-            jsonParam.append(String.format("\"additionalInfo\": \"%s\"", "{}"));
+            jsonParam.append(String.format("\"additionalInfo\": {}"));
             jsonParam.append("}");
 
             String response = UpdateRequest(route, jsonParam, APIManager.PATCH);
