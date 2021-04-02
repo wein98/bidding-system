@@ -5,8 +5,8 @@ import org.json.JSONObject;
 import java.lang.Object;
 public interface APIBehaviour {
     Object getAll();
-    JSONObject create();
-    JSONObject getById(String id);
-    JSONObject deleteById(String id);
-    JSONObject updatePartialById(String id);
+//    Object create();
+    Object getById(String id);
+    boolean deleteById(String id); // delete will return its status code, return -1 if catch error in code
+//    Object updatePartialById(String id, String payload); // TODO: different obj need different parameters ... should we just give it as a String ? or StringBuilder
 }
