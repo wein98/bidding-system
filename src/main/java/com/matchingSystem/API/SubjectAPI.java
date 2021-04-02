@@ -21,12 +21,12 @@ public class SubjectAPI implements APIBehaviour {
      * @return a subject
      */
     @Override
-    public Object getById(String id) {
+    public Subject getById(String id) {
         try {
             String urlRoute = ROUTE + "/" + id;
             String jsonResponse = APIManager.GETRequest(urlRoute);
-
-            return objMapper.readValue(jsonResponse, Subject.class);
+            Subject subject = objMapper.readValue(jsonResponse, Subject.class);
+            return subject;
         } catch (JsonMappingException e) {
             e.printStackTrace();
         } catch (JsonProcessingException e) {

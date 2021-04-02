@@ -12,12 +12,6 @@ public class Subject {
     @JsonProperty("description")
     private String description;
 
-//    public Subject(String id, String name, String description) {
-//        this.id = id;
-//        this.name = name;
-//        this.description = description;
-//    }
-
     public String getId() {
         return id;
     }
@@ -36,5 +30,14 @@ public class Subject {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Subject{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

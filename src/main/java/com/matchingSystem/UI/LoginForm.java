@@ -25,7 +25,7 @@ public class LoginForm extends javax.swing.JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JSONObject response = userAPI.userLogin(textFieldUsername.getText(), String.valueOf(passwordField1.getText()));
+        JSONObject response = userAPI.userLogin(textFieldUsername.getText(), String.valueOf(passwordField1.getPassword()));
         if (response.has("jwt")) {
             System.out.println(response.getString("jwt"));
             Utility.decodeJWT(response.getString("jwt"));

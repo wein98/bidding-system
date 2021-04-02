@@ -1,18 +1,42 @@
 package com.matchingSystem;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.Map;
+
 public class Qualification {
+    @JsonProperty("id")
     private String id;
+
+    @JsonProperty("title")
     private String title;
+
+    @JsonProperty("description")
     private String description;
+
+    @JsonProperty("verified")
     private boolean verified;
+
+    @JsonProperty("owner")
     private User owner;
 
-    public Qualification(String id, String title, String description, boolean verified, User owner) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.verified = verified;
-        this.owner = owner;
+    // mapping nested User object
+    @SuppressWarnings("unchecked")
+    @JsonProperty("owner")
+    private void unpackNested(Map<String,Object> owner) {
+        if ((boolean) owner.get("isStudent")) {
+            this.owner = new Student(
+                    (String) owner.get("id"),
+                    (String) owner.get("givenName"),
+                    (String) owner.get("familyName"),
+                    (String) owner.get("userName"));
+        } else {
+            this.owner = new Tutor(
+                    (String) owner.get("id"),
+                    (String) owner.get("givenName"),
+                    (String) owner.get("familyName"),
+                    (String) owner.get("userName"));
+        }
     }
 
     public String getId() {
@@ -49,5 +73,16 @@ public class Qualification {
 
     public void setVerified(boolean verified) {
         this.verified = verified;
+    }
+
+    @Override
+    public String toString() {
+        return "Qualification{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", verified=" + verified +
+                ", owner=" + owner +
+                '}';
     }
 }

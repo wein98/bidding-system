@@ -4,4 +4,16 @@ public class Student extends User {
     public Student(String id, String givenName, String familyName, String userName) {
         super(id, givenName, familyName, userName);
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id='" + id + '\'' +
+                ", givenName='" + givenName + '\'' +
+                ", familyName='" + familyName + '\'' +
+                ", userName='" + userName + '\'' +
+                ", competencies=" + competencies +
+                ", qualifications=" + qualifications +
+                '}';
+    }
 }
