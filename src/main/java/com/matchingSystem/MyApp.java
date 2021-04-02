@@ -1,5 +1,6 @@
 package com.matchingSystem;
 
+import com.matchingSystem.UI.LoginForm;
 import com.matchingSystem.UI.TestingForm;
 
 import javax.swing.*;
@@ -16,7 +17,7 @@ public class MyApp {
         }
 
         JFrame frame = new JFrame("Testing");
-        frame.setContentPane(new TestingForm().TestingFormPanel);
+        frame.setContentPane(new LoginForm().loginForm);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);

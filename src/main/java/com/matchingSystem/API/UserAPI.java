@@ -21,7 +21,7 @@ public class UserAPI implements APIBehaviour {
     @Override
     public JSONObject getById(String id) {
         String urlRoute = route + "/" + id;
-        String jsonResponse = apiManager.GETRequest(route);
+        String jsonResponse = apiManager.GETRequest(urlRoute);
 
         return new JSONObject(jsonResponse);
     }
@@ -33,16 +33,20 @@ public class UserAPI implements APIBehaviour {
 
     @Override
     public JSONObject updatePartialById(String id) {
+
         return null;
     }
 
     public JSONObject userLogin(String username, String password) {
         String urlRoute = route + "/login?jwt=true";
-        String param = String.format(
-                "{\n" + "\"userName\": \"%s\",\r\n" +
-                        "\"password\": \"%s\"\r\n" + "}", username, password);
+        StringBuilder jsonParam = new StringBuilder();
+        jsonParam.append("{");
+        jsonParam.append(String.format("\"userName\": \"%s\",", username));
+        jsonParam.append(String.format("\"password\": \"%s\"", password));
+        jsonParam.append("}");
 
-        String response = apiManager.POSTRequest(urlRoute, param);
+        // call request
+        String response = apiManager.POSTRequest(urlRoute, jsonParam);
         return new JSONObject(response);
     }
 }
