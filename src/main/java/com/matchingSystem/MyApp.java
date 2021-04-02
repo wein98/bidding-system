@@ -1,5 +1,9 @@
 package com.matchingSystem;
 
+import com.matchingSystem.API.MessageAPI;
+import com.matchingSystem.UI.LoginForm;
+
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class MyApp {
@@ -11,8 +15,11 @@ public class MyApp {
         for (Message message:messages) {
             System.out.println(message.toString()+"\n");
         }
-        // try out MessageAPI.create()
-        Message message = smtg.create("bc06e9ad-5d20-4dce-a176-a6ac73b26b35","4ad8f1ed-4883-4c44-a9ab-a50bdee96ff9");
-        System.out.println(message);
+
+        JFrame frame = new JFrame("Testing");
+        frame.setContentPane(new LoginForm().loginForm);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
     }
 }
