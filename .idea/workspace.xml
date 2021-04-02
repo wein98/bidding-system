@@ -4,10 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aaa730d7-2809-4d55-a239-d919d3906f94" name="Default Changelist" comment="added Message and Poster Entity class">
+    <list default="true" id="aaa730d7-2809-4d55-a239-d919d3906f94" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bidding/APIManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bidding/HomeForm.form" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bidding/HomeForm.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bidding/Login.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bidding/LoginForm.form" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bidding/LoginForm.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bidding/UserCookie.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/bidding/Utility.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/matchingSystem/APIBehaviour.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/matchingSystem/APIBehaviour.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/matchingSystem/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/matchingSystem/Message.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/matchingSystem/MessageAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/matchingSystem/MessageAPI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/matchingSystem/MyApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/matchingSystem/MyApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/matchingSystem/MyApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/matchingSystem/MyApp.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,23 +28,28 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="false">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/matchingSystem/MessageAPI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="25" column="60" lean-forward="true" selection-start-line="25" selection-start-column="60" selection-end-line="25" selection-end-column="60" />
+            <state relative-caret-position="206">
+              <caret line="64" column="105" selection-start-line="64" selection-start-column="105" selection-end-line="64" selection-end-column="105" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#521#530#0" expanded="true" />
-                <element signature="e#2273#2274#0" expanded="true" />
-                <element signature="e#2312#2313#0" expanded="true" />
-                <element signature="e#2355#2356#0" expanded="true" />
-                <element signature="e#2394#2395#0" expanded="true" />
-                <element signature="e#2440#2441#0" expanded="true" />
-                <element signature="e#2479#2480#0" expanded="true" />
-                <element signature="e#2532#2533#0" expanded="true" />
-                <element signature="e#2571#2572#0" expanded="true" />
+                <element signature="e#4417#4418#0" expanded="true" />
+                <element signature="e#4456#4457#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/matchingSystem/APIManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="14" column="54" selection-start-line="14" selection-start-column="54" selection-end-line="14" selection-end-column="54" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -42,20 +58,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/matchingSystem/MyApp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="9" lean-forward="true" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/matchingSystem/APIManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="42" column="43" lean-forward="true" selection-start-line="42" selection-start-column="43" selection-end-line="42" selection-end-column="43" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="306">
+              <caret line="18" selection-start-line="18" selection-end-line="18" />
             </state>
           </provider>
         </entry>
@@ -63,8 +67,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/matchingSystem/Message.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="33" lean-forward="true" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
+            <state relative-caret-position="425">
+              <caret line="25" column="134" selection-start-line="25" selection-start-column="134" selection-end-line="25" selection-end-column="134" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -73,32 +77,13 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/matchingSystem/Poster.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
-              <folding>
-                <element signature="e#499#500#0" expanded="true" />
-                <element signature="e#523#524#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/matchingSystem/APIKey.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="66" selection-start-line="3" selection-start-column="66" selection-end-line="3" selection-end-column="66" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/matchingSystem/APIBehaviour.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" selection-start-line="3" selection-end-line="3" />
+            <state relative-caret-position="153">
+              <caret line="9" column="12" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="12" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -127,11 +112,11 @@
         <option value="$PROJECT_DIR$/src/main/java/com/matchingSystem/APIKey.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/matchingSystem/APIManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/matchingSystem/Message.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/matchingSystem/Poster.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/matchingSystem/Message.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/matchingSystem/MyApp.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/matchingSystem/MessageAPI.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/matchingSystem/APIBehaviour.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/matchingSystem/MessageAPI.java" />
       </list>
     </option>
   </component>
@@ -164,9 +149,9 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1912" />
-    <option name="width" value="1291" />
-    <option name="height" value="1066" />
+    <option name="x" value="2480" />
+    <option name="width" value="1367" />
+    <option name="height" value="1057" />
   </component>
   <component name="ProjectId" id="1qYOeSWiJehpo1r3JdSorIIZOZh" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -212,8 +197,8 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="ProjectViewState">
@@ -223,11 +208,12 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1617271814346" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1617282498874" />
     <property name="last_opened_file_path" value="E:/json-20210307.jar!/" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -301,14 +287,27 @@
       <option name="project" value="LOCAL" />
       <updated>1617270328325</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="APIManager, GETRequest now return response json string">
+      <created>1617271794379</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1617271794379</updated>
+    </task>
+    <task id="LOCAL-00006" summary="APIBehaviour interface">
+      <created>1617271885289</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1617271885289</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1066" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2553305" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17963752" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -316,21 +315,21 @@
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5463753" weight="0.3290461" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49946696" weight="0.3290461" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.75959486" weight="0.3290461" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49946696" weight="0.39978564" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49946696" weight="0.3290461" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5026652" side_tool="true" visible="true" weight="0.3290461" />
-      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.59381664" weight="0.3290461" />
-      <window_info active="true" anchor="bottom" id="Messages" order="10" sideWeight="0.49733475" visible="true" weight="0.3290461" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.4067164" side_tool="true" visible="true" weight="0.03215434" />
+      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.5932836" visible="true" weight="0.03215434" />
+      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49733475" weight="0.3290461" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Maven" order="4" visible="true" weight="0.19509594" />
+      <window_info anchor="right" id="Maven" order="4" weight="0.19509594" />
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info anchor="right" id="Capture Analysis" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
@@ -381,7 +380,9 @@
     <MESSAGE value="added APIBehaviour interface" />
     <MESSAGE value="added Message and Poster Entity class" />
     <MESSAGE value="added testing call in myApp for MessageAPI getAll()" />
-    <option name="LAST_COMMIT_MESSAGE" value="added testing call in myApp for MessageAPI getAll()" />
+    <MESSAGE value="APIManager, GETRequest now return response json string" />
+    <MESSAGE value="APIBehaviour interface" />
+    <option name="LAST_COMMIT_MESSAGE" value="APIBehaviour interface" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -402,20 +403,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/matchingSystem/Message.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="33" lean-forward="true" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/matchingSystem/Poster.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
-          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
           <folding>
             <element signature="e#499#500#0" expanded="true" />
             <element signature="e#523#524#0" expanded="true" />
@@ -425,43 +416,49 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/matchingSystem/MyApp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="9" lean-forward="true" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
+        <state relative-caret-position="306">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/matchingSystem/MessageAPI.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/matchingSystem/Message.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
-          <caret line="25" column="60" lean-forward="true" selection-start-line="25" selection-start-column="60" selection-end-line="25" selection-end-column="60" />
+          <caret line="25" column="134" selection-start-line="25" selection-start-column="134" selection-end-line="25" selection-end-column="134" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#521#530#0" expanded="true" />
-            <element signature="e#2273#2274#0" expanded="true" />
-            <element signature="e#2312#2313#0" expanded="true" />
-            <element signature="e#2355#2356#0" expanded="true" />
-            <element signature="e#2394#2395#0" expanded="true" />
-            <element signature="e#2440#2441#0" expanded="true" />
-            <element signature="e#2479#2480#0" expanded="true" />
-            <element signature="e#2532#2533#0" expanded="true" />
-            <element signature="e#2571#2572#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/matchingSystem/APIBehaviour.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        <state relative-caret-position="153">
+          <caret line="9" column="12" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="12" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/matchingSystem/APIManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="42" column="43" lean-forward="true" selection-start-line="42" selection-start-column="43" selection-end-line="42" selection-end-column="43" />
+        <state relative-caret-position="238">
+          <caret line="14" column="54" selection-start-line="14" selection-start-column="54" selection-end-line="14" selection-end-column="54" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/matchingSystem/MessageAPI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="206">
+          <caret line="64" column="105" selection-start-line="64" selection-start-column="105" selection-end-line="64" selection-end-column="105" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4417#4418#0" expanded="true" />
+            <element signature="e#4456#4457#0" expanded="true" />
           </folding>
         </state>
       </provider>

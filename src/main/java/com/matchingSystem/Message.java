@@ -23,6 +23,6 @@ public class Message{
 
     @Override
     public String toString() {
-        return "messageId: " + this.id + "\nbidId: " + this.bidId + "\nposter" + this.poster.toString();
+        return "messageId: " + this.id + "\nbidId: " + this.bidId + "\nposter" + this.poster.toString()+ "\ncontent: " + this.content;
     }
 }

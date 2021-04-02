@@ -5,8 +5,8 @@ import org.json.JSONObject;
 import java.lang.Object;
 public interface APIBehaviour {
     Object getAll();
-    JSONObject create();
-    JSONObject getById(String id);
-    JSONObject deleteById(String id);
-    JSONObject updatePartialById(String id);
+    Object create(String itemId, String creatorId);
+    Object getById(String id);
+    boolean deleteById(String id);
+    Object updatePartialById(String id);
 }
