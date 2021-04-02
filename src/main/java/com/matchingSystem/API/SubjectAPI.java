@@ -85,11 +85,12 @@ public class SubjectAPI implements APIBehaviour {
 
     /**
      * Updates an existing Subject
+     * @param subjectId id of the subject
      * @param name name of the subject
      * @param desc description of the subject
      * @return the subject updated
      */
-    public Subject updateSubject(String name, String desc) {
+    public Subject updateSubject(String subjectId, String name, String desc) {
         try {
             StringBuilder jsonParam = new StringBuilder();
             jsonParam.append("{");
@@ -97,7 +98,7 @@ public class SubjectAPI implements APIBehaviour {
             jsonParam.append(String.format("\"description\": \"%s\",", desc));
             jsonParam.append("}");
 
-            String jsonResponse = APIManager.UpdateRequest(ROUTE, jsonParam, APIManager.PUT);
+            String jsonResponse = APIManager.UpdateRequest(ROUTE + "/" + subjectId, jsonParam, APIManager.PUT);
 
             return objMapper.readValue(jsonResponse, Subject.class);
         } catch (JsonMappingException e) {
