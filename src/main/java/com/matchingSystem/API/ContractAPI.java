@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import static com.matchingSystem.API.APIManager.*;
 import static com.matchingSystem.API.MessageAPI.sdf2;
 
-public class ContractAPI implements APIBehaviour {
+public class ContractAPI extends APIBehaviour {
     ObjectMapper objMapper = new ObjectMapper();
     private static final String APIPATH = "/contract";
 
@@ -106,21 +106,20 @@ public class ContractAPI implements APIBehaviour {
         return null;
     }
 
-    public boolean deleteById(String id){
-        try {
-            String route = APIPATH + "/" + id;
-            int responseCode = DELETERequest(route);
-            // TODO: think on how to display message of different status code of a failed request
-            if (responseCode == 204){
-                return true;
-            }else{
-                return false;
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        return false;
-    }
+//    public boolean deleteById(String id){
+//        try {
+//            String route = APIPATH + "/" + id;
+//            int responseCode = DELETERequest(route);
+//            if (responseCode == 204){
+//                return true;
+//            }else{
+//                return false;
+//            }
+//        } catch (Exception e){
+//            e.printStackTrace();
+//        }
+//        return false;
+//    }
 
     public boolean sign(String id){
         try {
