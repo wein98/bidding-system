@@ -92,7 +92,7 @@ public class APIManager {
         request.addHeader("Authorization", API_KEY);
         request.addHeader("accept", "*/*");
         request.addHeader("Content-Type", "application/json");
-        
+
         // send a JSON data
         try {
             request.setEntity(new StringEntity(params.toString()));

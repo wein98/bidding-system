@@ -3,6 +3,7 @@ package com.matchingSystem.API;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.Bid;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.sql.Time;
@@ -20,15 +21,21 @@ public class BidAPI implements APIBehaviour{
         ArrayList<Bid> bids = new ArrayList<>();
         try {
             String response = GETRequest(APIPATH);
-            response = response.replace("[","");
-            response = response.replace("]","");
-            response = response.replace("},{","}  {");
-            if(response.length() > 0) {
-                String[] resArr = response.split("  ", 0);
-                for (int i = 0; i < resArr.length; i++) {
-                    Bid bid = objMapper.readValue(resArr[i], Bid.class);
-                    bids.add(bid);
-                }
+//            response = response.replace("[","");
+//            response = response.replace("]","");
+//            response = response.replace("},{","}  {");
+//            if(response.length() > 0) {
+//                String[] resArr = response.split("  ", 0);
+//                for (int i = 0; i < resArr.length; i++) {
+//                    Bid bid = objMapper.readValue(resArr[i], Bid.class);
+//                    bids.add(bid);
+//                }
+//            }
+            JSONArray arr = new JSONArray(response);
+            for (int i = 0; i < arr.length(); i++) {
+                JSONObject jsonObj = arr.getJSONObject(i);
+                Bid bid = objMapper.readValue(jsonObj.toString(), Bid.class);
+                bids.add(bid);
             }
             return bids;
         }catch (JsonProcessingException e){
@@ -114,11 +121,11 @@ public class BidAPI implements APIBehaviour{
             jsonParam.append("{");
             jsonParam.append(String.format("\"dateClosedDown\": \"%s\"", sdf2.format(now)));
             jsonParam.append("}");
-            System.out.println(jsonParam);
+//            System.out.println(jsonParam);
             String response = UpdateRequest(route, jsonParam, APIManager.POST);
-            System.out.println(response);
+//            System.out.println(response);
             JSONObject resObj = new JSONObject(response);
-            System.out.println(resObj);
+//            System.out.println(resObj);
             // TODO: add conditions for different status code (400, 401, 409)
             if (resObj.getInt("statusCode") == 200){
                 return true;
