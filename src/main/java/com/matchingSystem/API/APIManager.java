@@ -88,17 +88,10 @@ public class APIManager {
         }else{
             request = new HttpPost(HOST + url);
         }
-//        System.out.println(request.getClass().getName());
         // add request headers
         request.addHeader("Authorization", API_KEY);
         request.addHeader("accept", "*/*");
         request.addHeader("Content-Type", "application/json");
-
-//        StringBuilder json = new StringBuilder();
-//        json.append("{");
-//        json.append("\"name\":\"mkyong\",");
-//        json.append("\"notes\":\"hello\"");
-//        json.append("}");
 
         // send a JSON data
         try {
@@ -138,74 +131,5 @@ public class APIManager {
         return -1; // negative -1 indicates system error
     }
 
-//    public static String PATCHRequest(String url, StringBuilder params){
-//        String result = null;
-//        HttpPatch patchRequest = new HttpPatch(HOST + url);
-//
-//        // add request headers
-//        patchRequest.addHeader("Authorization", API_KEY);
-//        patchRequest.addHeader("accept", "*/*");
-//        patchRequest.addHeader("Content-Type", "application/json");
-//
-////        StringBuilder json = new StringBuilder();
-////        json.append("{");
-////        json.append("\"name\":\"mkyong\",");
-////        json.append("\"notes\":\"hello\"");
-////        json.append("}");
-//
-//        // send a JSON data
-//        try {
-//            patchRequest.setEntity(new StringEntity(params.toString()));
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
-//
-//        try (CloseableHttpClient httpClient = HttpClients.createDefault();
-//             CloseableHttpResponse response = httpClient.execute(patchRequest)) {
-//
-//            result = EntityUtils.toString(response.getEntity());
-//        } catch (ClientProtocolException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return result;
-//    }
-
-//    public static String PUTRequest(String url, StringBuilder params){
-//        String result = null;
-//        HttpPut putRequest = new HttpPut(HOST + url);
-//
-//        // add request headers
-//        putRequest.addHeader("Authorization", API_KEY);
-//        putRequest.addHeader("accept", "*/*");
-//        putRequest.addHeader("Content-Type", "application/json");
-//
-////        StringBuilder json = new StringBuilder();
-////        json.append("{");
-////        json.append("\"name\":\"mkyong\",");
-////        json.append("\"notes\":\"hello\"");
-////        json.append("}");
-//
-//        // send a JSON data
-//        try {
-//            putRequest.setEntity(new StringEntity(params.toString()));
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
-//
-//        try (CloseableHttpClient httpClient = HttpClients.createDefault();
-//             CloseableHttpResponse response = httpClient.execute(putRequest)) {
-//
-//            result = EntityUtils.toString(response.getEntity());
-//        } catch (ClientProtocolException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return result;
-//    }
 }
 

@@ -3,6 +3,8 @@ package com.matchingSystem.API;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.Message;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -24,15 +26,21 @@ public class MessageAPI implements APIBehaviour {
         try {
             String response = GETRequest(APIPATH);
             // split returned string into array of strings (multiple object)
-            response = response.replace("[","");
-            response = response.replace("]","");
-            response = response.replace("},{","}  {");
-            if(response.length() > 0) {
-                String[] resArr = response.split("  ", 0);
-                for (int i = 0; i < resArr.length; i++) {
-                    Message message = objMapper.readValue(resArr[i], Message.class);
-                    messages.add(message);
-                }
+//            response = response.replace("[","");
+//            response = response.replace("]","");
+//            response = response.replace("},{","}  {");
+//            if(response.length() > 0) {
+//                String[] resArr = response.split("  ", 0);
+//                for (int i = 0; i < resArr.length; i++) {
+//                    Message message = objMapper.readValue(resArr[i], Message.class);
+//                    messages.add(message);
+//                }
+//            }
+            JSONArray arr = new JSONArray(response);
+            for (int i = 0; i < arr.length(); i++) {
+                JSONObject jsonObj = arr.getJSONObject(i);
+                Message message = objMapper.readValue(jsonObj.toString(), Message.class);
+                messages.add(message);
             }
             return messages;
         }catch (JsonProcessingException e){
