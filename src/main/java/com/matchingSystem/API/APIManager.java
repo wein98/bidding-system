@@ -40,7 +40,7 @@ public class APIManager {
             try {
 
                 // Get HttpResponse Status
-//                System.out.println(response.getProtocolVersion());              // HTTP/1.1
+//                System.out.println(res0ponse.getProtocolVersion());              // HTTP/1.1
 //                System.out.println(response.getStatusLine().getStatusCode());   // 200
 //                System.out.println(response.getStatusLine().getReasonPhrase()); // OK
 //                System.out.println(response.getStatusLine().toString());        // HTTP/1.1 200 OK

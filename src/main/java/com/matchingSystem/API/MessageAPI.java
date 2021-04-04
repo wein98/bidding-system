@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import static com.matchingSystem.API.APIManager.*;
 
 public class MessageAPI implements APIBehaviour {
+
     ObjectMapper objMapper = new ObjectMapper();
     private static final String APIPATH = "/message";
 
@@ -43,7 +44,7 @@ public class MessageAPI implements APIBehaviour {
     /**
      * Format of Timestamp used (ex. 2021-03-24T16:44:39.083+08:00)
      */
-    private static final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+    public static final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
 
     /**
      * Create a new message
