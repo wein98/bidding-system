@@ -58,7 +58,7 @@ public class UserAPI implements APIBehaviour {
         jsonParam.append("}");
 
         // call request
-        String response = apiManager.POSTRequest(urlRoute, jsonParam);
+        String response = apiManager.UpdateRequest(urlRoute, jsonParam, APIManager.POST );
         return new JSONObject(response);
     }
 }
