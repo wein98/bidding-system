@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 
 import static com.matchingSystem.API.APIManager.*;
 
-public class MessageAPI implements APIBehaviour {
+public class MessageAPI extends APIBehaviour {
 
     ObjectMapper objMapper = new ObjectMapper();
     private static final String APIPATH = "/message";
@@ -101,21 +101,20 @@ public class MessageAPI implements APIBehaviour {
      * Delete a message by its message id
      * @param id the target message id
      */
-    public boolean deleteById(String id){
-        try {
-            String route = APIPATH + "/" + id;
-            int responseCode = DELETERequest(route);
-            // TODO: think on how to display message of different status code of a failed request
-            if (responseCode == 204){
-                return true;
-            }else{
-                return false;
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        return false;
-    }
+//    public boolean deleteById(String id){
+//        try {
+//            String route = APIPATH + "/" + id;
+//            int responseCode = DELETERequest(route);
+//            if (responseCode == 204){
+//                return true;
+//            }else{
+//                return false;
+//            }
+//        } catch (Exception e){
+//            e.printStackTrace();
+//        }
+//        return false;
+//    }
 
     /**
      * Update message content
