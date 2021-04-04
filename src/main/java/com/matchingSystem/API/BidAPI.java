@@ -3,7 +3,9 @@ package com.matchingSystem.API;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.Bid;
+import org.json.JSONObject;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import static com.matchingSystem.API.APIManager.*;
@@ -74,6 +76,51 @@ public class BidAPI implements APIBehaviour{
             int responseCode = DELETERequest(route);
             // TODO: think on how to display message of different status code of a failed request
             if (responseCode == 204){
+                return true;
+            }else{
+                return false;
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public Bid updatePartialById(String id, String content){
+        try{
+            String route = APIPATH + "/" + id;
+
+            StringBuilder jsonParam = new StringBuilder();
+            jsonParam.append("{");
+            jsonParam.append(String.format("\"content\": \"%s\",", content));
+            jsonParam.append(String.format("\"additionalInfo\": {}"));
+            jsonParam.append("}");
+
+            String response = UpdateRequest(route, jsonParam, APIManager.PATCH);
+            Bid bid = objMapper.readValue(response, Bid.class);
+
+            return bid;
+        } catch (JsonProcessingException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean closeDownBidById(String id){
+        try {
+            String route = APIPATH + "/" + id + "/close-down";
+            Timestamp now = new Timestamp(System.currentTimeMillis());
+            StringBuilder jsonParam = new StringBuilder();
+            jsonParam.append("{");
+            jsonParam.append(String.format("\"dateClosedDown\": \"%s\"", sdf2.format(now)));
+            jsonParam.append("}");
+            System.out.println(jsonParam);
+            String response = UpdateRequest(route, jsonParam, APIManager.POST);
+            System.out.println(response);
+            JSONObject resObj = new JSONObject(response);
+            System.out.println(resObj);
+            // TODO: add conditions for different status code (400, 401, 409)
+            if (resObj.getInt("statusCode") == 200){
                 return true;
             }else{
                 return false;
