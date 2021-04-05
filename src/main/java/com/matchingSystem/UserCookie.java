@@ -1,5 +1,8 @@
 package com.matchingSystem;
 
+import com.matchingSystem.Model.Student;
+import com.matchingSystem.Model.Tutor;
+import com.matchingSystem.Model.User;
 import org.json.JSONObject;
 
 public class UserCookie {

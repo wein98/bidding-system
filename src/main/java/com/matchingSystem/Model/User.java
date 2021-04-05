@@ -1,14 +1,26 @@
-package com.matchingSystem;
+package com.matchingSystem.Model;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.matchingSystem.Model.Competency;
+import com.matchingSystem.Model.Qualification;
 
 import java.util.ArrayList;
 
 public abstract class User {
-    private String id;
-    private String givenName;
-    private String familyName;
-    private String userName;
-    private ArrayList<Competency> competencies;
-    private ArrayList<Qualification> qualifications;
+    @JsonProperty("id")
+    protected String id;
+
+    @JsonProperty("givenName")
+    protected String givenName;
+
+    @JsonProperty("familyName")
+    protected String familyName;
+
+    @JsonProperty("userName")
+    protected String userName;
+
+    protected ArrayList<Competency> competencies;
+    protected ArrayList<Qualification> qualifications;
 
     public User(String id, String givenName, String familyName, String userName) {
         this.id = id;
@@ -50,4 +62,5 @@ public abstract class User {
     public void setFamilyName(String familyName) {
         this.familyName = familyName;
     }
+
 }

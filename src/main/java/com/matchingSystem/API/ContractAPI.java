@@ -2,7 +2,7 @@ package com.matchingSystem.API;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.matchingSystem.Contract;
+import com.matchingSystem.Model.Contract;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import static com.matchingSystem.API.APIManager.*;
 import static com.matchingSystem.API.MessageAPI.sdf2;
 
-public class ContractAPI extends APIBehaviour {
+public class ContractAPI extends APIRouter {
     ObjectMapper objMapper = new ObjectMapper();
     private static final String APIPATH = "/contract";
 

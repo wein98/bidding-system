@@ -1,41 +1,57 @@
 package com.matchingSystem.API;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.matchingSystem.Model.Subject;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class UserAPI implements APIBehaviour {
-    private static String route = "/user";
-    private static APIManager apiManager = new APIManager();
+public class UserAPI extends APIRouter {
+    /**
+     * UserAPI constructor
+     */
+    public UserAPI() {
+        this.objMapper = new ObjectMapper();
+        route = "/user";
+    }
 
-    // call get all users request
+    /**
+     * Get all users
+     * @return JSONArray of all the users
+     */
     @Override
     public JSONArray getAll() {
-        return new JSONArray(apiManager.GETRequest(route));
+        return new JSONArray(APIManager.GETRequest(route));
     }
 
     public JSONObject create() {
         return null;
     }
 
-    // get user response by userId
+    /**
+     * Get a user by userId
+     * @param id the target user id
+     * @return a user
+     */
     @Override
     public JSONObject getById(String id) {
         String urlRoute = route + "/" + id;
-        String jsonResponse = apiManager.GETRequest(urlRoute);
+        String jsonResponse = APIManager.GETRequest(urlRoute);
+
+
 
         return new JSONObject(jsonResponse);
-    }
-
-    @Override
-    public boolean deleteById(String id) {
-        return false;
     }
 
     public JSONObject updatePartialById(String id) {
 
         return null;
     }
-
+    /**
+     * User login
+     * @param username credential
+     * @param password login credential
+     * @return jwt token if success, else error msg in json
+     */
     // call user login request with username and password
     public JSONObject userLogin(String username, String password) {
         String urlRoute = route + "/login?jwt=true";
@@ -46,10 +62,15 @@ public class UserAPI implements APIBehaviour {
         jsonParam.append("}");
 
         // call request
-        String response = apiManager.UpdateRequest(urlRoute, jsonParam, APIManager.POST );
+        String response = APIManager.UpdateRequest(urlRoute, jsonParam, APIManager.POST);
         return new JSONObject(response);
     }
 
+    /**
+     * User verify with token
+     * @param jwt jwt token of the user
+     * @return JSONObject the user that holds this jwt token, else a error msg json
+     */
     public JSONObject userVerifyToken(String jwt) {
         String urlRoute = route + "/verify-token";
         StringBuilder jsonParam = new StringBuilder();
@@ -58,7 +79,7 @@ public class UserAPI implements APIBehaviour {
         jsonParam.append("}");
 
         // call request
-        String response = apiManager.UpdateRequest(urlRoute, jsonParam, APIManager.POST );
+        String response = APIManager.UpdateRequest(urlRoute, jsonParam, APIManager.POST);
         return new JSONObject(response);
     }
 }

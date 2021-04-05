@@ -1,25 +1,38 @@
 package com.matchingSystem;
 
-import com.matchingSystem.API.BidAPI;
+import com.matchingSystem.API.CompetencyAPI;
 import com.matchingSystem.API.MessageAPI;
-import com.matchingSystem.UI.LoginForm;
+import com.matchingSystem.API.QualificationAPI;
+import com.matchingSystem.API.SubjectAPI;
+import com.matchingSystem.Model.Competency;
+import com.matchingSystem.Model.Message;
+import com.matchingSystem.Model.Qualification;
+import com.matchingSystem.Model.Subject;
 
-import javax.swing.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MyApp {
+    public static final String USER_ID = "f5449b1f-6f55-408a-88ee-194958f52219";
+    public static final String COMPETENCY_ID = "36502d02-9f07-4394-af77-9a5489570f82";
+    public static final String QUALIFICATION_ID = "657c69ae-c7ad-4a6c-b13a-6bb024346d19";
+    public static final String SUBJECT_ID = "148e0af0-699b-4c1f-9e49-4de8816d121e";
+
     public static void main(String[] args) {
         System.out.println("Hello World!");
         // Note: Change the message id in testDelete before running this
+//        testMessage();
         // testMessage();
-        BidAPI bidApi =  new BidAPI();
-        boolean res = bidApi.closeDownBidById("bc06e9ad-5d20-4dce-a176-a6ac73b26b35");
+//        BidAPI bidApi =  new BidAPI();
+//        boolean res = bidApi.closeDownBidById("bc06e9ad-5d20-4dce-a176-a6ac73b26b35");
 //        JFrame frame = new JFrame("Testing");
 //        frame.setContentPane(new LoginForm().loginForm);
 //        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //        frame.pack();
 //        frame.setVisible(true);
+
+//        testSubjectAPI();
+        testCompetencyAPI();
+//        testQualification();
     }
 
     /**
@@ -69,5 +82,90 @@ public class MyApp {
         System.out.println("Test updating (patching) an item");
         testPatch();
         testGetAll();
+    }
+
+//    public static void testSubject() {
+//        SubjectAPI subjectAPI = new SubjectAPI();
+//
+//        Subject subject = subjectAPI.getById("148e0af0-699b-4c1f-9e49-4de8816d121e");
+//        System.out.println(subject.toString());
+//    }
+
+    public static void testCompetencyAPI() {
+        System.out.println("===== Testing CompetencyAPI =====");
+        CompetencyAPI competencyAPI = new CompetencyAPI();
+        Competency competency;
+        String competencyId;
+
+        System.out.println("\ncreate()");
+        StringBuilder createParams = competencyAPI.parseToJsonForCreate(USER_ID, SUBJECT_ID, 0);
+        competency = (Competency) competencyAPI.create(createParams);
+        System.out.println(competency.toString());
+        competencyId = competency.getId();
+
+        System.out.println("\ngetById()");
+        competency = (Competency) competencyAPI.getById(competencyId);
+        System.out.println(competency.toString());
+
+        System.out.println("\nupdatePartialById()");
+        StringBuilder partialUpdateParams = competencyAPI.parseToJsonForPartialUpdate(0);
+        competency = (Competency) competencyAPI.updatePartialById(competencyId, partialUpdateParams);
+        System.out.println(competency.toString());
+
+        System.out.println("\ndeleteById()");
+        boolean delete = competencyAPI.deleteById(competencyId);
+        System.out.println(delete);
+    }
+
+    public static void testSubjectAPI() {
+        System.out.println("===== Testing SubjectAPI =====");
+        SubjectAPI subjectAPI = new SubjectAPI();
+        Subject subject;
+        String subjectId;
+
+        System.out.println("\ncreate()");
+        StringBuilder createParams = subjectAPI.parseToJson("Testing Subject", "Testing");
+        subject = (Subject) subjectAPI.create(createParams);
+        System.out.println(subject.toString());
+        subjectId = subject.getId();
+
+        System.out.println("\ngetById()");
+        subject = (Subject) subjectAPI.getById(subjectId);
+        System.out.println(subject.toString());
+
+        System.out.println("\nupdatePartialById()");
+        StringBuilder partialUpdateParams = subjectAPI.parseToJson("Testing Subject", "Testing");
+        subject = (Subject) subjectAPI.updatePartialById(subjectId, partialUpdateParams);
+        System.out.println(subject.toString());
+
+        System.out.println("\ndeleteById()");
+        boolean delete = subjectAPI.deleteById(subjectId);
+        System.out.println(delete);
+    }
+
+    public static void testQualification() {
+        System.out.println("===== Testing QualificationAPI =====");
+        QualificationAPI qualificationAPI = new QualificationAPI();
+        Qualification qualification;
+        String qualificationId;
+
+        System.out.println("\ncreate()");
+        StringBuilder createParams = qualificationAPI.parseToJson("Testing Qualification", "testing", "true", USER_ID);
+        qualification = (Qualification) qualificationAPI.create(createParams);
+        System.out.println(qualification.toString());
+        qualificationId = qualification.getId();
+
+        System.out.println("\ngetById()");
+        qualification = (Qualification) qualificationAPI.getById(qualificationId);
+        System.out.println(qualification.toString());
+
+        System.out.println("\nupdatePartialById()");
+        StringBuilder partialUpdateParams = qualificationAPI.parseToJson("Testing Qualification Update", "testing", "true", USER_ID);
+        qualification = (Qualification) qualificationAPI.updatePartialById(qualificationId, partialUpdateParams);
+        System.out.println(qualification.toString());
+
+        System.out.println("\ndeleteById()");
+        boolean delete = qualificationAPI.deleteById(qualificationId);
+        System.out.println(delete);
     }
 }
