@@ -1,4 +1,4 @@
-package com.matchingSystem;
+package com.matchingSystem.Model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

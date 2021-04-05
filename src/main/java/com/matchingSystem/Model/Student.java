@@ -1,4 +1,6 @@
-package com.matchingSystem;
+package com.matchingSystem.Model;
+
+import com.matchingSystem.Model.User;
 
 public class Student extends User {
     public Student(String id, String givenName, String familyName, String userName) {

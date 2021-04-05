@@ -1,6 +1,8 @@
-package com.matchingSystem;
+package com.matchingSystem.Model;
 
-public class Tutor extends User{
+import com.matchingSystem.Model.User;
+
+public class Tutor extends User {
     public Tutor(String id, String givenName, String familyName, String userName) {
         super(id, givenName, familyName, userName);
     }

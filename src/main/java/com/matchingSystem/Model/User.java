@@ -1,6 +1,8 @@
-package com.matchingSystem;
+package com.matchingSystem.Model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.matchingSystem.Model.Competency;
+import com.matchingSystem.Model.Qualification;
 
 import java.util.ArrayList;
 

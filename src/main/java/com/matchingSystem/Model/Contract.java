@@ -1,6 +1,7 @@
-package com.matchingSystem;
+package com.matchingSystem.Model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.matchingSystem.Poster;
 import org.json.JSONObject;
 
 import java.sql.Timestamp;
