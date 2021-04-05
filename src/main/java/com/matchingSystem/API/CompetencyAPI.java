@@ -1,14 +1,18 @@
 package com.matchingSystem.API;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.matchingSystem.Competency;
+import com.matchingSystem.Model.Competency;
 import org.json.JSONArray;
 
-public class CompetencyAPI implements APIBehaviour{
-    ObjectMapper objMapper = new ObjectMapper();
-    private static String ROUTE = "/competency";
+public class CompetencyAPI extends APIRouter {
+    /**
+     * CompetencyAPI constructor
+     */
+    public CompetencyAPI() {
+        this.objMapper = new ObjectMapper();
+        route = "/competency";
+        c = Competency.class;
+    }
 
     /**
      * Get all competencies
@@ -16,101 +20,42 @@ public class CompetencyAPI implements APIBehaviour{
      */
     @Override
     public Object getAll() {
-        return new JSONArray(APIManager.GETRequest(ROUTE));
+        return new JSONArray(APIManager.GETRequest(route));
     }
 
     /**
-     * Get a competency by competency id
-     * @param id the target competency id
-     * @return a competency
-     */
-    @Override
-    public Competency getById(String id) {
-        try {
-            String urlRoute = ROUTE + "/" + id;
-            String jsonResponse = APIManager.GETRequest(urlRoute);
-
-            return objMapper.readValue(jsonResponse, Competency.class);
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    /**
-     * Delete a Competency by competency id
-     * @param id the target competency id
-     * @return true if delete success, else false
-     */
-    @Override
-    public boolean deleteById(String id) {
-        try {
-            int responseCode = APIManager.DELETERequest(ROUTE + "/" + id);
-            // TODO: think on how to display message of different status code of a failed request
-            if (responseCode == 204){
-                return true;
-            }else{
-                return false;
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    /**
-     * Create a new Competency
+     * Function that parses variables to json needed for the request body for create()
+     *
      * @param ownerId ownerId of this Competency
      * @param subjectId subjectId of the subject
      * @param level level of the Competency
-     * @return the Competency created
+     * @return StringBuilder of the parsed json
      */
-    public Competency create(String ownerId, String subjectId, int level) {
-        try {
-            StringBuilder jsonParam = new StringBuilder();
-            jsonParam.append("{");
-            jsonParam.append(String.format("\"ownerId\": \"%s\",", ownerId));
-            jsonParam.append(String.format("\"subjectId\": \"%s\",", subjectId));
-            jsonParam.append(String.format("\"level\": \"%d\",", level));
-            jsonParam.append("}");
+    public StringBuilder parseToJsonForCreate(String ownerId, String subjectId, int level) {
+        StringBuilder retVal = new StringBuilder();
 
-            String jsonResponse = APIManager.UpdateRequest(ROUTE, jsonParam, APIManager.POST);
+        retVal.append("{");
+        retVal.append(String.format("\"ownerId\": \"%s\",", ownerId));
+        retVal.append(String.format("\"subjectId\": \"%s\",", subjectId));
+        retVal.append(String.format("\"level\": %d", level));
+        retVal.append("}");
 
-            return objMapper.readValue(jsonResponse, Competency.class);
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        return retVal;
     }
 
     /**
-     * Updates level of the competency by competencyId
-     * @param competencyId id of the Competency
+     * Function that parses variables to json needed for the request body for updatePartialById()
+     *
      * @param level level of the Competency to be updated
-     * @return the Competency updated
+     * @return StringBuilder of the parsed json
      */
-    public Competency updateLevel(String competencyId, int level) {
-        try {
-            StringBuilder jsonParam = new StringBuilder();
-            jsonParam.append("{");
-            jsonParam.append(String.format("\"level\": \"%d\",", level));
-            jsonParam.append("}");
+    public StringBuilder parseToJsonForPartialUpdate(int level) {
+        StringBuilder retVal = new StringBuilder();
 
-            String jsonResponse = APIManager.UpdateRequest(ROUTE + "/" + competencyId, jsonParam, APIManager.PATCH);
+        retVal.append("{");
+        retVal.append(String.format("\"level\": %d", level));
+        retVal.append("}");
 
-            return objMapper.readValue(jsonResponse, Competency.class);
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        return retVal;
     }
 }

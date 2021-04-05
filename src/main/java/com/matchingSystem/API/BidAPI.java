@@ -2,17 +2,16 @@ package com.matchingSystem.API;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.matchingSystem.Bid;
+import com.matchingSystem.Model.Bid;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import static com.matchingSystem.API.APIManager.*;
 import static com.matchingSystem.API.MessageAPI.sdf2;
 
-public class BidAPI extends APIBehaviour{
+public class BidAPI extends APIRouter {
 
     ObjectMapper objMapper = new ObjectMapper();
     private static final String APIPATH = "/bid";

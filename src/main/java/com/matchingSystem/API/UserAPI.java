@@ -1,10 +1,18 @@
 package com.matchingSystem.API;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.matchingSystem.Model.Subject;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class UserAPI implements APIBehaviour {
-    private static String route = "/user";
+public class UserAPI extends APIRouter {
+    /**
+     * UserAPI constructor
+     */
+    public UserAPI() {
+        this.objMapper = new ObjectMapper();
+        route = "/user";
+    }
 
     /**
      * Get all users
@@ -29,12 +37,9 @@ public class UserAPI implements APIBehaviour {
         String urlRoute = route + "/" + id;
         String jsonResponse = APIManager.GETRequest(urlRoute);
 
-        return new JSONObject(jsonResponse);
-    }
 
-    @Override
-    public boolean deleteById(String id) {
-        return false;
+
+        return new JSONObject(jsonResponse);
     }
 
     public JSONObject updatePartialById(String id) {

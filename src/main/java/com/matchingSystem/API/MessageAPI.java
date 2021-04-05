@@ -2,7 +2,7 @@ package com.matchingSystem.API;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.matchingSystem.Message;
+import com.matchingSystem.Model.Message;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 
 import static com.matchingSystem.API.APIManager.*;
 
-public class MessageAPI extends APIBehaviour {
+public class MessageAPI extends APIRouter {
 
     ObjectMapper objMapper = new ObjectMapper();
     private static final String APIPATH = "/message";
