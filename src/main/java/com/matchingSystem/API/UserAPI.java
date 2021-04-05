@@ -13,7 +13,6 @@ public class UserAPI implements APIBehaviour {
         return new JSONArray(apiManager.GETRequest(route));
     }
 
-    @Override
     public JSONObject create() {
         return null;
     }
@@ -28,11 +27,10 @@ public class UserAPI implements APIBehaviour {
     }
 
     @Override
-    public JSONObject deleteById(String id) {
-        return null;
+    public boolean deleteById(String id) {
+        return false;
     }
 
-    @Override
     public JSONObject updatePartialById(String id) {
 
         return null;
@@ -48,7 +46,7 @@ public class UserAPI implements APIBehaviour {
         jsonParam.append("}");
 
         // call request
-        String response = apiManager.POSTRequest(urlRoute, jsonParam);
+        String response = apiManager.UpdateRequest(urlRoute, jsonParam, APIManager.POST );
         return new JSONObject(response);
     }
 
