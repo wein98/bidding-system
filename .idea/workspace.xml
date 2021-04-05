@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aaa730d7-2809-4d55-a239-d919d3906f94" name="Default Changelist" comment="ADDED: .gitignore ignore .idea directory">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Jetbrains.gitignore" afterDir="false" />
+    <list default="true" id="aaa730d7-2809-4d55-a239-d919d3906f94" name="Default Changelist" comment="ADDED: Entity classes (Qualification, Student, Subject, Tutor, User, Student, Competency), UserCookie">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -260,7 +260,28 @@
       <option name="project" value="LOCAL" />
       <updated>1617335361138</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="ADDED: .gitignore ignore .idea directory">
+      <created>1617335632743</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1617335632743</updated>
+    </task>
+    <task id="LOCAL-00008" summary="ADDED: .gitignore ignore .idea directory">
+      <created>1617335766782</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1617335766782</updated>
+    </task>
+    <task id="LOCAL-00009" summary="ADDED: Entity classes (Qualification, Student, Subject, Tutor, User, Student, Competency), UserCookie">
+      <created>1617346032382</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1617346032382</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -340,7 +361,8 @@
     <MESSAGE value="added testing call in myApp for MessageAPI getAll()" />
     <MESSAGE value="ADDED: loginform, userLogin request. CHANGED: APImanager postrequest" />
     <MESSAGE value="ADDED: .gitignore ignore .idea directory" />
-    <option name="LAST_COMMIT_MESSAGE" value="ADDED: .gitignore ignore .idea directory" />
+    <MESSAGE value="ADDED: Entity classes (Qualification, Student, Subject, Tutor, User, Student, Competency), UserCookie" />
+    <option name="LAST_COMMIT_MESSAGE" value="ADDED: Entity classes (Qualification, Student, Subject, Tutor, User, Student, Competency), UserCookie" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
