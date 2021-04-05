@@ -1,6 +1,9 @@
 package com.matchingSystem;
 
+import com.matchingSystem.API.CompetencyAPI;
 import com.matchingSystem.API.MessageAPI;
+import com.matchingSystem.API.QualificationAPI;
+import com.matchingSystem.API.SubjectAPI;
 import com.matchingSystem.UI.LoginForm;
 
 import javax.swing.*;
@@ -8,15 +11,24 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MyApp {
+    public static final String USER_ID = "f5449b1f-6f55-408a-88ee-194958f52219";
+    public static final String COMPETENCY_ID = "36502d02-9f07-4394-af77-9a5489570f82";
+    public static final String QUALIFICATION_ID = "657c69ae-c7ad-4a6c-b13a-6bb024346d19";
+    public static final String SUBJECT_ID = "148e0af0-699b-4c1f-9e49-4de8816d121e";
+
     public static void main(String[] args) {
         System.out.println("Hello World!");
         // Note: Change the message id in testDelete before running this
-        testMessage();
+//        testMessage();
 //        JFrame frame = new JFrame("Testing");
 //        frame.setContentPane(new LoginForm().loginForm);
 //        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //        frame.pack();
 //        frame.setVisible(true);
+
+//        testSubject();
+//        testCompetency();
+        testQualification();
     }
 
     /**
@@ -66,5 +78,46 @@ public class MyApp {
         System.out.println("Test updating (patching) an item");
         testPatch();
         testGetAll();
+    }
+
+    public static void testSubject() {
+        SubjectAPI subjectAPI = new SubjectAPI();
+
+        Subject subject = subjectAPI.getById("148e0af0-699b-4c1f-9e49-4de8816d121e");
+        System.out.println(subject.toString());
+    }
+
+    public static void testCompetency() {
+        System.out.println("===== Testing CompetencyAPI =====");
+
+        CompetencyAPI competencyAPI = new CompetencyAPI();
+
+        System.out.println("\ngetById()");
+        Competency competency = competencyAPI.getById("36502d02-9f07-4394-af77-9a5489570f82");
+        System.out.println(competency.toString());
+    }
+
+    public static void testQualification() {
+        System.out.println("===== Testing QualificationAPI =====");
+        QualificationAPI qualificationAPI = new QualificationAPI();
+        Qualification qualification;
+        String qualificationId;
+
+        System.out.println("\ncreate()");
+        qualification = qualificationAPI.create("Testing Qualification", "testing", "true", USER_ID);
+        System.out.println(qualification.toString());
+        qualificationId = qualification.getId();
+
+        System.out.println("\ngetById()");
+        qualification = qualificationAPI.getById(qualificationId);
+        System.out.println(qualification.toString());
+
+        System.out.println("\nupdateQualification()");
+        qualification = qualificationAPI.updateQualification(qualificationId,"Testing Qualification Update", "testing", "true", USER_ID);
+        System.out.println(qualification.toString());
+
+        System.out.println("\ndeleteById()");
+        boolean delete = qualificationAPI.deleteById(qualificationId);
+        System.out.println(delete);
     }
 }
