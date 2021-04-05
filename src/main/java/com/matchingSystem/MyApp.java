@@ -1,5 +1,6 @@
 package com.matchingSystem;
 
+import com.matchingSystem.API.BidAPI;
 import com.matchingSystem.API.CompetencyAPI;
 import com.matchingSystem.API.MessageAPI;
 import com.matchingSystem.API.QualificationAPI;
@@ -20,6 +21,9 @@ public class MyApp {
         System.out.println("Hello World!");
         // Note: Change the message id in testDelete before running this
 //        testMessage();
+        // testMessage();
+        BidAPI bidApi =  new BidAPI();
+        boolean res = bidApi.closeDownBidById("bc06e9ad-5d20-4dce-a176-a6ac73b26b35");
 //        JFrame frame = new JFrame("Testing");
 //        frame.setContentPane(new LoginForm().loginForm);
 //        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
