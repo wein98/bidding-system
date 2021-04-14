@@ -2,6 +2,7 @@ package com.matchingSystem;
 
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.Base64;
 
 public class Utility {
@@ -15,4 +16,7 @@ public class Utility {
         System.out.println(payload);
         return null;
     }
+
+    public static final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+
 }
