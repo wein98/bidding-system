@@ -1,4 +1,4 @@
-package com.matchingSystem.UI;
+package com.matchingSystem.View;
 
 import com.matchingSystem.UserCookie;
 import com.matchingSystem.Utility;
