@@ -3,6 +3,7 @@ package com.matchingSystem.API;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.Model.Message;
+import com.matchingSystem.Utility;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -52,7 +53,7 @@ public class MessageAPI extends APIRouter {
     /**
      * Format of Timestamp used (ex. 2021-03-24T16:44:39.083+08:00)
      */
-    public static final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+//    public static final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
 
     /**
      * Create a new message
@@ -67,7 +68,7 @@ public class MessageAPI extends APIRouter {
             jsonParam.append("{");
             jsonParam.append(String.format("\"bidId\": \"%s\",", bidId));
             jsonParam.append(String.format("\"posterId\": \"%s\",", posterId));
-            jsonParam.append(String.format("\"datePosted\": \"%s\",", sdf2.format(now)));
+            jsonParam.append(String.format("\"datePosted\": \"%s\",", Utility.sdf2.format(now)));
             jsonParam.append(String.format("\"content\": \"%s\",", content));
             jsonParam.append(String.format("\"additionalInfo\": {}"));
             jsonParam.append("}");
@@ -96,25 +97,6 @@ public class MessageAPI extends APIRouter {
         }
         return null;
     }
-
-    /**
-     * Delete a message by its message id
-     * @param id the target message id
-     */
-//    public boolean deleteById(String id){
-//        try {
-//            String route = APIPATH + "/" + id;
-//            int responseCode = DELETERequest(route);
-//            if (responseCode == 204){
-//                return true;
-//            }else{
-//                return false;
-//            }
-//        } catch (Exception e){
-//            e.printStackTrace();
-//        }
-//        return false;
-//    }
 
     /**
      * Update message content

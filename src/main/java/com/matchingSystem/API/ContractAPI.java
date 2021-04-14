@@ -3,6 +3,7 @@ package com.matchingSystem.API;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.Model.Contract;
+import com.matchingSystem.Utility;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -10,7 +11,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import static com.matchingSystem.API.APIManager.*;
-import static com.matchingSystem.API.MessageAPI.sdf2;
 
 public class ContractAPI extends APIRouter {
     ObjectMapper objMapper = new ObjectMapper();
@@ -51,8 +51,8 @@ public class ContractAPI extends APIRouter {
             jsonParam.append(String.format("\"firstPartyId\": \"%s\",", firstPartyId));
             jsonParam.append(String.format("\"secondPartyId\": \"%s\",", secondPartyId));
             jsonParam.append(String.format("\"subjectId\": \"%s\",", subjectId));
-            jsonParam.append(String.format("\"dateCreated\": \"%s\",", sdf2.format(expiryDate)));
-            jsonParam.append(String.format("\"expiryDate\": \"%s\",", sdf2.format(now)));
+            jsonParam.append(String.format("\"dateCreated\": \"%s\",", Utility.sdf2.format(expiryDate)));
+            jsonParam.append(String.format("\"expiryDate\": \"%s\",", Utility.sdf2.format(now)));
             jsonParam.append(String.format("\"paymentInfo\": {}"));
             jsonParam.append(String.format("\"lessonInfo\": {}"));
             jsonParam.append(String.format("\"additionalInfo\": {}"));
@@ -89,8 +89,8 @@ public class ContractAPI extends APIRouter {
             jsonParam.append(String.format("\"firstPartyId\": \"%s\",", firstPartyId));
             jsonParam.append(String.format("\"secondPartyId\": \"%s\",", secondPartyId));
             jsonParam.append(String.format("\"subjectId\": \"%s\",", subjectId));
-            jsonParam.append(String.format("\"dateCreated\": \"%s\",", sdf2.format(expiryDate)));
-            jsonParam.append(String.format("\"expiryDate\": \"%s\",", sdf2.format(now)));
+            jsonParam.append(String.format("\"dateCreated\": \"%s\",", Utility.sdf2.format(expiryDate)));
+            jsonParam.append(String.format("\"expiryDate\": \"%s\",", Utility.sdf2.format(now)));
             jsonParam.append(String.format("\"paymentInfo\": {}"));
             jsonParam.append(String.format("\"lessonInfo\": {}"));
             jsonParam.append(String.format("\"additionalInfo\": {}"));
@@ -106,28 +106,13 @@ public class ContractAPI extends APIRouter {
         return null;
     }
 
-//    public boolean deleteById(String id){
-//        try {
-//            String route = APIPATH + "/" + id;
-//            int responseCode = DELETERequest(route);
-//            if (responseCode == 204){
-//                return true;
-//            }else{
-//                return false;
-//            }
-//        } catch (Exception e){
-//            e.printStackTrace();
-//        }
-//        return false;
-//    }
-
     public boolean sign(String id){
         try {
             String route = APIPATH + "/" + id + "/sign";
             Timestamp now = new Timestamp(System.currentTimeMillis());
             StringBuilder jsonParam = new StringBuilder();
             jsonParam.append("{");
-            jsonParam.append(String.format("\"dateSigned\": \"%s\"", sdf2.format(now)));
+            jsonParam.append(String.format("\"dateSigned\": \"%s\"", Utility.sdf2.format(now)));
             jsonParam.append("}");
             String response = UpdateRequest(route, jsonParam, APIManager.POST);
             JSONObject resObj = new JSONObject(response);

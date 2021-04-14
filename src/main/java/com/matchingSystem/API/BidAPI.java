@@ -3,13 +3,13 @@ package com.matchingSystem.API;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.Model.Bid;
+import com.matchingSystem.Utility;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import static com.matchingSystem.API.APIManager.*;
-import static com.matchingSystem.API.MessageAPI.sdf2;
 
 public class BidAPI extends APIRouter {
 
@@ -50,7 +50,7 @@ public class BidAPI extends APIRouter {
             jsonParam.append("{");
             jsonParam.append(String.format("\"type\": \"%s\",", type));
             jsonParam.append(String.format("\"initiatorId\": \"%s\",", initiatorId));
-            jsonParam.append(String.format("\"datePosted\": \"%s\",", sdf2.format(now)));
+            jsonParam.append(String.format("\"datePosted\": \"%s\",", Utility.sdf2.format(now)));
             jsonParam.append(String.format("\"subjectId\": \"%s\",", subjectId));
             jsonParam.append(String.format("\"additionalInfo\": {}"));
             jsonParam.append("}");
@@ -76,28 +76,12 @@ public class BidAPI extends APIRouter {
         return null;
     }
 
-//    public boolean deleteById(String id){
-//        try {
-//            String route = APIPATH + "/" + id;
-//            int responseCode = DELETERequest(route);
-//            if (responseCode == 204){
-//                return true;
-//            }else{
-//                return false;
-//            }
-//        } catch (Exception e){
-//            e.printStackTrace();
-//        }
-//        return false;
-//    }
-
     public Bid updatePartialById(String id, String content){
         try{
             String route = APIPATH + "/" + id;
 
             StringBuilder jsonParam = new StringBuilder();
             jsonParam.append("{");
-            jsonParam.append(String.format("\"content\": \"%s\",", content));
             jsonParam.append(String.format("\"additionalInfo\": {}"));
             jsonParam.append("}");
 
@@ -117,7 +101,7 @@ public class BidAPI extends APIRouter {
             Timestamp now = new Timestamp(System.currentTimeMillis());
             StringBuilder jsonParam = new StringBuilder();
             jsonParam.append("{");
-            jsonParam.append(String.format("\"dateClosedDown\": \"%s\"", sdf2.format(now)));
+            jsonParam.append(String.format("\"dateClosedDown\": \"%s\"", Utility.sdf2.format(now)));
             jsonParam.append("}");
 //            System.out.println(jsonParam);
             String response = UpdateRequest(route, jsonParam, APIManager.POST);
