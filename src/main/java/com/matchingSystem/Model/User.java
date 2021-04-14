@@ -1,12 +1,14 @@
 package com.matchingSystem.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.matchingSystem.Model.Competency;
 import com.matchingSystem.Model.Qualification;
 
 import java.util.ArrayList;
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class User {
+
     @JsonProperty("id")
     protected String id;
 
@@ -30,6 +32,8 @@ public abstract class User {
         this.competencies = new ArrayList<Competency>();
         this.qualifications = new ArrayList<Qualification>();
     }
+
+    public User() {}
 
     public String getId() {
         return id;

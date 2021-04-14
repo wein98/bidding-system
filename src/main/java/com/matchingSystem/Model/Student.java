@@ -7,6 +7,10 @@ public class Student extends User {
         super(id, givenName, familyName, userName);
     }
 
+    public Student(){
+        super();
+    }
+
     @Override
     public String toString() {
         return "Student{" +

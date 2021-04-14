@@ -7,6 +7,10 @@ public class Tutor extends User {
         super(id, givenName, familyName, userName);
     }
 
+    public Tutor() {
+        super();
+    }
+
     @Override
     public String toString() {
         return "Tutor{" +
