@@ -1,8 +1,7 @@
-package com.matchingSystem.UI;
+package com.matchingSystem.View;
 
 import com.matchingSystem.API.UserAPI;
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

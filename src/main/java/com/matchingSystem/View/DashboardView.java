@@ -1,4 +1,4 @@
-package com.matchingSystem.UI;
+package com.matchingSystem.View;
 
 public class DashboardView {
 }
