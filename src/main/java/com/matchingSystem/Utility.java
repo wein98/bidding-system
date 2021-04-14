@@ -14,7 +14,7 @@ public class Utility {
         String header = new String(decoder.decode(chunks[0]));
         String payload = new String(decoder.decode(chunks[1]));
         System.out.println(payload);
-        return null;
+        return new JSONObject(payload);
     }
 
     public static final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
