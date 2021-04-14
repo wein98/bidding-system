@@ -1,13 +1,11 @@
 package com.matchingSystem;
 
-import com.matchingSystem.API.CompetencyAPI;
-import com.matchingSystem.API.MessageAPI;
-import com.matchingSystem.API.QualificationAPI;
-import com.matchingSystem.API.SubjectAPI;
+import com.matchingSystem.API.*;
 import com.matchingSystem.Model.Competency;
 import com.matchingSystem.Model.Message;
 import com.matchingSystem.Model.Qualification;
 import com.matchingSystem.Model.Subject;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -31,8 +29,9 @@ public class MyApp {
 //        frame.setVisible(true);
 
 //        testSubjectAPI();
-        testCompetencyAPI();
+//        testCompetencyAPI();
 //        testQualification();
+        testUserAPI();
     }
 
     /**
@@ -90,6 +89,16 @@ public class MyApp {
 //        Subject subject = subjectAPI.getById("148e0af0-699b-4c1f-9e49-4de8816d121e");
 //        System.out.println(subject.toString());
 //    }
+
+    public static void testUserAPI() {
+        String username = "mbrown123";
+
+        UserAPI userAPI = new UserAPI();
+
+        JSONObject response = userAPI.userLogin(username, username);
+
+        Utility.decodeJWT(response.getString("jwt"));
+    }
 
     public static void testCompetencyAPI() {
         System.out.println("===== Testing CompetencyAPI =====");

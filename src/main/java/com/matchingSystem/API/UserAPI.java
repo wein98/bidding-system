@@ -1,11 +1,13 @@
 package com.matchingSystem.API;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.matchingSystem.Model.Subject;
+import com.matchingSystem.Model.UserFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class UserAPI extends APIRouter {
+    UserFactory userFactory = new UserFactory();
+
     /**
      * UserAPI constructor
      */
@@ -42,10 +44,6 @@ public class UserAPI extends APIRouter {
         return new JSONObject(jsonResponse);
     }
 
-    public JSONObject updatePartialById(String id) {
-
-        return null;
-    }
     /**
      * User login
      * @param username credential
@@ -60,9 +58,10 @@ public class UserAPI extends APIRouter {
         jsonParam.append(String.format("\"userName\": \"%s\",", username));
         jsonParam.append(String.format("\"password\": \"%s\"", password));
         jsonParam.append("}");
-
+        System.out.println(jsonParam.toString());
         // call request
         String response = APIManager.UpdateRequest(urlRoute, jsonParam, APIManager.POST);
+
         return new JSONObject(response);
     }
 

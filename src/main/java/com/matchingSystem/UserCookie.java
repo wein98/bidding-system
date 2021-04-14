@@ -3,10 +3,12 @@ package com.matchingSystem;
 import com.matchingSystem.Model.Student;
 import com.matchingSystem.Model.Tutor;
 import com.matchingSystem.Model.User;
+import com.matchingSystem.Model.UserFactory;
 import org.json.JSONObject;
 
-public class UserCookie {
+    public class UserCookie {
     private static UserCookie ourInstance;
+    UserFactory userFactory = new UserFactory();
 
     public static UserCookie getInstance() {
 
@@ -17,8 +19,9 @@ public class UserCookie {
     }
 
     private String jwtToken = null;
-    private Student isStudent = null;
-    private Tutor isTutor = null;
+    private User user = null;
+//    private Student isStudent = null;
+//    private Tutor isTutor = null;
 
     private UserCookie() {
 
@@ -26,40 +29,52 @@ public class UserCookie {
 
     public void setJwtToken(String jwtToken) {
         this.jwtToken = jwtToken;
-        setUser();
+//        setUser();
     }
 
-    private void setUser() {
+//    private void setUser() {
+//        JSONObject userObj = Utility.decodeJWT(jwtToken);
+//
+//        // user is a Student
+//        if (userObj.getBoolean("isStudent")) {
+//            isStudent = new Student(
+//                userObj.getString("sub"),
+//                userObj.getString("givenName"),
+//                userObj.getString("familyName"),
+//                userObj.getString("username"));
+//        }
+//
+//        // user is a Tutor
+//        if (userObj.getBoolean("isTutor")) {
+//            isTutor = new Tutor(
+//                userObj.getString("sub"),
+//                userObj.getString("givenName"),
+//                userObj.getString("familyName"),
+//                userObj.getString("username"));
+//        }
+//    }
+
+    // Function called to set usercookie
+    public void setUser(int userType) {
+        // decode jwt
         JSONObject userObj = Utility.decodeJWT(jwtToken);
 
-        // user is a Student
-        if (userObj.getBoolean("isStudent")) {
-            isStudent = new Student(
-                userObj.getString("sub"),
-                userObj.getString("givenName"),
-                userObj.getString("familyName"),
-                userObj.getString("username"));
-        }
-
-        // user is a Tutor
-        if (userObj.getBoolean("isTutor")) {
-            isTutor = new Tutor(
-                userObj.getString("sub"),
-                userObj.getString("givenName"),
-                userObj.getString("familyName"),
-                userObj.getString("username"));
+        if (userType == UserFactory.IS_STUDENT) {
+            user = (Student) userFactory.createUser(userObj.toString(), userType);
+        } else if (userType == UserFactory.IS_TUTOR) {
+            user = (Tutor) userFactory.createUser(userObj.toString(), userType);
         }
     }
 
     // get user as a Student
-    public User getStudent() {
-        return isStudent;
+    public User getUser() {
+        return user;
     }
 
     // get user as a Tutor
-    public User getTutor() {
-        return isTutor;
-    }
+//    public User getTutor() {
+//        return isTutor;
+//    }
 
     public String getJwtToken() {
         return jwtToken;
