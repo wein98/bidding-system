@@ -1,6 +1,8 @@
 package com.matchingSystem.Controller;
 
+import com.matchingSystem.Constant;
 import com.matchingSystem.Model.UserFactory;
+import com.matchingSystem.View.DashboardView;
 import com.matchingSystem.View.UserTypeView;
 import com.matchingSystem.UserCookie;
 
@@ -19,16 +21,19 @@ public class UserTypeController {
         // IsStudentBtn OnClick listener
         view.getIsStudentBtn().addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                UserCookie.getInstance().setUser(UserFactory.IS_STUDENT);
+                UserCookie.getInstance().setUser(Constant.IS_STUDENT);
                 userTypeSelected();
+                view.dispose();
             }
         });
 
         // IsTutorBtn OnClick listener
-        view.getIsStudentBtn().addActionListener(new ActionListener(){
+        view.getIsTutorBtn().addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                UserCookie.getInstance().setUser(UserFactory.IS_TUTOR);
+                System.out.println("ASDASFwrdghWDGFSDGASRGsef");
+                UserCookie.getInstance().setUser(Constant.IS_TUTOR);
                 userTypeSelected();
+                view.dispose();
             }
         });
     }
@@ -38,7 +43,7 @@ public class UserTypeController {
         // Create dashboard model
 
         // Create dashboard view
-
+        DashboardView dashboardView = new DashboardView();
         // Create dashboard controller
     }
 

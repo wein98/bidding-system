@@ -6,7 +6,7 @@ import com.matchingSystem.Model.User;
 import com.matchingSystem.Model.UserFactory;
 import org.json.JSONObject;
 
-    public class UserCookie {
+public class UserCookie {
     private static UserCookie ourInstance;
     UserFactory userFactory = new UserFactory();
 
@@ -59,11 +59,17 @@ import org.json.JSONObject;
         // decode jwt
         JSONObject userObj = Utility.decodeJWT(jwtToken);
 
-        if (userType == UserFactory.IS_STUDENT) {
-            user = (Student) userFactory.createUser(userObj.toString(), userType);
-        } else if (userType == UserFactory.IS_TUTOR) {
-            user = (Tutor) userFactory.createUser(userObj.toString(), userType);
+        // reconstruct user from decoded jwt
+        String userInfo = userObj.toString();
+        userInfo = userInfo.replace("sub", "id");
+        userInfo = userInfo.replace("username", "userName");
+
+        if (userType == Constant.IS_STUDENT) {
+            user = (Student) userFactory.createUser(userInfo, userType);
+        } else if (userType == Constant.IS_TUTOR) {
+            user = (Tutor) userFactory.createUser(userInfo, userType);
         }
+
     }
 
     // get user as a Student
