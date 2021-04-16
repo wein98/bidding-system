@@ -1,6 +1,6 @@
 package com.matchingSystem.Model;
 
-import com.matchingSystem.API.UserAPI;
+import com.matchingSystem.API.APIAdapters.UserAPI;
 import org.json.JSONObject;
 
 public class LoginModel {

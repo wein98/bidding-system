@@ -1,10 +1,12 @@
-package com.matchingSystem.API;
+package com.matchingSystem.API.APIAdapters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.matchingSystem.API.APIService;
+import com.matchingSystem.API.ClientInterfaces.SubjectAPIInterface;
 import com.matchingSystem.Model.Subject;
 import org.json.JSONArray;
 
-public class SubjectAPI extends APIRouter {
+public class SubjectAPI extends APIRouter implements SubjectAPIInterface {
     /**
      * SubjectAPI constructor
      */
@@ -16,7 +18,7 @@ public class SubjectAPI extends APIRouter {
 
     @Override
     public Object getAll() {
-        return new JSONArray(APIManager.GETRequest(route));
+        return new JSONArray(APIService.GETRequest(route));
     }
 
     public StringBuilder parseToJson(String name, String desc) {

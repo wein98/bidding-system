@@ -1,11 +1,13 @@
-package com.matchingSystem.API;
+package com.matchingSystem.API.APIAdapters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.matchingSystem.API.APIService;
+import com.matchingSystem.API.ClientInterfaces.UserAPIInterface;
 import com.matchingSystem.Model.UserFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class UserAPI extends APIRouter {
+public class UserAPI extends APIRouter implements UserAPIInterface {
     UserFactory userFactory = new UserFactory();
 
     /**
@@ -22,7 +24,7 @@ public class UserAPI extends APIRouter {
      */
     @Override
     public JSONArray getAll() {
-        return new JSONArray(APIManager.GETRequest(route));
+        return new JSONArray(APIService.GETRequest(route));
     }
 
     public JSONObject create() {
@@ -37,7 +39,7 @@ public class UserAPI extends APIRouter {
     @Override
     public JSONObject getById(String id) {
         String urlRoute = route + "/" + id;
-        String jsonResponse = APIManager.GETRequest(urlRoute);
+        String jsonResponse = APIService.GETRequest(urlRoute);
 
 
 
@@ -60,7 +62,7 @@ public class UserAPI extends APIRouter {
         jsonParam.append("}");
         System.out.println(jsonParam.toString());
         // call request
-        String response = APIManager.UpdateRequest(urlRoute, jsonParam, APIManager.POST);
+        String response = APIService.UpdateRequest(urlRoute, jsonParam, APIService.POST);
 
         return new JSONObject(response);
     }
@@ -78,7 +80,7 @@ public class UserAPI extends APIRouter {
         jsonParam.append("}");
 
         // call request
-        String response = APIManager.UpdateRequest(urlRoute, jsonParam, APIManager.POST);
+        String response = APIService.UpdateRequest(urlRoute, jsonParam, APIService.POST);
         return new JSONObject(response);
     }
 }
