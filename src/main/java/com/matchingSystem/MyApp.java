@@ -4,7 +4,7 @@ import com.matchingSystem.API.APIAdapters.*;
 import com.matchingSystem.API.ClientInterfaces.CompetencyAPIInterface;
 import com.matchingSystem.API.ClientInterfaces.QualificationAPIInterface;
 import com.matchingSystem.API.ClientInterfaces.SubjectAPIInterface;
-import com.matchingSystem.API.MessageAPI;
+import com.matchingSystem.API.APIAdapters.MessageAPI;
 import com.matchingSystem.Model.Competency;
 import com.matchingSystem.Model.Message;
 import com.matchingSystem.Model.Qualification;
