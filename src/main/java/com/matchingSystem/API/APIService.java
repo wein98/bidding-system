@@ -15,7 +15,7 @@ import java.net.*;
 import static com.matchingSystem.API.APIKey.API_KEY;
 
 
-public class APIManager {
+public class APIService {
 
     private static final String HOST = "https://fit3077.com/api/v1";
     public static final int PATCH = 1;

@@ -1,9 +1,10 @@
-package com.matchingSystem.API;
+package com.matchingSystem.API.APIAdapters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.matchingSystem.API.ClientInterfaces.QualificationAPIInterface;
 import com.matchingSystem.Model.Qualification;
 
-public class QualificationAPI extends APIRouter {
+public class QualificationAPI extends APIRouter implements QualificationAPIInterface {
     /**
      * QualificationAPI constructor
      */

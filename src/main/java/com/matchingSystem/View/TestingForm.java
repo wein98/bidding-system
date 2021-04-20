@@ -1,6 +1,6 @@
 package com.matchingSystem.View;
 
-import com.matchingSystem.API.UserAPI;
+import com.matchingSystem.API.APIAdapters.UserAPI;
 import org.json.JSONArray;
 
 import javax.swing.*;

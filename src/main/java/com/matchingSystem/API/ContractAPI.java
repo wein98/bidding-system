@@ -2,6 +2,7 @@ package com.matchingSystem.API;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.matchingSystem.API.APIAdapters.APIRouter;
 import com.matchingSystem.Model.Contract;
 import com.matchingSystem.Utility;
 import org.json.JSONArray;
@@ -10,7 +11,7 @@ import org.json.JSONObject;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-import static com.matchingSystem.API.APIManager.*;
+import static com.matchingSystem.API.APIService.*;
 
 public class ContractAPI extends APIRouter {
     ObjectMapper objMapper = new ObjectMapper();
@@ -57,7 +58,7 @@ public class ContractAPI extends APIRouter {
             jsonParam.append(String.format("\"lessonInfo\": {}"));
             jsonParam.append(String.format("\"additionalInfo\": {}"));
             jsonParam.append("}");
-            String response = UpdateRequest(APIPATH, jsonParam, APIManager.POST);
+            String response = UpdateRequest(APIPATH, jsonParam, APIService.POST);
             Contract contract = objMapper.readValue(response, Contract.class);
 
             return contract;
@@ -96,7 +97,7 @@ public class ContractAPI extends APIRouter {
             jsonParam.append(String.format("\"additionalInfo\": {}"));
             jsonParam.append("}");
 
-            String response = UpdateRequest(route, jsonParam, APIManager.PATCH);
+            String response = UpdateRequest(route, jsonParam, APIService.PATCH);
             Contract contract = objMapper.readValue(response, Contract.class);
 
             return contract;
@@ -114,7 +115,7 @@ public class ContractAPI extends APIRouter {
             jsonParam.append("{");
             jsonParam.append(String.format("\"dateSigned\": \"%s\"", Utility.sdf2.format(now)));
             jsonParam.append("}");
-            String response = UpdateRequest(route, jsonParam, APIManager.POST);
+            String response = UpdateRequest(route, jsonParam, APIService.POST);
             JSONObject resObj = new JSONObject(response);
             if (resObj.getInt("statusCode") == 200){
                 return true;

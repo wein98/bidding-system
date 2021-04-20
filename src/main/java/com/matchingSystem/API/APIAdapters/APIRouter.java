@@ -1,19 +1,22 @@
-package com.matchingSystem.API;
+package com.matchingSystem.API.APIAdapters;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.matchingSystem.API.APIService;
 
 import java.lang.Object;
 
-import static com.matchingSystem.API.APIManager.DELETERequest;
+import static com.matchingSystem.API.APIService.DELETERequest;
 
 public abstract class APIRouter {
     protected String route;
     protected ObjectMapper objMapper;
     protected Class c;
 
-    abstract Object getAll();
+    public Object getAll() {
+        return null;
+    }
 
     /**
      * Create a new c.object
@@ -21,7 +24,7 @@ public abstract class APIRouter {
      * @return the c.object created
      */
     public Object create(StringBuilder params) {
-        String jsonResponse = APIManager.UpdateRequest(route, params, APIManager.POST);
+        String jsonResponse = APIService.UpdateRequest(route, params, APIService.POST);
 
         try {
             return objMapper.readValue(jsonResponse, c);
@@ -31,7 +34,7 @@ public abstract class APIRouter {
         }
 
         return null;
-    };
+    }
 
     /**
      * Get an object by id
@@ -41,7 +44,7 @@ public abstract class APIRouter {
     public Object getById(String id) {
         try {
             String urlRoute = route + "/" + id;
-            String jsonResponse = APIManager.GETRequest(urlRoute);
+            String jsonResponse = APIService.GETRequest(urlRoute);
             return objMapper.readValue(jsonResponse, c);
         } catch (JsonMappingException e) {
             e.printStackTrace();
@@ -50,7 +53,7 @@ public abstract class APIRouter {
         }
 
         return null;
-    };
+    }
 
     /**
      * Delete an object by id
@@ -61,11 +64,7 @@ public abstract class APIRouter {
         try {
             int responseCode = DELETERequest(route + "/" + id);
             // TODO: think on how to display message of different status code of a failed request
-            if (responseCode == 204){
-                return true;
-            }else{
-                return false;
-            }
+            return responseCode == 204;
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -82,7 +81,7 @@ public abstract class APIRouter {
      */
     public Object updatePartialById(String id, StringBuilder params) {
         try {
-            String jsonResponse = APIManager.UpdateRequest(route + "/" + id, params, APIManager.PATCH);
+            String jsonResponse = APIService.UpdateRequest(route + "/" + id, params, APIService.PATCH);
 
             return objMapper.readValue(jsonResponse, c);
         } catch (JsonMappingException e) {
@@ -92,5 +91,5 @@ public abstract class APIRouter {
         }
 
         return null;
-    };
+    }
 }

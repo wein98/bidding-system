@@ -2,6 +2,7 @@ package com.matchingSystem.API;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.matchingSystem.API.APIAdapters.APIRouter;
 import com.matchingSystem.Model.Message;
 import com.matchingSystem.Utility;
 import org.json.JSONArray;
@@ -9,9 +10,8 @@ import org.json.JSONObject;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.text.SimpleDateFormat;
 
-import static com.matchingSystem.API.APIManager.*;
+import static com.matchingSystem.API.APIService.*;
 
 public class MessageAPI extends APIRouter {
 
@@ -72,7 +72,7 @@ public class MessageAPI extends APIRouter {
             jsonParam.append(String.format("\"content\": \"%s\",", content));
             jsonParam.append(String.format("\"additionalInfo\": {}"));
             jsonParam.append("}");
-            String response = UpdateRequest(APIPATH, jsonParam, APIManager.POST);
+            String response = UpdateRequest(APIPATH, jsonParam, APIService.POST);
             Message message = objMapper.readValue(response, Message.class);
             return message;
         }catch (JsonProcessingException e){
@@ -113,7 +113,7 @@ public class MessageAPI extends APIRouter {
             jsonParam.append(String.format("\"additionalInfo\": {}"));
             jsonParam.append("}");
 
-            String response = UpdateRequest(route, jsonParam, APIManager.PATCH);
+            String response = UpdateRequest(route, jsonParam, APIService.PATCH);
             Message message = objMapper.readValue(response, Message.class);
 
             return message;

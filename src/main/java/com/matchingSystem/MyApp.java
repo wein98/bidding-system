@@ -1,6 +1,10 @@
 package com.matchingSystem;
 
-import com.matchingSystem.API.*;
+import com.matchingSystem.API.APIAdapters.*;
+import com.matchingSystem.API.ClientInterfaces.CompetencyAPIInterface;
+import com.matchingSystem.API.ClientInterfaces.QualificationAPIInterface;
+import com.matchingSystem.API.ClientInterfaces.SubjectAPIInterface;
+import com.matchingSystem.API.MessageAPI;
 import com.matchingSystem.Model.Competency;
 import com.matchingSystem.Model.Message;
 import com.matchingSystem.Model.Qualification;
@@ -29,9 +33,9 @@ public class MyApp {
 //        frame.setVisible(true);
 
 //        testSubjectAPI();
-//        testCompetencyAPI();
+        testCompetencyAPI();
 //        testQualification();
-        testUserAPI();
+//        testUserAPI();
     }
 
     /**
@@ -102,7 +106,7 @@ public class MyApp {
 
     public static void testCompetencyAPI() {
         System.out.println("===== Testing CompetencyAPI =====");
-        CompetencyAPI competencyAPI = new CompetencyAPI();
+        CompetencyAPIInterface competencyAPI = new CompetencyAPI();
         Competency competency;
         String competencyId;
 
@@ -128,7 +132,7 @@ public class MyApp {
 
     public static void testSubjectAPI() {
         System.out.println("===== Testing SubjectAPI =====");
-        SubjectAPI subjectAPI = new SubjectAPI();
+        SubjectAPIInterface subjectAPI = new SubjectAPI();
         Subject subject;
         String subjectId;
 
@@ -154,7 +158,7 @@ public class MyApp {
 
     public static void testQualification() {
         System.out.println("===== Testing QualificationAPI =====");
-        QualificationAPI qualificationAPI = new QualificationAPI();
+        QualificationAPIInterface qualificationAPI = new QualificationAPI();
         Qualification qualification;
         String qualificationId;
 

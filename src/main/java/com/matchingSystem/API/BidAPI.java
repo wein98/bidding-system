@@ -2,6 +2,7 @@ package com.matchingSystem.API;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.matchingSystem.API.APIAdapters.APIRouter;
 import com.matchingSystem.Model.Bid;
 import com.matchingSystem.Utility;
 import org.json.JSONArray;
@@ -9,7 +10,7 @@ import org.json.JSONObject;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import static com.matchingSystem.API.APIManager.*;
+import static com.matchingSystem.API.APIService.*;
 
 public class BidAPI extends APIRouter {
 
@@ -54,7 +55,7 @@ public class BidAPI extends APIRouter {
             jsonParam.append(String.format("\"subjectId\": \"%s\",", subjectId));
             jsonParam.append(String.format("\"additionalInfo\": {}"));
             jsonParam.append("}");
-            String response = UpdateRequest(APIPATH, jsonParam, APIManager.POST);
+            String response = UpdateRequest(APIPATH, jsonParam, APIService.POST);
             Bid bid = objMapper.readValue(response, Bid.class);
 
             return bid;
@@ -85,7 +86,7 @@ public class BidAPI extends APIRouter {
             jsonParam.append(String.format("\"additionalInfo\": {}"));
             jsonParam.append("}");
 
-            String response = UpdateRequest(route, jsonParam, APIManager.PATCH);
+            String response = UpdateRequest(route, jsonParam, APIService.PATCH);
             Bid bid = objMapper.readValue(response, Bid.class);
 
             return bid;
@@ -104,7 +105,7 @@ public class BidAPI extends APIRouter {
             jsonParam.append(String.format("\"dateClosedDown\": \"%s\"", Utility.sdf2.format(now)));
             jsonParam.append("}");
 //            System.out.println(jsonParam);
-            String response = UpdateRequest(route, jsonParam, APIManager.POST);
+            String response = UpdateRequest(route, jsonParam, APIService.POST);
 //            System.out.println(response);
             JSONObject resObj = new JSONObject(response);
 //            System.out.println(resObj);
