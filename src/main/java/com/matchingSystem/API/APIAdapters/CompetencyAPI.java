@@ -8,12 +8,28 @@ import org.json.JSONArray;
 
 public class CompetencyAPI extends APIRouter implements CompetencyAPIInterface {
     /**
-     * CompetencyAPI constructor
+     * Singleton design pattern
      */
-    public CompetencyAPI() {
+    private static CompetencyAPI ourInstance;
+    /**
+     * CompetencyAPI constructor (private)
+     */
+    private CompetencyAPI() {
         this.objMapper = new ObjectMapper();
         route = "/competency";
         c = Competency.class;
+    }
+
+    /**
+     * Global access point
+     * @return the only instance of this class
+     */
+    public static CompetencyAPI getInstance() {
+
+        if (ourInstance == null) {
+            ourInstance = new CompetencyAPI();
+        }
+        return ourInstance;
     }
 
     /**
