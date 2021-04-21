@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.API.APIService;
 import com.matchingSystem.API.ClientInterfaces.BidAPIInterface;
 import com.matchingSystem.Model.Bid;
+import com.matchingSystem.Model.CloseBid;
+import com.matchingSystem.Model.OpenBid;
 import com.matchingSystem.Utility;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -33,7 +35,12 @@ public class BidAPI extends APIRouter implements BidAPIInterface {
             for (int i = 0; i < arr.length(); i++) {
                 JSONObject jsonObj = arr.getJSONObject(i);
                 String jsonStr =  jsonObj.toString();
-                Bid bid = objMapper.readValue(jsonStr, Bid.class);
+                Bid bid;
+                if(jsonObj.getString("type") == "open"){
+                    bid = objMapper.readValue(jsonStr, OpenBid.class);
+                }else {
+                    bid = objMapper.readValue(jsonStr, CloseBid.class);
+                }
                 bids.add(bid);
             }
             return bids;

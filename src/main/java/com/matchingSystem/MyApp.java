@@ -51,7 +51,7 @@ public class MyApp {
 
     public static void testCreate(){
         MessageAPI smtg = new MessageAPI();
-        Message newMessage = smtg.create("bc06e9ad-5d20-4dce-a176-a6ac73b26b35","ecc52cc1-a3e4-4037-a80f-62d3799645f4","New Stuff 4");
+//        Message newMessage = smtg.create("bc06e9ad-5d20-4dce-a176-a6ac73b26b35","ecc52cc1-a3e4-4037-a80f-62d3799645f4","New Stuff 4");
     }
 
     public static void testDelete(){
@@ -67,7 +67,7 @@ public class MyApp {
 
     public static void testPatch(){
         MessageAPI smtg = new MessageAPI();
-        Message toUpdate = smtg.updatePartialById("f66ff397-3132-453d-8ef6-cfdbc25230b6","Some Very Old Things");
+//        Message toUpdate = smtg.updatePartialById("f66ff397-3132-453d-8ef6-cfdbc25230b6","Some Very Old Things");
     }
 
     public static void testMessage(){
