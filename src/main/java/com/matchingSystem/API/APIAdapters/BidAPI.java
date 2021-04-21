@@ -16,16 +16,35 @@ import java.util.ArrayList;
 import static com.matchingSystem.API.APIService.*;
 
 public class BidAPI extends APIRouter implements BidAPIInterface {
-
     /**
-     * BidAPI constructor
+     * Singleton design pattern
      */
-    public BidAPI() {
+    private static BidAPI ourInstance;
+    /**
+     * BidAPI constructor (private)
+     */
+    private BidAPI() {
         this.objMapper = new ObjectMapper();
         route = "/bid";
         this.c = Bid.class;
     }
 
+    /**
+     * Global access point
+     * @return the only instance of this class
+     */
+    public static BidAPI getInstance() {
+
+        if (ourInstance == null) {
+            ourInstance = new BidAPI();
+        }
+        return ourInstance;
+    }
+
+    /**
+     * Get all bid requests
+     * @return an array of Bids
+     */
     @Override
     public ArrayList<Bid> getAll(){
         ArrayList<Bid> bids = new ArrayList<>();
@@ -50,6 +69,14 @@ public class BidAPI extends APIRouter implements BidAPIInterface {
         return null;
     }
 
+    /**
+     * Function that parses variables to json needed for the request body for create()
+     * @param type type of bidding (open or close)
+     * @param initiatorId Id of student who posted the bid request
+     * @param subjectId Id of the subject requested
+     * @param additionalInfo additional infomation about this bid request
+     * @return StringBuilder for the parsed json
+     */
     public StringBuilder parseToJsonForCreate(String type, String initiatorId, String subjectId, JSONObject additionalInfo){
         Timestamp now = new Timestamp(System.currentTimeMillis());
         StringBuilder jsonParam = new StringBuilder();
@@ -64,6 +91,11 @@ public class BidAPI extends APIRouter implements BidAPIInterface {
         return jsonParam;
     }
 
+    /**
+     * Function that parses variables to json needed for the request body for updatePartialById()
+     * @param additionalInfo additional information to update
+     * @return StringBuilder of the parsed json
+     */
     public StringBuilder parseToJsonForPartialUpdate(JSONObject additionalInfo){
         StringBuilder jsonParam = new StringBuilder();
         jsonParam.append("{");
@@ -73,6 +105,11 @@ public class BidAPI extends APIRouter implements BidAPIInterface {
         return jsonParam;
     }
 
+    /**
+     * Function to call the API to closed down a Bid
+     * @param id Id of the bid
+     * @return true if bid request is successfully closed down
+     */
     public boolean closeDownBidById(String id){
         try {
             String route = this.route + "/" + id + "/close-down";

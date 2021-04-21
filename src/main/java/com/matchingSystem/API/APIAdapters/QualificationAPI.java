@@ -6,14 +6,34 @@ import com.matchingSystem.Model.Qualification;
 
 public class QualificationAPI extends APIRouter implements QualificationAPIInterface {
     /**
-     * QualificationAPI constructor
+     * Singleton design pattern
      */
-    public QualificationAPI() {
+    private static QualificationAPI ourInstance;
+    /**
+     * QualificationAPI constructor (private)
+     */
+    private QualificationAPI() {
         this.objMapper = new ObjectMapper();
         route = "/qualification";
         c = Qualification.class;
     }
 
+    /**
+     * Global access point
+     * @return the only instance of this class
+     */
+    public static QualificationAPI getInstance() {
+
+        if (ourInstance == null) {
+            ourInstance = new QualificationAPI();
+        }
+        return ourInstance;
+    }
+
+    /**
+     * Get all qualifications
+     * @return null
+     */
     @Override
     public Object getAll() {
         return null;
@@ -21,7 +41,6 @@ public class QualificationAPI extends APIRouter implements QualificationAPIInter
 
     /**
      * Function that parses variables to json needed for the request body
-     *
      * @param title title of the Qualification
      * @param desc description of the Qualification
      * @param verified verification of the Qualification

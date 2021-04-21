@@ -16,10 +16,28 @@ import static com.matchingSystem.API.APIService.*;
 
 public class MessageAPI extends APIRouter implements MessageAPIInterface {
 
-    public MessageAPI() {
+    /**
+     * Singleton design pattern
+     */
+    private static MessageAPI ourInstance;
+    /**
+     * Message API constructor (private)
+     */
+    private MessageAPI() {
         this.objMapper = new ObjectMapper();
         route = "/message";
         c = Message.class;
+    }
+    /**
+     * Global access point
+     * @return the only instance of this class
+     */
+    public static MessageAPI getInstance() {
+
+        if (ourInstance == null) {
+            ourInstance = new MessageAPI();
+        }
+        return ourInstance;
     }
     /**
      * Get all messages
