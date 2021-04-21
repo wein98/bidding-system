@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.API.APIService;
 
 import java.lang.Object;
+import java.util.ArrayList;
 
 import static com.matchingSystem.API.APIService.DELETERequest;
 

@@ -21,6 +21,33 @@ public class Message{
     @JsonProperty("additionalInfo")
     private JSONObject additionalInfo;
 
+    private BidOffer linkedOffer; // the Offer that this message is linked to
+
+    Message(){}
+
+    /**
+     * Get the attached offer offered by tutor
+     * @return
+     */
+    public BidOffer getLinkedOffer(){
+        return this.linkedOffer;
+    }
+    /**
+     * Attach the offer that this message is linked to OR update the offer
+     * @param offer
+     */
+    public void attachOffer(BidOffer offer){
+        this.linkedOffer = offer;
+    }
+
+    /**
+     * Append new content in the conversation
+     * @param content
+     */
+    public void addMessageContent(String content){
+        this.content += "\n" + content;
+        this.dateLastEdited = new Timestamp(System.currentTimeMillis());
+    }
     @Override
     public String toString() {
         return "messageId: " + this.id + "\nbidId: " + this.bidId + "\nposter" + this.poster.toString()+ "\ncontent: " + this.content;
