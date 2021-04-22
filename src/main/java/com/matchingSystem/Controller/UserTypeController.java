@@ -1,6 +1,7 @@
 package com.matchingSystem.Controller;
 
 import com.matchingSystem.Constant;
+import com.matchingSystem.Model.DashboardModel;
 import com.matchingSystem.Model.UserFactory;
 import com.matchingSystem.View.DashboardView;
 import com.matchingSystem.View.UserTypeView;
@@ -41,10 +42,11 @@ public class UserTypeController {
     private void userTypeSelected() {
         // TODO: create dashboard MVC here
         // Create dashboard model
-
+        DashboardModel dashboardModel = new DashboardModel();
         // Create dashboard view
-        DashboardView dashboardView = new DashboardView();
+        DashboardView dashboardView = new DashboardView(dashboardModel);
         // Create dashboard controller
+        DashboardController dashboardController = new DashboardController(dashboardView, dashboardModel);
     }
 
 }
