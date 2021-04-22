@@ -34,7 +34,6 @@ public class LoginController {
         if (response.has("jwt")) {
             loginSuccess(response.getString("jwt"));
             this.view.dispose();
-            System.out.println("KEK");
         } else {
             // TODO: prompt error message
         }

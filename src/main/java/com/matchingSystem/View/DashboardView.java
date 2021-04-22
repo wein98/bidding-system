@@ -14,6 +14,10 @@ public class DashboardView extends javax.swing.JFrame {
     private JLabel givenNameLabel;
     private JPanel profileSection;
     private JPanel window2;
+    private JPanel contractsPanel;
+    private JButton ContractRefreshBtn;
+    private JButton BidActionBtn;
+    private JScrollPane ContractListScroll;
 
     public DashboardView() {
         initComponents();
