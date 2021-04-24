@@ -1,8 +1,15 @@
 package com.matchingSystem.API.APIAdapters;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.API.ClientInterfaces.QualificationAPIInterface;
 import com.matchingSystem.Model.Qualification;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import static com.matchingSystem.API.APIService.GETRequest;
 
 public class QualificationAPI extends APIRouter implements QualificationAPIInterface {
     /**
@@ -35,7 +42,21 @@ public class QualificationAPI extends APIRouter implements QualificationAPIInter
      * @return null
      */
     @Override
-    public Object getAll() {
+    public ArrayList<Qualification> getAll() {
+        ArrayList<Qualification> qualifications = new ArrayList<>();
+        try {
+            String response = GETRequest(this.route);
+            JSONArray arr = new JSONArray(response);
+            for (int i = 0; i < arr.length(); i++) {
+                JSONObject jsonObj = arr.getJSONObject(i);
+                String jsonStr =  jsonObj.toString();
+                Qualification qualification = objMapper.readValue(jsonStr, Qualification.class);
+                qualifications.add(qualification);
+            }
+            return qualifications;
+        }catch (JsonProcessingException e){
+            e.printStackTrace();
+        }
         return null;
     }
 
