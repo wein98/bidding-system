@@ -3,6 +3,9 @@ package com.matchingSystem.Model;
 import com.matchingSystem.API.APIAdapters.BidAPI;
 import com.matchingSystem.API.APIAdapters.QualificationAPI;
 import com.matchingSystem.API.APIAdapters.SubjectAPI;
+import com.matchingSystem.API.ClientInterfaces.BidAPIInterface;
+import com.matchingSystem.API.ClientInterfaces.QualificationAPIInterface;
+import com.matchingSystem.API.ClientInterfaces.SubjectAPIInterface;
 import com.matchingSystem.UserCookie;
 import org.json.JSONObject;
 
@@ -10,9 +13,9 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 public class BiddingCreationModel extends Observable {
-    private BidAPI bidAPI = BidAPI.getInstance();
-    private SubjectAPI subjectAPI = SubjectAPI.getInstance();
-    private QualificationAPI qualificationAPI = QualificationAPI.getInstance();
+    private final BidAPIInterface bidAPI = BidAPI.getInstance();
+    private final SubjectAPIInterface subjectAPI = SubjectAPI.getInstance();
+    private final QualificationAPIInterface qualificationAPI = QualificationAPI.getInstance();
 
     private ArrayList<Subject> subjects;
     private ArrayList<Qualification> qualifications;
@@ -22,12 +25,12 @@ public class BiddingCreationModel extends Observable {
     private static String[] dayNight = {"AM","PM"};
     private static String[] numsForLesson = {"1","2","3","4","5","6","7","8","9","10"};
     private static String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
-    User user = UserCookie.getInstance().getUser();
+    private User user = UserCookie.getInstance().getUser();
 
     public void updateDDL(){
 
-        this.subjects = subjectAPI.getAll();
-        this.qualifications = qualificationAPI.getAll();
+        this.subjects = (ArrayList<Subject>) subjectAPI.getAll();
+        this.qualifications = (ArrayList<Qualification>)qualificationAPI.getAll();
         // notify observers
         setChanged();
         notifyObservers();

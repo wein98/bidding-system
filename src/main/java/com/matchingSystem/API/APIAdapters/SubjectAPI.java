@@ -1,7 +1,6 @@
 package com.matchingSystem.API.APIAdapters;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.API.APIService;
 import com.matchingSystem.API.ClientInterfaces.SubjectAPIInterface;
@@ -13,8 +12,6 @@ import com.matchingSystem.Model.Subject;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import static com.matchingSystem.API.APIService.*;
-import org.json.JSONObject;
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.ArrayList;
 
