@@ -18,6 +18,7 @@ public class DashboardView extends javax.swing.JFrame implements Observer {
     private JButton ContractRefreshBtn;
     private JButton BidActionBtn;
     private JScrollPane ContractListScroll;
+    private JTextArea textArea1;
 
     private DashboardModel model;
 

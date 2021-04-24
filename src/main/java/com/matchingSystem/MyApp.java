@@ -117,7 +117,7 @@ public class MyApp {
         competencyId = competency.getId();
 
         System.out.println("\ngetById()");
-        competency = (Competency) competencyAPI.getById(competencyId);
+//        competency = (Competency) competencyAPI.getById(competencyId);
         System.out.println(competency.toString());
 
         System.out.println("\nupdatePartialById()");
@@ -143,7 +143,7 @@ public class MyApp {
         subjectId = subject.getId();
 
         System.out.println("\ngetById()");
-        subject = (Subject) subjectAPI.getById(subjectId);
+//        subject = (Subject) subjectAPI.getById(subjectId);
         System.out.println(subject.toString());
 
         System.out.println("\nupdatePartialById()");
@@ -169,7 +169,7 @@ public class MyApp {
         qualificationId = qualification.getId();
 
         System.out.println("\ngetById()");
-        qualification = (Qualification) qualificationAPI.getById(qualificationId);
+//        qualification = (Qualification) qualificationAPI.getById(qualificationId);
         System.out.println(qualification.toString());
 
         System.out.println("\nupdatePartialById()");

@@ -21,8 +21,8 @@ public abstract class User {
     @JsonProperty("userName")
     protected String userName;
 
-    protected ArrayList<Competency> competencies;
-    protected ArrayList<Qualification> qualifications;
+    protected ArrayList<Competency> competencies = new ArrayList<Competency>();
+    protected ArrayList<Qualification> qualifications = new ArrayList<Qualification>();
 
     public User(String id, String givenName, String familyName, String userName) {
         this.id = id;
@@ -53,6 +53,10 @@ public abstract class User {
 
     public ArrayList<Competency> getCompetencies() {
         return competencies;
+    }
+
+    public void addCompetency(Competency c) {
+        competencies.add(c);
     }
 
     public ArrayList<Qualification> getQualifications() {
