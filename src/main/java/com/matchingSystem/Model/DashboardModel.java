@@ -1,25 +1,36 @@
 package com.matchingSystem.Model;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.matchingSystem.API.APIAdapters.SubjectAPI;
+import com.matchingSystem.API.APIAdapters.UserAPI;
+import com.matchingSystem.API.ClientInterfaces.UserAPIInterface;
+import com.matchingSystem.Constant;
 import com.matchingSystem.UserCookie;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.ArrayList;
 import java.util.Observable;
 
 public class DashboardModel extends Observable {
+    private final ObjectMapper objMapper = new ObjectMapper();
+    private final UserCookie userCookie = UserCookie.getInstance();
+    private final UserAPIInterface userAPI = UserAPI.getInstance();
+
+
     private ArrayList<Contract> contractArrayList;
     private String username;
     private String userType;
     private String familyName;
     private String givenName;
 
-//    private ArrayList<Observer> observers;
-
     public ArrayList<Contract> getContractArrayList() {
         return contractArrayList;
     }
 
     public void setProfile() {
-        UserCookie userCookie = UserCookie.getInstance();
 
         // set userType
         if (userCookie.getUser() instanceof Student) {
@@ -35,9 +46,29 @@ public class DashboardModel extends Observable {
         familyName = userCookie.getUser().getFamilyName();
         givenName = userCookie.getUser().getGivenName();
 
+        setCompetencies();
+
         // notify observers
         setChanged();
         notifyObservers();
+    }
+
+    private void setCompetencies() {
+        // Get list of competencies for this user
+        JSONObject response = (JSONObject) userAPI.getById(userCookie.getUser().getId(), Constant.COMPETENCIES_SUBJECT_S);;
+        JSONArray competencyArr = response.getJSONArray("competencies");
+
+        // Update the list of competencies to usercookie
+        if (competencyArr.length() != 0) {
+            for (int i = 0; i < competencyArr.length(); i++) {
+                try {
+                    JSONObject competencyObj = competencyArr.getJSONObject(i);
+                    userCookie.getUser().addCompetency(objMapper.readValue(competencyObj.toString(), Competency.class));
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     public String getUsername() {

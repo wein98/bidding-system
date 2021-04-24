@@ -8,9 +8,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
-import javax.swing.*;
 import java.io.*;
-import java.net.*;
 
 import static com.matchingSystem.API.APIKey.API_KEY;
 
@@ -32,8 +30,6 @@ public class APIService {
             // add request headers
             request.addHeader("Authorization", API_KEY);
             request.addHeader("Accept", "application/json");
-
-//            request.addHeader(HttpHeaders.USER_AGENT, "Googlebot");
 
             CloseableHttpResponse response = httpClient.execute(request);
 

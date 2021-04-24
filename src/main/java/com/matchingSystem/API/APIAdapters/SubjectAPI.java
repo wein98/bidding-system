@@ -1,10 +1,17 @@
 package com.matchingSystem.API.APIAdapters;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.API.APIService;
 import com.matchingSystem.API.ClientInterfaces.SubjectAPIInterface;
+import com.matchingSystem.Constant;
+import com.matchingSystem.Model.Bid;
+import com.matchingSystem.Model.Competency;
+import com.matchingSystem.Model.Qualification;
 import com.matchingSystem.Model.Subject;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import static com.matchingSystem.API.APIService.*;
 import org.json.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -57,6 +64,13 @@ public class SubjectAPI extends APIRouter implements SubjectAPIInterface {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public Object getById(String id, String queryParam) {
+        String urlRoute = route + "/" + id + queryParam;
+//            String jsonResponse = APIService.GETRequest(urlRoute);
+        return new JSONObject(APIService.GETRequest(urlRoute));
     }
 
     /**

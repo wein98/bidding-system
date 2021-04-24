@@ -52,11 +52,9 @@ public class UserAPI extends APIRouter implements UserAPIInterface {
      * @return a user
      */
     @Override
-    public JSONObject getById(String id) {
-        String urlRoute = route + "/" + id;
+    public JSONObject getById(String id, String queryParam) {
+        String urlRoute = route + "/" + id + queryParam;
         String jsonResponse = APIService.GETRequest(urlRoute);
-
-
 
         return new JSONObject(jsonResponse);
     }

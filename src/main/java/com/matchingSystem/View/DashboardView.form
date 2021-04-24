@@ -130,7 +130,12 @@
             </constraints>
             <properties/>
             <border type="none"/>
-            <children/>
+            <children>
+              <component id="25196" class="javax.swing.JTextArea" binding="textArea1" default-binding="true">
+                <constraints/>
+                <properties/>
+              </component>
+            </children>
           </scrollpane>
           <component id="13116" class="javax.swing.JButton" binding="ContractRefreshBtn">
             <constraints>

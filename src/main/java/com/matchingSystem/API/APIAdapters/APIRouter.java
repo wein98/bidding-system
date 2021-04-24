@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.API.APIService;
+import com.matchingSystem.Constant;
 
 import java.lang.Object;
 import java.util.ArrayList;
@@ -40,18 +41,21 @@ public abstract class APIRouter {
     /**
      * Get an object by id
      * @param id the target object id
+     * @param queryParam the query parameter constant
+     *                   pass in Constant.NONE_S if it's the default param
+     *                   refer to //field type string section in Constant.class
      * @return a c.object
      */
-    public Object getById(String id) {
-        try {
-            String urlRoute = route + "/" + id;
-            String jsonResponse = APIService.GETRequest(urlRoute);
-            return objMapper.readValue(jsonResponse, c);
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+    public Object getById(String id, String queryParam) {
+//        try {
+//            String urlRoute = route + "/" + id + queryParam;
+//            String jsonResponse = APIService.GETRequest(urlRoute);
+//            return objMapper.readValue(jsonResponse, c);
+//        } catch (JsonMappingException e) {
+//            e.printStackTrace();
+//        } catch (JsonProcessingException e) {
+//            e.printStackTrace();
+//        }
 
         return null;
     }
