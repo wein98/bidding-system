@@ -12,7 +12,7 @@ public class TestingForm extends javax.swing.JFrame implements ActionListener {
     private JButton button1;
     public JPanel TestingFormPanel;
 
-    private UserAPI userAPI = new UserAPI();
+    private UserAPI userAPI = UserAPI.getInstance();
 
     public TestingForm() {
         button1.addActionListener(this);
