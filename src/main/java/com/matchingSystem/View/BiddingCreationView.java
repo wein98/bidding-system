@@ -1,13 +1,16 @@
 package com.matchingSystem.View;
 
+import com.matchingSystem.Model.BiddingCreationModel;
 import com.matchingSystem.Model.Qualification;
 import com.matchingSystem.Model.Subject;
 import org.json.JSONObject;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
-public class BiddingCreationView extends javax.swing.JFrame {
+public class BiddingCreationView extends javax.swing.JFrame implements Observer {
     private JPanel bidCreationForm;
     private JLabel subjectLabel;
     private JLabel qualificationLabel;
@@ -27,49 +30,49 @@ public class BiddingCreationView extends javax.swing.JFrame {
     private JComboBox dayNight;
     private JLabel typeLabel;
 
-    public BiddingCreationView() {
+    private BiddingCreationModel model;
+
+    public BiddingCreationView(BiddingCreationModel model) {
 //        btnLoginSubmit.addActionListener(this);
+        this.model = model;
+        model.addObserver(this);
         initComponents();
         this.setVisible(true);
     }
 
-    private ArrayList<String> retrieveQualificationList(ArrayList<Qualification> qualifications){
-        ArrayList<String> qualificationNames = new ArrayList<>();
-        for(Qualification qualification: qualifications){
-            qualificationNames.add(qualification.getTitle());
-        }
-        return qualificationNames;
-    }
-    private ArrayList<String> retrieveSubjectList(ArrayList<Subject> subjects){
-        ArrayList<String> subjectNames = new ArrayList<>();
-        for(Subject subject: subjects){
-            subjectNames.add(subject.getName());
-        }
-
-        return subjectNames;
-    }
     @SuppressWarnings("unchecked")
     private void initComponents() {
-
-        //TODO: Have to retrieve and arrange the list of qualifications and subjects from DB other than hardcoding
-        ArrayList<String> subjects = retrieveSubjectList();
-        String[] qualifications = { "PT3", "SPM", "STPM", "Matriculation", "Diploma", "Degree", "Master" , "Doctoral"};
-        // JComboBox is generic, and does not support primitive type int, use Integer
-        String[] timeVals = {"1","2","3","4","5","6","7","8","9","10","11","12"};
-        String[] dayNight = {"AM","PM"};
-        String[] numsForLesson = {"1","2","3","4","5","6","7","8","9","10"};
-        String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
-
-        this.qualifications = new JComboBox(qualifications);
-        this.subjects = new JComboBox(subjects);
-        this.timeVal = new JComboBox(timeVals);
-        this.dayNight = new JComboBox(dayNight);
-        this.days = new JComboBox(days);
-        this.numOfLesson = new JComboBox(numsForLesson);
-
         setContentPane(bidCreationForm);
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         pack();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if(o instanceof BiddingCreationModel) {
+            System.out.println("---> Updating all fields in form");
+            ArrayList<String> qualificationTitles = extractQualificationNames(model.getQualifications());
+            for (String item: qualificationTitles) {
+                this.qualifications.addItem(item);
+            }
+            ArrayList<String> subjectNames = extractSubjectNames(model.getSubjects());
+            for (String item: subjectNames) {
+                this.subjects.addItem(item);
+            }
+            for (String item: BiddingCreationModel.getTimeVals()) {
+                this.timeVal.addItem(item);
+            }
+            for (String item: BiddingCreationModel.getDayNight()) {
+                this.dayNight.addItem(item);
+            }
+            for (String item: BiddingCreationModel.getNumsForLesson()) {
+                this.numOfLesson.addItem(item);
+            }
+            for (String item: BiddingCreationModel.getDays()) {
+                this.days.addItem(item);
+            }
+            System.out.println("---> Updated all fields in form");
+        }
     }
 
     /**
@@ -78,23 +81,44 @@ public class BiddingCreationView extends javax.swing.JFrame {
      */
     public JSONObject getFields(){
         JSONObject jsonObj = new JSONObject();
-        jsonObj.put("subject", (String)this.subjects.getSelectedItem());
+        jsonObj.put("subjectIndex", this.subjects.getSelectedIndex());
         jsonObj.put("qualification", (String)this.qualifications.getSelectedItem());
         if(openBiddingRadioButton.isSelected()){
             jsonObj.put("type","open");
         }else{
             jsonObj.put("type","close");
         }
-        jsonObj.put("time",(String)this.timeVal.getSelectedItem());
-        jsonObj.put("dayNight",(String)this.dayNight.getSelectedItem());
-        jsonObj.put("prefDay",(String)this.days.getSelectedItem());
-        jsonObj.put("numOfLesson",(String)this.numOfLesson.getSelectedItem());
-        jsonObj.put("rate",(String)this.inputRate.getText());
+
+        JSONObject additionalInfo = new JSONObject();
+        additionalInfo.put("time",(String)this.timeVal.getSelectedItem());
+        additionalInfo.put("dayNight",(String)this.dayNight.getSelectedItem());
+        additionalInfo.put("prefDay",(String)this.days.getSelectedItem());
+        additionalInfo.put("numOfLesson",(String)this.numOfLesson.getSelectedItem());
+        additionalInfo.put("rate",(String)this.inputRate.getText());
+
+        jsonObj.put("additionalInfo", additionalInfo);
         return jsonObj;
     }
 
     public JButton getBtnInitiateBiddingSubmit() {
         return startBiddingButton;
+    }
+
+    private ArrayList<String> extractQualificationNames(ArrayList<Qualification> qualifications){
+        ArrayList<String> qualificationNames = new ArrayList<>();
+        for(Qualification qualification: qualifications){
+            qualificationNames.add(qualification.getTitle());
+        }
+        return qualificationNames;
+    }
+
+    private ArrayList<String> extractSubjectNames(ArrayList<Subject> subjects){
+        ArrayList<String> subjectNames = new ArrayList<>();
+        for(Subject subject: subjects){
+            subjectNames.add(subject.getName());
+        }
+
+        return subjectNames;
     }
 
     private void createUIComponents() {

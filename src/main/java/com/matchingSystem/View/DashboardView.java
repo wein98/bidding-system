@@ -51,6 +51,10 @@ public class DashboardView extends javax.swing.JFrame implements Observer {
         pack();
     }
 
+    public JButton getBidActionBtn() {
+        return BidActionBtn;
+    }
+
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof DashboardModel) {
