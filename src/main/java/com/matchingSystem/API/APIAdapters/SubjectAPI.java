@@ -5,6 +5,11 @@ import com.matchingSystem.API.APIService;
 import com.matchingSystem.API.ClientInterfaces.SubjectAPIInterface;
 import com.matchingSystem.Model.Subject;
 import org.json.JSONArray;
+import static com.matchingSystem.API.APIService.*;
+import org.json.JSONObject;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import java.util.ArrayList;
 
 public class SubjectAPI extends APIRouter implements SubjectAPIInterface {
     /**
@@ -36,8 +41,22 @@ public class SubjectAPI extends APIRouter implements SubjectAPIInterface {
      * @return JSONArray of all the subjects
      */
     @Override
-    public Object getAll() {
-        return new JSONArray(APIService.GETRequest(route));
+    public ArrayList<Subject> getAll() {
+        ArrayList<Subject> subjects = new ArrayList<>();
+        try {
+            String response = GETRequest(this.route);
+            JSONArray arr = new JSONArray(response);
+            for (int i = 0; i < arr.length(); i++) {
+                JSONObject jsonObj = arr.getJSONObject(i);
+                String jsonStr =  jsonObj.toString();
+                Subject subject = objMapper.readValue(jsonStr, Subject.class);
+                subjects.add(subject);
+            }
+            return subjects;
+        }catch (JsonProcessingException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
