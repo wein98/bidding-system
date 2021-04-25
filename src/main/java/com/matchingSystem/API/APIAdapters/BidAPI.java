@@ -26,7 +26,7 @@ public class BidAPI extends APIRouter implements BidAPIInterface {
     private BidAPI() {
         this.objMapper = new ObjectMapper();
         route = "/bid";
-        this.c = Bid.class;
+        this.c = OpenBid.class;
     }
 
     /**
@@ -83,9 +83,10 @@ public class BidAPI extends APIRouter implements BidAPIInterface {
         jsonParam.append("{");
         jsonParam.append(String.format("\"type\": \"%s\",", type));
         jsonParam.append(String.format("\"initiatorId\": \"%s\",", initiatorId));
-        jsonParam.append(String.format("\"datePosted\": \"%s\",", Utility.sdf2.format(now)));
+        jsonParam.append(String.format("\"dateCreated\": \"%s\",", Utility.sdf2.format(now)));
         jsonParam.append(String.format("\"subjectId\": \"%s\",", subjectId));
-        jsonParam.append(String.format("\"additionalInfo\": \"%s\"", additionalInfo.toString()));
+        jsonParam.append("\"additionalInfo\": ");
+        jsonParam.append(additionalInfo);
         jsonParam.append("}");
 
         return jsonParam;
