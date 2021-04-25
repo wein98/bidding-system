@@ -31,22 +31,6 @@ public class DashboardView extends javax.swing.JFrame implements Observer {
 
     @SuppressWarnings("unchecked")
     private void initComponents() {
-//        UserCookie user = UserCookie.getInstance();
-
-//        System.out.println(user.getUser().toString());
-//        // display profile section
-//        if (user.getUser() instanceof Student) {
-//            userTypeLabel.setText("Student");
-//        } else if (user.getUser() instanceof Tutor) {
-//            userTypeLabel.setText("Tutor");
-//        } else {
-//            userTypeLabel.setText("unknown");
-//        }
-//
-//        usernameLabel.setText(user.getUser().getUserName());
-//        familyNameLabel.setText(user.getUser().getFamilyName());
-//        givenNameLabel.setText(user.getUser().getGivenName());
-
         setContentPane(window2);
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         pack();
@@ -59,7 +43,6 @@ public class DashboardView extends javax.swing.JFrame implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof DashboardModel) {
-            System.out.println("HAHAFHDFHDFH");
             userTypeLabel.setText(model.getUserType());
             usernameLabel.setText(model.getUsername());
             familyNameLabel.setText(model.getFamilyName());

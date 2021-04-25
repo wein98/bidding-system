@@ -20,8 +20,6 @@ public class UserCookie {
 
     private String jwtToken = null;
     private User user = null;
-//    private Student isStudent = null;
-//    private Tutor isTutor = null;
 
     private UserCookie() {
 
@@ -29,30 +27,7 @@ public class UserCookie {
 
     public void setJwtToken(String jwtToken) {
         this.jwtToken = jwtToken;
-//        setUser();
     }
-
-//    private void setUser() {
-//        JSONObject userObj = Utility.decodeJWT(jwtToken);
-//
-//        // user is a Student
-//        if (userObj.getBoolean("isStudent")) {
-//            isStudent = new Student(
-//                userObj.getString("sub"),
-//                userObj.getString("givenName"),
-//                userObj.getString("familyName"),
-//                userObj.getString("username"));
-//        }
-//
-//        // user is a Tutor
-//        if (userObj.getBoolean("isTutor")) {
-//            isTutor = new Tutor(
-//                userObj.getString("sub"),
-//                userObj.getString("givenName"),
-//                userObj.getString("familyName"),
-//                userObj.getString("username"));
-//        }
-//    }
 
     // Function called to set usercookie
     public void setUser(int userType) {
@@ -72,15 +47,10 @@ public class UserCookie {
 
     }
 
-    // get user as a Student
+    // return user object
     public User getUser() {
         return user;
     }
-
-    // get user as a Tutor
-//    public User getTutor() {
-//        return isTutor;
-//    }
 
     public String getJwtToken() {
         return jwtToken;

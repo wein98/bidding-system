@@ -2,7 +2,6 @@ package com.matchingSystem.Model;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.matchingSystem.API.APIAdapters.SubjectAPI;
 import com.matchingSystem.API.APIAdapters.UserAPI;
 import com.matchingSystem.API.ClientInterfaces.UserAPIInterface;
 import com.matchingSystem.Constant;
@@ -10,7 +9,6 @@ import com.matchingSystem.UserCookie;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import javax.jws.soap.SOAPBinding;
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -47,6 +45,7 @@ public class DashboardModel extends Observable {
         givenName = userCookie.getUser().getGivenName();
 
         setCompetencies();
+        setQualifications();
 
         // notify observers
         setChanged();
@@ -69,6 +68,28 @@ public class DashboardModel extends Observable {
                 }
             }
         }
+    }
+
+    private void setQualifications() {
+        // Get list of competencies for this user
+        JSONObject response = (JSONObject) userAPI.getById(userCookie.getUser().getId(), Constant.QUALIFICATIONS_S);;
+        JSONArray qualArr = response.getJSONArray("qualifications");
+
+        // Update the list of qualifications to usercookie
+        if (qualArr.length() != 0) {
+            for (int i = 0; i < qualArr.length(); i++) {
+                try {
+                    JSONObject qualObj = qualArr.getJSONObject(i);
+                    userCookie.getUser().addQualification(objMapper.readValue(qualObj.toString(), Qualification.class));
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void setContracts() {
+        // TODO: filter out getAll contracts that matches current user and update to model.contractList
     }
 
     public String getUsername() {
