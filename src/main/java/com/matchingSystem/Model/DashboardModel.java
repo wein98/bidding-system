@@ -32,7 +32,7 @@ public class DashboardModel extends Observable {
         // set userType
         if (UserCookie.getUserType() == Constant.IS_STUDENT) {
             userType = "Student";
-        } else if (UserCookie.getUserType() == Constant.IS_TUTOR) {
+        } else if (UserCookie.getUserType()  == Constant.IS_TUTOR) {
             userType = "Tutor";
         } else {
             userType = "unknown";

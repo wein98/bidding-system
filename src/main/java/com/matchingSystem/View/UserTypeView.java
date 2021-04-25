@@ -1,6 +1,5 @@
 package com.matchingSystem.View;
 
-import com.matchingSystem.Constant;
 import com.matchingSystem.UserCookie;
 import com.matchingSystem.Utility;
 import org.json.JSONObject;
@@ -8,7 +7,8 @@ import org.json.JSONObject;
 import javax.swing.*;
 
 public class UserTypeView extends javax.swing.JFrame {
-    int userType;
+    private boolean is_tutor = false;
+    private boolean is_student = false;
 
     // UI components
     private JPanel window;
@@ -17,14 +17,14 @@ public class UserTypeView extends javax.swing.JFrame {
     private JLabel UserTypeViewLabel;
 
     public UserTypeView() {
-        JSONObject jwtObject = Utility.decodeJWT(UserCookie.jwtToken);
+        JSONObject jwtObject = Utility.decodeJWT(UserCookie.getJwtToken());
 
         if (jwtObject.getBoolean("isStudent")) {
-            userType = Constant.IS_STUDENT;
+            is_student = true;
         }
 
         if (jwtObject.getBoolean("isTutor")) {
-            userType = Constant.IS_TUTOR;
+            is_tutor = true;
         }
 
         initComponents();
@@ -34,21 +34,17 @@ public class UserTypeView extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     private void initComponents() {
 
-        if (userType == Constant.IS_STUDENT) {
+        if (is_student) {
             isStudentBtn.setVisible(true);
         }
 
-        if (userType == Constant.IS_TUTOR) {
+        if (is_tutor) {
             isTutorBtn.setVisible(true);
         }
 
         setContentPane(window);
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         pack();
-    }
-
-    public int getUserType() {
-        return userType;
     }
 
     public JButton getIsStudentBtn() {

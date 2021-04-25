@@ -29,11 +29,11 @@ public class UserCookie {
     private UserCookie() {}
 
     public static void init(int userType, String jwtCode) {
-        setUser(jwtCode, userType);
+        setUser(userType);
     }
 
     // Function called to set usercookie
-    private static void setUser(String jwtCode, int userType) {
+    private static void setUser(int _userType) {
         // decode jwt
         JSONObject userObj = Utility.decodeJWT(jwtToken);
 
@@ -42,11 +42,11 @@ public class UserCookie {
         userInfo = userInfo.replace("sub", "id");
         userInfo = userInfo.replace("username", "userName");
 
-        if (userType == Constant.IS_STUDENT) {
-            user = (Student) userFactory.createUser(userInfo, userType);
+        if (_userType == Constant.IS_STUDENT) {
+            user = (Student) userFactory.createUser(userInfo, _userType);
             userType = Constant.IS_STUDENT;
-        } else if (userType == Constant.IS_TUTOR) {
-            user = (Tutor) userFactory.createUser(userInfo, userType);
+        } else if (_userType == Constant.IS_TUTOR) {
+            user = (Tutor) userFactory.createUser(userInfo, _userType);
             userType = Constant.IS_TUTOR;
         }
 
@@ -99,7 +99,11 @@ public class UserCookie {
         return userType;
     }
 
-    public String getJwtToken() {
+    public static String getJwtToken() {
         return jwtToken;
+    }
+
+    public static void setJwtToken(String jwtcode) {
+        jwtToken = jwtcode;
     }
 }
