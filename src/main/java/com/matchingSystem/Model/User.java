@@ -6,8 +6,10 @@ import com.matchingSystem.Model.Competency;
 import com.matchingSystem.Model.Qualification;
 
 import java.util.ArrayList;
+import java.util.Observable;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
-public abstract class User {
+public abstract class User extends Observable {
 
     @JsonProperty("id")
     protected String id;
@@ -24,14 +26,14 @@ public abstract class User {
     protected ArrayList<Competency> competencies = new ArrayList<Competency>();
     protected ArrayList<Qualification> qualifications = new ArrayList<Qualification>();
 
-    public User(String id, String givenName, String familyName, String userName) {
-        this.id = id;
-        this.givenName = givenName;
-        this.familyName = familyName;
-        this.userName = userName;
-        this.competencies = new ArrayList<Competency>();
-        this.qualifications = new ArrayList<Qualification>();
-    }
+//    public User(String id, String givenName, String familyName, String userName) {
+//        this.id = id;
+//        this.givenName = givenName;
+//        this.familyName = familyName;
+//        this.userName = userName;
+//        this.competencies = new ArrayList<Competency>();
+//        this.qualifications = new ArrayList<Qualification>();
+//    }
 
     public User() {}
 
@@ -61,6 +63,10 @@ public abstract class User {
 
     public ArrayList<Qualification> getQualifications() {
         return qualifications;
+    }
+
+    public void addQualification(Qualification q) {
+        qualifications.add(q);
     }
 
     public void setGivenName(String givenName) {

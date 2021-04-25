@@ -2,7 +2,6 @@ package com.matchingSystem.Controller;
 
 import com.matchingSystem.Constant;
 import com.matchingSystem.Model.DashboardModel;
-import com.matchingSystem.Model.UserFactory;
 import com.matchingSystem.View.DashboardView;
 import com.matchingSystem.View.UserTypeView;
 import com.matchingSystem.UserCookie;
@@ -31,7 +30,6 @@ public class UserTypeController {
         // IsTutorBtn OnClick listener
         view.getIsTutorBtn().addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                System.out.println("ASDASFwrdghWDGFSDGASRGsef");
                 UserCookie.getInstance().setUser(Constant.IS_TUTOR);
                 userTypeSelected();
                 view.dispose();
@@ -40,7 +38,6 @@ public class UserTypeController {
     }
 
     private void userTypeSelected() {
-        // TODO: create dashboard MVC here
         // Create dashboard model
         DashboardModel dashboardModel = new DashboardModel();
         // Create dashboard view
