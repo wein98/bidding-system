@@ -17,7 +17,7 @@ public class UserTypeView extends javax.swing.JFrame {
     private JLabel UserTypeViewLabel;
 
     public UserTypeView() {
-        JSONObject jwtObject = Utility.decodeJWT(UserCookie.getInstance().getJwtToken());
+        JSONObject jwtObject = Utility.decodeJWT(UserCookie.jwtToken);
 
         if (jwtObject.getBoolean("isStudent")) {
             userType = Constant.IS_STUDENT;

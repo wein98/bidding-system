@@ -26,14 +26,12 @@ public abstract class User extends Observable {
     protected ArrayList<Competency> competencies = new ArrayList<Competency>();
     protected ArrayList<Qualification> qualifications = new ArrayList<Qualification>();
 
-//    public User(String id, String givenName, String familyName, String userName) {
-//        this.id = id;
-//        this.givenName = givenName;
-//        this.familyName = familyName;
-//        this.userName = userName;
-//        this.competencies = new ArrayList<Competency>();
-//        this.qualifications = new ArrayList<Qualification>();
-//    }
+    public User(String id, String givenName, String familyName, String userName) {
+        this.id = id;
+        this.givenName = givenName;
+        this.familyName = familyName;
+        this.userName = userName;
+    }
 
     public User() {}
 

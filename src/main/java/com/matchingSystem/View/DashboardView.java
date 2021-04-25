@@ -47,6 +47,7 @@ public class DashboardView extends javax.swing.JFrame implements Observer {
             usernameLabel.setText(model.getUsername());
             familyNameLabel.setText(model.getFamilyName());
             givenNameLabel.setText(model.getGivenName());
+//            textArea1.setText(model.getTesting());
         }
 
     }
