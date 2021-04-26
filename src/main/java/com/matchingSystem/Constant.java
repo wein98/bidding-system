@@ -17,4 +17,10 @@ public class Constant {
     public static final String QUALIFICATIONS_S = "?fields=qualifications";
     public static final String INITIATEDBIDS_S = "?fields=initiatedBids";
 
+    // bid type string
+    public static final int OPENBID = 0;
+    public static final int CLOSEBID = 1;
+    public static final String OPENBID_S = "open";
+    public static final String CLOSEBID_S = "close";
+
 }
