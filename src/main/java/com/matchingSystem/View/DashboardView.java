@@ -84,11 +84,7 @@ public class DashboardView extends javax.swing.JFrame implements Observer {
             familyNameLabel.setText(model.getFamilyName());
             givenNameLabel.setText(model.getGivenName());
 
-            if (model.getUserType().equals("Student")) {
-                BidActionBtn.setText("Post a Bid");
-            } else if (model.getUserType().equals("Tutor")) {
-                BidActionBtn.setText("View current biddings");
-            }
+
 
             setContractsPanel(model.getContractArrayList());
 //            textArea1.setText(model.getTesting());

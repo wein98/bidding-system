@@ -25,12 +25,12 @@ public class Contract {
 //    private Timestamp dateSigned;
     @JsonProperty("expiryDate")
     private Timestamp expiryDate;
-    @JsonProperty("paymentInfo")
-    private JSONObject paymentInfo;
-    @JsonProperty("lessonInfo")
-    private JSONObject lessonInfo;
-    @JsonProperty("additionalInfo")
-    private JSONObject additionalInfo;
+//    @JsonProperty("paymentInfo")
+//    private JSONObject paymentInfo;
+//    @JsonProperty("lessonInfo")
+//    private JSONObject lessonInfo;
+//    @JsonProperty("additionalInfo")
+//    private JSONObject additionalInfo;
 
 
     public Poster getFirstParty() {

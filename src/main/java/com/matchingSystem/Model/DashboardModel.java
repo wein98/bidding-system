@@ -1,19 +1,11 @@
 package com.matchingSystem.Model;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.matchingSystem.API.APIAdapters.UserAPI;
-import com.matchingSystem.API.ClientInterfaces.UserAPIInterface;
 import com.matchingSystem.Constant;
 import com.matchingSystem.UserCookie;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Observable;
 
 public class DashboardModel extends Observable {
-    private final ObjectMapper objMapper = new ObjectMapper();
-    private final UserAPIInterface userAPI = UserAPI.getInstance();
-
 
     private ArrayList<Contract> contractArrayList = new ArrayList<>();
     private User user;
@@ -53,33 +45,6 @@ public class DashboardModel extends Observable {
         notifyObservers();
     }
 
-    private void setCompetencies() {
-    }
-
-    private void setQualifications() {
-    }
-
-//    private void setContractArrayList() {
-//        contractArrayList = user.getContracts();
-//    }
-
-    private void setBid() {
-        JSONObject response = (JSONObject) userAPI.getById(UserCookie.getUser().getId(), Constant.INITIATEDBIDS_S);;
-        JSONArray bidArr = response.getJSONArray("initiatedBids");
-        // TODO: get bid object and store to student.bid for bid button
-//        if (bidArr.length() != 0) {
-//            try {
-//                JSONObject qualObj = bidArr.getJSONObject(0);
-//                if (UserCookie.getUserType() == Constant.IS_STUDENT) {
-//                    Student userObj = (Student) user;
-//                    userObj.setBid(objMapper.readValue(qualObj.toString(), Qualification.class));
-//                }
-//            } catch (JsonProcessingException e) {
-//                e.printStackTrace();
-//            }
-//        }
-    }
-
     private void setContractArrayList() {
         // TODO: filter out getAll contracts that matches current user and update to model.contractList
         contractArrayList = user.getContracts();
@@ -103,5 +68,16 @@ public class DashboardModel extends Observable {
 
     public String getGivenName() {
         return givenName;
+    }
+
+    public int getBidType() {
+        if (user.getInitiatedBid() != null) {
+            if (user.getInitiatedBid().getType().equals(Constant.OPENBID_S)) {
+                return Constant.OPENBID;
+            } else {
+                return Constant.CLOSEBID;
+            }
+        }
+        return 2;
     }
 }

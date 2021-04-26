@@ -60,6 +60,7 @@ public class UserCookie {
         setCompetencies();
         setQualifications();
         setContracts();
+        setInitiatedBid();
     }
 
     private static void setCompetencies() {
@@ -103,6 +104,24 @@ public class UserCookie {
 
         for (Contract c: contractArr) {
             user.addContract(c);
+        }
+    }
+
+    private static void setInitiatedBid() {
+        // Get list of competencies for this user
+        JSONObject response = (JSONObject) userAPI.getById(UserCookie.getUser().getId(), Constant.INITIATEDBIDS_S);
+        JSONArray bidArr = response.getJSONArray("initiatedBids");
+
+        // Update the list of qualifications to UserCookie
+        if (bidArr.length() != 0) {
+            JSONObject obj = bidArr.getJSONObject(0);
+            if (obj.getString("type").equals("open")) {
+                OpenBidFactory openBid = new OpenBidFactory();
+                user.setInitiatedBid(openBid.createBid(obj.toString()));
+            } else {
+                CloseBidFactory closeBid = new CloseBidFactory();
+                user.setInitiatedBid(closeBid.createBid(obj.toString()));
+            }
         }
     }
 
