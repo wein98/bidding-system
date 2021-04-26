@@ -47,15 +47,15 @@ public abstract class APIRouter {
      * @return a c.object
      */
     public Object getById(String id, String queryParam) {
-//        try {
-//            String urlRoute = route + "/" + id + queryParam;
-//            String jsonResponse = APIService.GETRequest(urlRoute);
-//            return objMapper.readValue(jsonResponse, c);
-//        } catch (JsonMappingException e) {
-//            e.printStackTrace();
-//        } catch (JsonProcessingException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            String urlRoute = route + "/" + id + queryParam;
+            String jsonResponse = APIService.GETRequest(urlRoute);
+            return objMapper.readValue(jsonResponse, c);
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
 
         return null;
     }
@@ -69,7 +69,7 @@ public abstract class APIRouter {
         try {
             int responseCode = DELETERequest(route + "/" + id);
             // TODO: think on how to display message of different status code of a failed request
-            return responseCode == 204;
+            return responseCode == 204 || responseCode == 200;
         } catch (Exception e){
             e.printStackTrace();
         }
