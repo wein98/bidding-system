@@ -15,7 +15,7 @@ public class DashboardModel extends Observable {
     private final UserAPIInterface userAPI = UserAPI.getInstance();
 
 
-    private ArrayList<Contract> contractArrayList;
+    private ArrayList<Contract> contractArrayList = new ArrayList<>();
     private User user;
     private String username;
     private String userType;
@@ -46,6 +46,8 @@ public class DashboardModel extends Observable {
         givenName = user.getGivenName();
         testing = user.getCompetencies().toString();
 
+        setContractArrayList();
+
         // notify observers
         setChanged();
         notifyObservers();
@@ -56,6 +58,10 @@ public class DashboardModel extends Observable {
 
     private void setQualifications() {
     }
+
+//    private void setContractArrayList() {
+//        contractArrayList = user.getContracts();
+//    }
 
     private void setBid() {
         JSONObject response = (JSONObject) userAPI.getById(UserCookie.getUser().getId(), Constant.INITIATEDBIDS_S);;
@@ -74,8 +80,9 @@ public class DashboardModel extends Observable {
 //        }
     }
 
-    private void setContracts() {
+    private void setContractArrayList() {
         // TODO: filter out getAll contracts that matches current user and update to model.contractList
+        contractArrayList = user.getContracts();
     }
 
     public String getTesting() {

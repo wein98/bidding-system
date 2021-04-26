@@ -24,7 +24,7 @@ public class ContractAPI extends APIRouter implements ContractAPIInterface {
      * ContractAPI constructor (private)
      */
     private ContractAPI() {
-        ObjectMapper objMapper = new ObjectMapper();
+        this.objMapper = new ObjectMapper();
         route = "/contract";
         c = Contract.class;
     }
@@ -45,6 +45,7 @@ public class ContractAPI extends APIRouter implements ContractAPIInterface {
      * Get all contracts
      * @return an array of Contracts
      */
+    @Override
     public ArrayList<Contract> getAll(){
         ArrayList<Contract> contracts = new ArrayList<>();
         try {

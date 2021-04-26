@@ -18,12 +18,14 @@ public class Student extends User implements StudentActions {
     @Override
     public String toString() {
         return "Student{" +
-                "id='" + id + '\'' +
+                "bid=" + bid +
+                ", id='" + id + '\'' +
                 ", givenName='" + givenName + '\'' +
                 ", familyName='" + familyName + '\'' +
                 ", userName='" + userName + '\'' +
                 ", competencies=" + competencies +
                 ", qualifications=" + qualifications +
+                ", contracts=" + contracts +
                 '}';
     }
 

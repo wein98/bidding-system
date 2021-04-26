@@ -25,6 +25,7 @@ public abstract class User extends Observable {
 
     protected ArrayList<Competency> competencies = new ArrayList<Competency>();
     protected ArrayList<Qualification> qualifications = new ArrayList<Qualification>();
+    protected ArrayList<Contract> contracts = new ArrayList<Contract>();
 
     public User(String id, String givenName, String familyName, String userName) {
         this.id = id;
@@ -65,6 +66,14 @@ public abstract class User extends Observable {
 
     public void addQualification(Qualification q) {
         qualifications.add(q);
+    }
+
+    public ArrayList<Contract> getContracts() {
+        return contracts;
+    }
+
+    public void addContract(Contract c) {
+        contracts.add(c);
     }
 
     public void setGivenName(String givenName) {

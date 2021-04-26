@@ -2,14 +2,19 @@ package com.matchingSystem;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.matchingSystem.API.APIAdapters.ContractAPI;
 import com.matchingSystem.API.APIAdapters.UserAPI;
+import com.matchingSystem.API.ClientInterfaces.ContractAPIInterface;
 import com.matchingSystem.API.ClientInterfaces.UserAPIInterface;
 import com.matchingSystem.Model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class UserCookie {
     private static final UserAPIInterface userAPI = UserAPI.getInstance();
+    private static final ContractAPIInterface contractAPI = ContractAPI.getInstance();
     private static final ObjectMapper objMapper = new ObjectMapper();
     private static final UserFactory userFactory = new UserFactory();
 
@@ -42,6 +47,8 @@ public class UserCookie {
         userInfo = userInfo.replace("sub", "id");
         userInfo = userInfo.replace("username", "userName");
 
+        System.out.println(userInfo);
+
         if (_userType == Constant.IS_STUDENT) {
             user = (Student) userFactory.createUser(userInfo, _userType);
             userType = Constant.IS_STUDENT;
@@ -52,6 +59,7 @@ public class UserCookie {
 
         setCompetencies();
         setQualifications();
+        setContracts();
     }
 
     private static void setCompetencies() {
@@ -87,6 +95,14 @@ public class UserCookie {
                     e.printStackTrace();
                 }
             }
+        }
+    }
+
+    private static void setContracts() {
+        ArrayList<Contract> contractArr = (ArrayList<Contract>) contractAPI.getAll();
+
+        for (Contract c: contractArr) {
+            user.addContract(c);
         }
     }
 
