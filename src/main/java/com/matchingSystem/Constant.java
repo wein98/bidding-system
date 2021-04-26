@@ -23,4 +23,9 @@ public class Constant {
     public static final String OPENBID_S = "open";
     public static final String CLOSEBID_S = "close";
 
+    // biddings view type string
+    public static final int OPEN_BIDDING_VIEW = 10;
+    public static final int CLOSE_BIDDING_VIEW = 11;
+    public static final int OFFER_BIDS_VIEW = 12;
+
 }
