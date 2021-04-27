@@ -28,9 +28,7 @@ public class OpenBid implements Bid {
     protected ArrayList<BidOffer> bidders;
     protected boolean closed = false; // indicate if a Bid is closed
 
-    public OpenBid(){
-
-    }
+    public OpenBid(){}
 
     // mapping nested object
     @SuppressWarnings("unchecked")
@@ -92,5 +90,10 @@ public class OpenBid implements Bid {
         this.closed = true;
         this.dateClosedDown = new Timestamp(System.currentTimeMillis());
         additionalInfo.put("successfulBidder", tutorId);
+    }
+
+    @Override
+    public String getType() {
+        return type;
     }
 }

@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.matchingSystem.View.DashboardView">
   <grid id="27dc6" binding="window2" layout-manager="GridBagLayout">
     <constraints>
-      <xy x="20" y="20" width="500" height="465"/>
+      <xy x="20" y="20" width="500" height="564"/>
     </constraints>
     <properties>
       <preferredSize width="1000" height="600"/>
@@ -123,23 +123,9 @@
               <html.disable class="java.lang.Boolean" value="false"/>
             </clientProperties>
           </component>
-          <scrollpane id="4512c" binding="ContractListScroll">
-            <constraints>
-              <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="1.0" ipady="100"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <component id="25196" class="javax.swing.JTextArea" binding="textArea1" default-binding="true">
-                <constraints/>
-                <properties/>
-              </component>
-            </children>
-          </scrollpane>
           <component id="13116" class="javax.swing.JButton" binding="ContractRefreshBtn">
             <constraints>
-              <grid row="0" column="1" row-span="2" col-span="1" vsize-policy="0" hsize-policy="3" anchor="5" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="1" row-span="3" col-span="1" vsize-policy="0" hsize-policy="3" anchor="5" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag weightx="0.1" weighty="0.1"/>
             </constraints>
             <properties>
@@ -147,6 +133,24 @@
               <text value="Refresh"/>
             </properties>
           </component>
+          <scrollpane id="a7078" binding="scrollPane">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <preferredSize width="500" height="500"/>
+            </properties>
+            <border type="none" title=""/>
+            <children>
+              <grid id="6ff9d" binding="panel1" layout-manager="GridBagLayout">
+                <constraints/>
+                <properties/>
+                <border type="none"/>
+                <children/>
+              </grid>
+            </children>
+          </scrollpane>
         </children>
       </grid>
       <component id="8f062" class="javax.swing.JButton" binding="BidActionBtn">

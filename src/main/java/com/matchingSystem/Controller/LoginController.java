@@ -6,6 +6,7 @@ import com.matchingSystem.View.UserTypeView;
 import com.matchingSystem.UserCookie;
 import org.json.JSONObject;
 
+import javax.jws.soap.SOAPBinding;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -42,13 +43,15 @@ public class LoginController {
     private void loginSuccess(String jwtCode) {
         // Create user cookie
         UserCookie userCookie = UserCookie.getInstance();
-        userCookie.setJwtToken(jwtCode);
+//        UserCookie.jwtToken = jwtCode;
+        UserCookie.setJwtToken(jwtCode);
+//        userCookie.setJwtToken(jwtCode);
 
         // Create userType view
         UserTypeView userTypeView = new UserTypeView();
 
         // Create userType controller
-        UserTypeController userTypeController = new UserTypeController(userTypeView);
+        UserTypeController userTypeController = new UserTypeController(userTypeView, jwtCode);
     }
 
     private String getUsernameFromLogin() {

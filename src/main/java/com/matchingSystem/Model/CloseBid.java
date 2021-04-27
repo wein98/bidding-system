@@ -87,4 +87,8 @@ public class CloseBid implements Bid {
         this.closed = true;
         this.dateClosedDown = new Timestamp(System.currentTimeMillis());
     }
+
+    public String getType() {
+        return type;
+    }
 }
