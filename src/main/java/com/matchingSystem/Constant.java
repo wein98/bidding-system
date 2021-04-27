@@ -16,6 +16,7 @@ public class Constant {
     public static final String COMPETENCIES_SUBJECT_S = "?fields=competencies.subject";
     public static final String QUALIFICATIONS_S = "?fields=qualifications";
     public static final String INITIATEDBIDS_S = "?fields=initiatedBids";
+    public static final String BID_MESSAGES = "?fields=messages";
 
     // bid type string
     public static final int OPENBID = 0;

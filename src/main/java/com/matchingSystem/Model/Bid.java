@@ -1,20 +1,31 @@
 package com.matchingSystem.Model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.matchingSystem.Poster;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-public interface Bid {
-    void selectBidder(BidOffer offer);
+import java.sql.Array;
+import java.sql.Timestamp;
+import java.util.List;
 
-    boolean isExpired();
-    String getExpireDuration();
+// holds the common fields of OpenBid and CloseBid
+public abstract class Bid implements BidInterface{
+    @JsonProperty("id")
+    protected String id;
+    @JsonProperty("type")
+    protected String type;
+    @JsonProperty("initiator")
+    protected Poster initiator;
+    @JsonProperty("dateCreated")
+    protected Timestamp dateCreated;
+    @JsonProperty("dateClosedDown")
+    protected Timestamp dateClosedDown;
+    @JsonProperty("subject")
+    protected Subject subject;
+    @JsonProperty("additionalInfo")
+    protected JSONObject additionalInfo;
 
-    void close();
-    String getDateCreated();
-    String getType();
-    Poster getInitiator();
-    Subject getSubject();
-    String getNoLessons();
-    String getRate();
-    String getDayTime();
-    int getCompetencyLevel();
+    @JsonProperty(value = "messages",required = false)
+    protected List<Message> messages;
 }

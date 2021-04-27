@@ -9,7 +9,7 @@ import java.util.Observable;
 
 public class BiddingsModel extends Observable {
 
-    private ArrayList<BidOffer> bidOffersList = new ArrayList<>();
+    private ArrayList<BidOfferModel> bidOffersList = new ArrayList<>();
     private ArrayList<Bid> bids = new ArrayList<>();
 
     public void setBiddings(int biddingsViewType) {
@@ -54,7 +54,7 @@ public class BiddingsModel extends Observable {
 
     }
 
-    public ArrayList<BidOffer> getBidOffersList() {
+    public ArrayList<BidOfferModel> getBidOffersList() {
         return bidOffersList;
     }
 

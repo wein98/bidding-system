@@ -18,5 +18,9 @@ public class Utility {
     }
 
     public static final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-
+    public static final String[] timeVals = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
+    public static final String[] dayNight = {"AM", "PM"};
+    public static final String[] duration = {"1", "1.5", "2", "2.5", "3", "3.5"};
+    public static final String[] numsForLesson = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+    public static final String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 }
