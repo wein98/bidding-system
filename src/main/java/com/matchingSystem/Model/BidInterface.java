@@ -6,6 +6,7 @@ public interface BidInterface {
     void selectBidder(BidOfferModel offer);
 
     boolean isExpired();
+    String getExpireDuration();
 
     void close();
     String getType();
@@ -14,4 +15,6 @@ public interface BidInterface {
     String getNoLessons();
     String getRate();
     String getDayTime();
+    String getDateCreated();
+    int getCompetencyLevel();
 }

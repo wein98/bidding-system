@@ -3,6 +3,7 @@ package com.matchingSystem.Model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.matchingSystem.Poster;
+import com.matchingSystem.Utility;
 import org.json.JSONObject;
 
 import java.sql.Timestamp;
@@ -91,6 +92,7 @@ public class OpenBid extends Bid{
      */
     @Override
     public void close() {
+        // TODO: should i call the close down API here ?
         this.closed = true;
         this.dateClosedDown = new Timestamp(System.currentTimeMillis());
         additionalInfo.put("successfulBidder","undefined");
@@ -98,7 +100,7 @@ public class OpenBid extends Bid{
 
     @Override
     public String getDateCreated() {
-        return null;
+        return Utility.sdf2.format(this.dateCreated);
     }
 
     /**
