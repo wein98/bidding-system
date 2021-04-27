@@ -53,16 +53,9 @@ public class BidAPI extends APIRouter implements BidAPIInterface {
             for (int i = 0; i < arr.length(); i++) {
                 JSONObject jsonObj = arr.getJSONObject(i);
                 String jsonStr =  jsonObj.toString();
-                Bid bid = null;
-                if(jsonObj.getString("type").equals("open")){
-                    OpenBidFactory bidFactory = new OpenBidFactory();
-                    bid = bidFactory.createBid(jsonStr);
-                    bids.add(bid);
-                } else if (jsonObj.getString("type").equals("close")){
-                    CloseBidFactory bidFactory = new CloseBidFactory();
-                    bid = bidFactory.createBid(jsonStr);
-                    bids.add(bid);
-                }
+                BidFactory bidFactory = new BidFactory();
+                Bid bid = bidFactory.createBid(jsonStr,jsonObj.getString("type"));
+                bids.add(bid);
             }
             System.out.println("BIDAPI: " + bids.toString());
 

@@ -117,26 +117,26 @@ public class CloseBid implements Bid {
 
     @Override
     public Poster getInitiator() {
-        return null;
+        return this.initiator;
     }
 
     @Override
     public Subject getSubject() {
-        return null;
+        return this.subject;
     }
 
     @Override
     public String getNoLessons() {
-        return null;
+        return this.additionalInfo.getString("numOfLesson");
     }
 
     @Override
     public String getRate() {
-        return null;
+        return this.additionalInfo.getString("rate");
     }
 
     @Override
     public String getDayTime() {
-        return null;
+        return this.additionalInfo.getString("prefDay") + " ," + this.additionalInfo.getString("time") + this.additionalInfo.getString("dayNight");
     }
 }
