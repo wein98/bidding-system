@@ -10,14 +10,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
-public class TutorBidOffersView extends BiddingsView implements Observer {
+public class TutorBidOffersView extends BiddingsView {
 
     public TutorBidOffersView(BiddingsModel model) {
         this.model = model;
-        model.addObserver(this);
         initComponents();
         this.setVisible(true);
     }
@@ -33,6 +30,7 @@ public class TutorBidOffersView extends BiddingsView implements Observer {
     }
 
     public void setPanel(ArrayList<Bid> bids) {
+        panel.removeAll();
         for (Bid b: bids) {
 
             JPanel panel1 = new JPanel();
@@ -100,12 +98,5 @@ public class TutorBidOffersView extends BiddingsView implements Observer {
         };
         String[] col = {"", ""};
         return new JTable(rec, col);
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        if (o instanceof BiddingsModel) {
-            setPanel(model.getBids());
-        }
     }
 }

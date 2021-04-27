@@ -40,6 +40,8 @@ public class TutorBidOffersController implements Observer, ActionListener {
 
     @Override
     public void update(Observable o, Object arg) {
-
+        if (o instanceof BiddingsModel) {
+            view.setPanel(model.getBids());
+        }
     }
 }

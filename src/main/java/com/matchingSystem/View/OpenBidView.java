@@ -7,14 +7,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
-public class OpenBidView extends BiddingsView implements Observer {
+public class OpenBidView extends BiddingsView {
 
     public OpenBidView(BiddingsModel model) {
         this.model = model;
-        model.addObserver(this);
         initComponents();
         this.setVisible(true);
     }
@@ -29,6 +26,7 @@ public class OpenBidView extends BiddingsView implements Observer {
     }
 
     public void setPanel(ArrayList<BidOffer> bidOffers) {
+        panel.removeAll();
         if (bidOffers.size() != 0) {
             for (BidOffer b: bidOffers) {
 //        for (int i=0; i<4; i++) {
@@ -80,13 +78,5 @@ public class OpenBidView extends BiddingsView implements Observer {
         };
         String[] col = {"", ""};
         return new JTable(rec, col);
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        if (o instanceof BiddingsModel) {
-            setPanel(model.getBidOffersList());
-            BidDurationText.setText("Bid duration left: " + model.getDuration());
-        }
     }
 }

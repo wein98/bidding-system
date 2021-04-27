@@ -33,12 +33,15 @@ public class OpenBidController implements Observer, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(view.getBiddingRefreshBtn())) {
-            System.out.println("Refresh open bid offers button pressed");
+            updateBidOffers();
         }
     }
 
     @Override
     public void update(Observable o, Object arg) {
-
+        if (o instanceof BiddingsModel) {
+            view.setPanel(model.getBidOffersList());
+            view.getBidDurationText().setText("Bid duration left: " + model.getDuration());
+        }
     }
 }
