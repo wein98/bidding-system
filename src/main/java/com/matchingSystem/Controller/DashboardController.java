@@ -6,6 +6,7 @@ import com.matchingSystem.Model.BiddingsModel;
 import com.matchingSystem.Model.DashboardModel;
 import com.matchingSystem.View.BiddingCreationView;
 import com.matchingSystem.View.DashboardView;
+import com.matchingSystem.View.OpenBidView;
 import com.matchingSystem.View.TutorBidOffersView;
 
 import java.util.Observable;
@@ -38,6 +39,7 @@ public class DashboardController implements Observer, ActionListener {
     }
 
     public DashboardView getView() { return this.view; }
+
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof DashboardModel) {
@@ -59,23 +61,27 @@ public class DashboardController implements Observer, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (model.getUserType().equals("Student")) {
+
             if (model.getBidType() == Constant.OPENBID) {
-                // TODO: open openbid view
+                // open openbid view
+                BiddingsModel biddingsModel = new BiddingsModel();
+                OpenBidView openBidView = new OpenBidView(biddingsModel);
+                new OpenBidController(openBidView, biddingsModel);
+
             } else if (model.getBidType() == Constant.CLOSEBID) {
                 // TODO: open closebid view
+
             } else {
-                // Create Bidding Creation Model
+                // Open student create bid view
                 BiddingCreationModel bidCreateModel = new BiddingCreationModel();
-                // Create Bidding Creation View
                 BiddingCreationView bidCreateView = new BiddingCreationView(bidCreateModel);
-                // Create Bidding Creation Controller
-                BiddingCreationController bidCreatecontroller = new BiddingCreationController(bidCreateView,bidCreateModel);
+                new BiddingCreationController(bidCreateView,bidCreateModel, model);
             }
         } else if (model.getUserType().equals("Tutor")) {
             // TODO: open view biddings window
             BiddingsModel biddingsModel = new BiddingsModel();
             TutorBidOffersView bidOffersView = new TutorBidOffersView(biddingsModel);
-            TutorBidOffersController bidOffersController = new TutorBidOffersController(bidOffersView, biddingsModel);
+            new TutorBidOffersController(bidOffersView, biddingsModel);
 //            SignContractView signContractView = new SignContractView();
 //            SignContractController signContractController = new SignContractController(signContractView, "XXX");
         }

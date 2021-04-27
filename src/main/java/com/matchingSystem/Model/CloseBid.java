@@ -2,13 +2,10 @@ package com.matchingSystem.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.matchingSystem.Model.Bid;
-import com.matchingSystem.Model.Message;
 import com.matchingSystem.Poster;
 import org.json.JSONObject;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -80,6 +77,21 @@ public class CloseBid implements Bid {
         }
     }
 
+    @Override
+    public String getExpireDuration() {
+        Timestamp now = new Timestamp(System.currentTimeMillis());
+        Timestamp creation = this.dateCreated;
+        Long interval = now.getTime() - creation.getTime();
+        long day = (((interval / 1000) / 60)/ 60)/ 24;
+
+        if (day > 0) {
+            return day + " days";
+        } else {
+            long minutes = (interval / 1000) / 60;
+            return minutes + " minutes";
+        }
+    }
+
     /**
      * Retrieve the offer attached in a conversation
      * @param message the message referred to
@@ -111,6 +123,11 @@ public class CloseBid implements Bid {
         this.dateClosedDown = new Timestamp(System.currentTimeMillis());
     }
 
+    @Override
+    public String getDateCreated() {
+        return null;
+    }
+
     public String getType() {
         return type;
     }
@@ -138,5 +155,13 @@ public class CloseBid implements Bid {
     @Override
     public String getDayTime() {
         return this.additionalInfo.getString("prefDay") + " ," + this.additionalInfo.getString("time") + this.additionalInfo.getString("dayNight");
+    }
+
+    @Override
+    public int getCompetencyLevel() {
+        if (additionalInfo != null) {
+            return additionalInfo.getInt("competencyLevel");
+        }
+        return 0;
     }
 }
