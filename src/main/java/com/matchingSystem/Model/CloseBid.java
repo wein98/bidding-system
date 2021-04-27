@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.matchingSystem.Model.BidInterface;
 import com.matchingSystem.Model.Message;
 import com.matchingSystem.Poster;
+import com.matchingSystem.Utility;
 import org.json.JSONObject;
 
 import java.sql.Timestamp;
@@ -134,7 +135,7 @@ public class CloseBid extends Bid{
 
     @Override
     public String getDateCreated() {
-        return null;
+        return Utility.sdf2.format(this.dateCreated);
     }
 
     public String getType() {
@@ -166,6 +167,14 @@ public class CloseBid extends Bid{
     public String getDayTime() {
         return this.additionalInfo.getString("prefDay") + " ," + this.additionalInfo.getString("time") + this.additionalInfo.getString("dayNight");
     }
+    @Override
+    public int getCompetencyLevel() {
+        if (additionalInfo != null) {
+            return additionalInfo.getInt("competencyLevel");
+        }
+        return 0;
+    }
+
 
     @Override
     public String toString() {

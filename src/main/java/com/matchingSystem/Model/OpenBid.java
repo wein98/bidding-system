@@ -3,6 +3,7 @@ package com.matchingSystem.Model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.matchingSystem.Poster;
+import com.matchingSystem.Utility;
 import org.json.JSONObject;
 
 import java.sql.Timestamp;
@@ -99,7 +100,7 @@ public class OpenBid extends Bid{
 
     @Override
     public String getDateCreated() {
-        return null;
+        return Utility.sdf2.format(this.dateCreated);
     }
 
     /**
