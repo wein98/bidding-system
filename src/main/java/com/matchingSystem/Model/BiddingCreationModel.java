@@ -24,6 +24,7 @@ public class BiddingCreationModel extends Observable {
     private static String[] timeVals = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11",
             "12"};
     private static String[] dayNight = {"AM", "PM"};
+    private static String[] duration = {"1","1.5","2","2.5","3","3.5"};
     private static String[] numsForLesson = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
     private static String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
             "Saturday", "Sunday"};
@@ -72,6 +73,9 @@ public class BiddingCreationModel extends Observable {
         return numsForLesson;
     }
 
+    public static String[] getDuration() {
+        return duration;
+    }
     public void initiateBid(JSONObject jsonObj) {
         String type = jsonObj.getString("type");
         String initiatorId = user.getId();
