@@ -231,6 +231,7 @@ public class MyApp {
             lessonInfo1.put("dayNight","PM");
             lessonInfo1.put("prefDay","Monday");
             lessonInfo1.put("numOfLesson","3");
+            lessonInfo1.put("duration","3");
             JSONObject addInfo1 = new JSONObject();
             addInfo1.put("rate","333333");
             StringBuilder createParams = contractAPI.parseToJsonForCreate(
@@ -252,6 +253,7 @@ public class MyApp {
             lessonInfo2.put("dayNight","PM");
             lessonInfo2.put("prefDay","Tuesday");
             lessonInfo2.put("numOfLesson","3");
+            lessonInfo2.put("duration","2");
             JSONObject addInfo2 = new JSONObject();
             addInfo2.put("rate","33333553");
             StringBuilder updateParams = contractAPI.parseToJsonForPartialUpdate(

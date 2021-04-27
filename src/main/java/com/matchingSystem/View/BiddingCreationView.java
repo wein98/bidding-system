@@ -29,6 +29,8 @@ public class BiddingCreationView extends javax.swing.JFrame implements Observer 
     private JComboBox numOfLesson;
     private JComboBox dayNight;
     private JLabel typeLabel;
+    private JLabel durationLabel;
+    private JComboBox duration;
 
     private BiddingCreationModel model;
 
@@ -70,6 +72,9 @@ public class BiddingCreationView extends javax.swing.JFrame implements Observer 
             for (String item: BiddingCreationModel.getDays()) {
                 this.days.addItem(item);
             }
+            for (String item: BiddingCreationModel.getDuration()) {
+                 this.duration.addItem(item);
+            }
             System.out.println("---> Updated all fields in form");
         }
     }
@@ -94,6 +99,7 @@ public class BiddingCreationView extends javax.swing.JFrame implements Observer 
         additionalInfo.put("prefDay",(String)this.days.getSelectedItem());
         additionalInfo.put("numOfLesson",(String)this.numOfLesson.getSelectedItem());
         additionalInfo.put("rate",(String)this.inputRate.getText());
+        additionalInfo.put("duration", (String)this.duration.getSelectedItem());
 
         jsonObj.put("additionalInfo", additionalInfo);
         return jsonObj;
