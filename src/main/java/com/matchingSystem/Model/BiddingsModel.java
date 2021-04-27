@@ -11,8 +11,6 @@ public class BiddingsModel extends Observable {
 
     private ArrayList<BidOfferModel> bidOffersList = new ArrayList<>();
     private ArrayList<Bid> bids = new ArrayList<>();
-    private String duration;
-    private int biddingsViewType;
 
     public void setBiddings(int biddingsViewType) {
         // TODO:
@@ -21,6 +19,9 @@ public class BiddingsModel extends Observable {
         //      - populate additionalInfos to List<BidOffer>
 
         // biddingsViewType = Constant.OPEN_BIDDING_VIEW
+        if (biddingsViewType == Constant.OPEN_BIDDING_VIEW) {
+            setBidOffersList();
+        }
         // biddingsViewType = Constant.CLOSE_BIDDING_VIEW
         // biddingsViewType = Constant.OFFER_BIDS_VIEW
         if (biddingsViewType == Constant.OFFER_BIDS_VIEW) {
@@ -37,6 +38,7 @@ public class BiddingsModel extends Observable {
         // filter by competencies of tutor
         for (Bid b: bidsArr) {
             // TODO: needs to filter out the competency subjects based on competency level
+
         }
 
         setChanged();
@@ -44,6 +46,11 @@ public class BiddingsModel extends Observable {
     }
 
     private void setBidOffersList() {
+        setChanged();
+        notifyObservers();
+    }
+
+    public void selectOffer(BidOffer b) {
 
     }
 
@@ -56,6 +63,7 @@ public class BiddingsModel extends Observable {
     }
 
     public String getDuration() {
-        return duration;
+        Student studentObj = (Student) UserCookie.getUser();
+        return studentObj.getInitiatedBid().getExpireDuration();
     }
 }

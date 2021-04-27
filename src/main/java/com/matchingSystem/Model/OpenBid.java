@@ -2,8 +2,6 @@ package com.matchingSystem.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.matchingSystem.Poster;
 import org.json.JSONObject;
 
@@ -41,14 +39,7 @@ public class OpenBid extends Bid{
     private void unpackNested(Map<String,Object> addInfo) {
         if (addInfo.size() > 0) {
             this.additionalInfo = new JSONObject(addInfo);
-//            ObjectMapper objMapper = new ObjectMapper();
-//            this.additionalInfo = objMapper.createObjectNode();
-//            additionalInfo.put("rate", (String) addInfo.get("rate"));
-//            additionalInfo.put("dayNight", (String) addInfo.get("dayNight"));
-//            additionalInfo.put("numOfLesson", (String) addInfo.get("numOfLesson"));
-//            additionalInfo.put("prefDay", (String) addInfo.get("prefDay"));
-//            additionalInfo.put("time", (String) addInfo.get("time"));
-        }else{
+        } else {
             this.additionalInfo = new JSONObject();
         }
     }
@@ -84,6 +75,17 @@ public class OpenBid extends Bid{
         }
     }
 
+    @Override
+    public String getExpireDuration() {
+        Timestamp now = new Timestamp(System.currentTimeMillis());
+        Timestamp creation = this.dateCreated;
+        Long interval = now.getTime() - creation.getTime();
+        long minutes = 30 - ((interval / 1000) / 60);
+        return minutes + " minutes";
+
+        // TODO: do something if duration is negative
+    }
+
     /**
      * Close out the Bid Request when no action is carried out by the student before expiry
      */
@@ -93,6 +95,11 @@ public class OpenBid extends Bid{
         this.closed = true;
         this.dateClosedDown = new Timestamp(System.currentTimeMillis());
         additionalInfo.put("successfulBidder","undefined");
+    }
+
+    @Override
+    public String getDateCreated() {
+        return null;
     }
 
     /**
@@ -152,6 +159,14 @@ public class OpenBid extends Bid{
 
     public JSONObject getAdditionalInfo() {
         return additionalInfo;
+    }
+
+    @Override
+    public int getCompetencyLevel() {
+        if (additionalInfo != null) {
+            return additionalInfo.getInt("competencyLevel");
+        }
+        return 0;
     }
 
     @Override
