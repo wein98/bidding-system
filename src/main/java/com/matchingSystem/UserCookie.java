@@ -62,27 +62,6 @@ public class UserCookie {
         }
     }
 
-    private static void setInitiatedBid() {
-        // Get list of competencies for this user
-        JSONObject response = (JSONObject) userAPI.getById(UserCookie.getUser().getId(), Constant.INITIATEDBIDS_S);
-        JSONArray bidArr = response.getJSONArray("initiatedBids");
-
-        // Update the list of qualifications to UserCookie
-        if (bidArr.length() != 0) {
-            JSONObject obj = bidArr.getJSONObject(0);
-            BidFactory bidFactory = new BidFactory();
-            Bid bid = bidFactory.createBid(obj.toString(),obj.getString("type"));
-            user.setInitiatedBid(bid);
-//            if (obj.getString("type").equals("open")) {
-//                OpenBidFactory openBid = new OpenBidFactory();
-//                user.setInitiatedBid(openBid.createBid(obj.toString()));
-//            } else {
-//                CloseBidFactory closeBid = new CloseBidFactory();
-//                user.setInitiatedBid(closeBid.createBid(obj.toString()));
-//            }
-        }
-    }
-
     // return user object
     public static User getUser() {
         return user;

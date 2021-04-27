@@ -46,18 +46,10 @@ public class Student extends User implements StudentActions {
         JSONArray arr = response.getJSONArray("initiatedBids");
 
         if (arr.length() != 0) {
-            JSONObject obj = arr.getJSONObject(0);
 
-            // TODO: to change using BidFactory
-            if (obj.getString("type").equals("open")) {
-                OpenBidFactory openBid = new OpenBidFactory();
-//                user.setInitiatedBid(openBid.createBid(obj.toString()));
-                this.initiatedBid = openBid.createBid(obj.toString());
-            } else {
-                CloseBidFactory closeBid = new CloseBidFactory();
-//                user.setInitiatedBid(closeBid.createBid(obj.toString()));
-                this.initiatedBid = closeBid.createBid(obj.toString());
-            }
+            BidFactory bidFactory = new BidFactory();
+            this.initiatedBid = bidFactory.createBid(arr.getJSONObject(0));
+
         }
     }
 
