@@ -50,7 +50,7 @@ public class BiddingsModel extends Observable {
         notifyObservers();
     }
 
-    public void selectOffer(BidOffer b) {
+    public void selectOffer(BidOfferModel b) {
 
     }
 
