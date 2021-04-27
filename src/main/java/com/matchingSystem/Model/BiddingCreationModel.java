@@ -28,12 +28,11 @@ public class BiddingCreationModel extends Observable {
     private static String[] numsForLesson = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
     private static String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
             "Saturday", "Sunday"};
-    private User user = UserCookie.getInstance().getUser();
 
     public void updateDDL() {
 
-        String userId = user.getId();
-        ArrayList<Competency> userCompetencies = user.getCompetencies();
+        String userId = UserCookie.getUser().getId();
+        ArrayList<Competency> userCompetencies = UserCookie.getUser().getCompetencies();
         ArrayList<Subject> userSubjects = new ArrayList<>();
         for (Competency competency : userCompetencies) {
             userSubjects.add(competency.getSubject());
@@ -77,15 +76,15 @@ public class BiddingCreationModel extends Observable {
         return duration;
     }
     public void initiateBid(JSONObject jsonObj) {
-        String type = jsonObj.getString("type");
-        String initiatorId = user.getId();
-        String subjectId = getSubjectId(jsonObj.getInt("subjectIndex"));
         JSONObject additionalInfo = jsonObj.getJSONObject("additionalInfo");
-        int competencyLevel = user.getCompetencies().get(jsonObj.getInt("subjectIndex")).getLevel();
+        int competencyLevel = UserCookie.getUser().getCompetencies().get(jsonObj.getInt("subjectIndex")).getLevel();
         additionalInfo.put("competencyLevel", competencyLevel);
-        StringBuilder jsonParams = bidAPI.parseToJsonForCreate(type, initiatorId, subjectId, additionalInfo);
-        System.out.println("Get all params for bid creation");
-        System.out.println(jsonParams.toString());
-        //bidAPI.create(jsonParams);
+
+        Student studentObj = (Student) UserCookie.getUser();
+        studentObj.postBid(
+                jsonObj.getString("type"),
+                getSubjectId(jsonObj.getInt("subjectIndex")),
+                additionalInfo
+        );
     }
 }
