@@ -48,17 +48,12 @@ public class BidAPI extends APIRouter implements BidAPIInterface {
         ArrayList<Bid> bids = new ArrayList<>();
             String response = GETRequest(this.route);
             JSONArray arr = new JSONArray(response);
-            System.out.println("BIDAPI: " + arr.toString());
+            BidFactory bidFactory = new BidFactory();
 
             for (int i = 0; i < arr.length(); i++) {
-                JSONObject jsonObj = arr.getJSONObject(i);
-                String jsonStr =  jsonObj.toString();
-                BidFactory bidFactory = new BidFactory();
-                Bid bid = bidFactory.createBid(jsonStr,jsonObj.getString("type"));
+                Bid bid = bidFactory.createBid(arr.getJSONObject(i));
                 bids.add(bid);
             }
-            System.out.println("BIDAPI: " + bids.toString());
-
             return bids;
     }
 
