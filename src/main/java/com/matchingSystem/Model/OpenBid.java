@@ -26,7 +26,7 @@ public class OpenBid implements Bid {
     @JsonProperty("subject")
     protected Subject subject;
     @JsonProperty("additionalInfo")
-    protected ObjectNode additionalInfo;
+    protected JSONObject additionalInfo;
 
     protected ArrayList<BidOffer> bidders;
     protected boolean closed = false; // indicate if a Bid is closed
@@ -38,13 +38,16 @@ public class OpenBid implements Bid {
     @JsonProperty("additionalInfo")
     private void unpackNested(Map<String,Object> addInfo) {
         if (addInfo.size() > 0) {
-            ObjectMapper objMapper = new ObjectMapper();
-            this.additionalInfo = objMapper.createObjectNode();
-            additionalInfo.put("rate", (String) addInfo.get("rate"));
-            additionalInfo.put("dayNight", (String) addInfo.get("dayNight"));
-            additionalInfo.put("numOfLesson", (String) addInfo.get("numOfLesson"));
-            additionalInfo.put("prefDay", (String) addInfo.get("prefDay"));
-            additionalInfo.put("time", (String) addInfo.get("time"));
+            this.additionalInfo = new JSONObject(addInfo);
+//            ObjectMapper objMapper = new ObjectMapper();
+//            this.additionalInfo = objMapper.createObjectNode();
+//            additionalInfo.put("rate", (String) addInfo.get("rate"));
+//            additionalInfo.put("dayNight", (String) addInfo.get("dayNight"));
+//            additionalInfo.put("numOfLesson", (String) addInfo.get("numOfLesson"));
+//            additionalInfo.put("prefDay", (String) addInfo.get("prefDay"));
+//            additionalInfo.put("time", (String) addInfo.get("time"));
+        }else{
+            this.additionalInfo = new JSONObject();
         }
     }
 
@@ -117,7 +120,7 @@ public class OpenBid implements Bid {
     @Override
     public String getNoLessons() {
         if (additionalInfo != null) {
-            return additionalInfo.get("numOfLesson").asText();
+            return additionalInfo.getString("numOfLesson");
         }
         return null;
     }
@@ -125,7 +128,7 @@ public class OpenBid implements Bid {
     @Override
     public String getRate() {
         if (additionalInfo != null) {
-            return additionalInfo.get("rate").asText();
+            return additionalInfo.getString("rate");
         }
         return null;
     }
@@ -133,9 +136,9 @@ public class OpenBid implements Bid {
     @Override
     public String getDayTime() {
         if (additionalInfo != null) {
-            String retVal = additionalInfo.get("prefDay").asText() + ",";
-            retVal += additionalInfo.get("time").asText();
-            retVal += additionalInfo.get("dayNight").asText();
+            String retVal = additionalInfo.getString("prefDay") + ",";
+            retVal += additionalInfo.getString("time");
+            retVal += additionalInfo.getString("dayNight");
             return retVal;
         }
         return null;

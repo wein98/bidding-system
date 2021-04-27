@@ -45,7 +45,6 @@ public class ContractAPI extends APIRouter implements ContractAPIInterface {
      * Get all contracts
      * @return an array of Contracts
      */
-    @Override
     public ArrayList<Contract> getAll(){
         ArrayList<Contract> contracts = new ArrayList<>();
         try {
@@ -53,7 +52,19 @@ public class ContractAPI extends APIRouter implements ContractAPIInterface {
             JSONArray arr = new JSONArray(response);
             for (int i = 0; i < arr.length(); i++) {
                 JSONObject jsonObj = arr.getJSONObject(i);
-                Contract contract = objMapper.readValue(jsonObj.toString(), Contract.class);
+//                System.out.println(jsonObj);
+                Object dateSigned = jsonObj.get("dateSigned");
+                jsonObj.remove("dateSigned");
+//                System.out.println(jsonObj);
+                String jsonStr = jsonObj.toString();
+                Contract contract = objMapper.readValue(jsonStr, Contract.class);
+                if (dateSigned instanceof String) {
+                    if (!"".equals((String) dateSigned)) {
+                        Timestamp t = Timestamp.valueOf((String) dateSigned);
+                        contract.setDateSigned((Timestamp) dateSigned);
+                    }
+
+                }
                 contracts.add(contract);
             }
 
@@ -72,18 +83,26 @@ public class ContractAPI extends APIRouter implements ContractAPIInterface {
      * @param expiryDate expiry of the contract
      * @return StringBuilder of parsed json
      */
-    public StringBuilder parseToJsonForCreate(String firstPartyId, String secondPartyId, String subjectId, Timestamp expiryDate, JSONObject paymentInfo, JSONObject lessonInfo, JSONObject additionalInfo){
+    public StringBuilder parseToJsonForCreate(String firstPartyId, String secondPartyId,
+                                              String subjectId, Timestamp expiryDate,
+                                              JSONObject paymentInfo, JSONObject lessonInfo,
+                                              JSONObject additionalInfo) {
         Timestamp now = new Timestamp(System.currentTimeMillis());
         StringBuilder jsonParam = new StringBuilder();
         jsonParam.append("{");
         jsonParam.append(String.format("\"firstPartyId\": \"%s\",", firstPartyId));
         jsonParam.append(String.format("\"secondPartyId\": \"%s\",", secondPartyId));
         jsonParam.append(String.format("\"subjectId\": \"%s\",", subjectId));
-        jsonParam.append(String.format("\"dateCreated\": \"%s\",", Utility.sdf2.format(expiryDate)));
-        jsonParam.append(String.format("\"expiryDate\": \"%s\",", Utility.sdf2.format(now)));
-        jsonParam.append(String.format("\"paymentInfo\": \"%s\",", paymentInfo.toString()));
-        jsonParam.append(String.format("\"lessonInfo\": \"%s\",", lessonInfo.toString()));
-        jsonParam.append(String.format("\"additionalInfo\": \"%s\"", additionalInfo.toString()));
+        jsonParam.append(String.format("\"dateCreated\": \"%s\",", Utility.sdf2.format(now)));
+        jsonParam.append(String.format("\"expiryDate\": \"%s\",", Utility.sdf2.format(expiryDate)));
+        jsonParam.append("\"paymentInfo\": ");
+        jsonParam.append(paymentInfo);
+        jsonParam.append(",");
+        jsonParam.append("\"lessonInfo\": ");
+        jsonParam.append(lessonInfo);
+        jsonParam.append(",");
+        jsonParam.append("\"additionalInfo\": ");
+        jsonParam.append(additionalInfo);
         jsonParam.append("}");
 
         return jsonParam;
@@ -104,12 +123,16 @@ public class ContractAPI extends APIRouter implements ContractAPIInterface {
         jsonParam.append(String.format("\"firstPartyId\": \"%s\",", firstPartyId));
         jsonParam.append(String.format("\"secondPartyId\": \"%s\",", secondPartyId));
         jsonParam.append(String.format("\"subjectId\": \"%s\",", subjectId));
-        jsonParam.append(String.format("\"dateCreated\": \"%s\",", Utility.sdf2.format(expiryDate)));
-        jsonParam.append(String.format("\"expiryDate\": \"%s\",", Utility.sdf2.format(now)));
-        jsonParam.append(String.format("\"paymentInfo\": \"%s\",", Utility.sdf2.format(now)));
-        jsonParam.append(String.format("\"paymentInfo\": \"%s\",", paymentInfo.toString()));
-        jsonParam.append(String.format("\"lessonInfo\": \"%s\",", lessonInfo.toString()));
-        jsonParam.append(String.format("\"additionalInfo\": \"%s\"", additionalInfo.toString()));
+        jsonParam.append(String.format("\"dateCreated\": \"%s\",", Utility.sdf2.format(now)));
+        jsonParam.append(String.format("\"expiryDate\": \"%s\",", Utility.sdf2.format(expiryDate)));
+        jsonParam.append("\"paymentInfo\": ");
+        jsonParam.append(paymentInfo);
+        jsonParam.append(",");
+        jsonParam.append("\"lessonInfo\": ");
+        jsonParam.append(lessonInfo);
+        jsonParam.append(",");
+        jsonParam.append("\"additionalInfo\": ");
+        jsonParam.append(additionalInfo);
         jsonParam.append("}");
 
         return jsonParam;
