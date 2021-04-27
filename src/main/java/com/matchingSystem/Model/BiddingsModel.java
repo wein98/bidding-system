@@ -4,7 +4,9 @@ import com.matchingSystem.API.APIFacade;
 import com.matchingSystem.Constant;
 import com.matchingSystem.UserCookie;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Observable;
 
 public class BiddingsModel extends Observable {
@@ -37,6 +39,7 @@ public class BiddingsModel extends Observable {
         // filter by competencies of tutor
         for (Bid b: bidsArr) {
             // TODO: needs to filter out the competency subjects based on competency level
+
         }
 
         setChanged();
@@ -45,6 +48,13 @@ public class BiddingsModel extends Observable {
 
     private void setBidOffersList() {
 
+    }
+
+    public void setDuration() {
+//        Timestamp timestamp = new Timestamp();
+        Student studentObj = (Student) UserCookie.getUser();
+
+        this.duration = duration;
     }
 
     public ArrayList<BidOffer> getBidOffersList() {
