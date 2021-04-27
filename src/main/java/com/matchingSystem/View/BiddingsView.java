@@ -24,7 +24,7 @@ public abstract class BiddingsView extends JFrame{
         return titleLabel;
     }
 
-    public JButton getBiddingRefresh() {
+    public JButton getBiddingRefreshBtn() {
         return biddingRefresh;
     }
 

@@ -86,6 +86,21 @@ public class CloseBid extends Bid{
         }
     }
 
+    @Override
+    public String getExpireDuration() {
+        Timestamp now = new Timestamp(System.currentTimeMillis());
+        Timestamp creation = this.dateCreated;
+        Long interval = now.getTime() - creation.getTime();
+        long day = (((interval / 1000) / 60)/ 60)/ 24;
+
+        if (day > 0) {
+            return day + " days";
+        } else {
+            long minutes = (interval / 1000) / 60;
+            return minutes + " minutes";
+        }
+    }
+
     /**
      * Retrieve the offer attached in a conversation
      * @param message the message referred to
@@ -115,6 +130,11 @@ public class CloseBid extends Bid{
     public void close() {
         this.closed = true;
         this.dateClosedDown = new Timestamp(System.currentTimeMillis());
+    }
+
+    @Override
+    public String getDateCreated() {
+        return null;
     }
 
     public String getType() {
