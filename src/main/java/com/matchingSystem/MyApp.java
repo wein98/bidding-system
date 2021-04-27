@@ -2,6 +2,7 @@ package com.matchingSystem;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.API.APIAdapters.*;
+import com.matchingSystem.API.APIFacade;
 import com.matchingSystem.API.ClientInterfaces.CompetencyAPIInterface;
 import com.matchingSystem.API.ClientInterfaces.ContractAPIInterface;
 import com.matchingSystem.API.ClientInterfaces.QualificationAPIInterface;
@@ -43,11 +44,8 @@ public class MyApp {
 //        testCompetencyAPI();
 //        testQualification();
 //        testUserAPI();
-        try {
-            testContract();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        testContract();
+        testBid();
     }
 
     /**
@@ -269,6 +267,54 @@ public class MyApp {
             System.out.println(deleted);
 
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void testBid(){
+        try{
+            System.out.println("===== Testing BidAPI =====");
+            String bidId;
+
+            System.out.println("\ngetAll()");
+            ArrayList<Bid> bids = (ArrayList<Bid>) APIFacade.getBidAPI().getAll();
+            for (Bid bid: bids){
+                System.out.println(bid.toString());
+            }
+            System.out.println("--> Successful");
+
+            System.out.println("\ncreate()");
+            StringBuilder params = APIFacade.getBidAPI().parseToJsonForCreate("close","3e541287-2ea2-4dad-b729" +
+                    "-761d8f36059f", "841199ac-d73e-4726-888d-dfeb538f49e2", new JSONObject());
+            CloseBid bid = (CloseBid) APIFacade.getBidAPI().create(params);
+            System.out.println(bid.toString());
+            bidId = bid.getId();
+            System.out.println("--> Successful");
+
+            System.out.println("\ngetById()");
+            CloseBid bid2 = (CloseBid) APIFacade.getBidAPI().getById(bidId,
+                    Constant.BID_MESSAGES);
+            System.out.println(bid2.toString());
+            System.out.println("--> Successful");
+
+            System.out.println("\nupdatePartialById()");
+            JSONObject addInfo = new JSONObject();
+            addInfo.put("rate","33333");
+            StringBuilder jsonParams = APIFacade.getBidAPI().parseToJsonForPartialUpdate(addInfo);
+            CloseBid bid3 = (CloseBid) APIFacade.getBidAPI().updatePartialById(bidId,jsonParams);
+            System.out.println(bid3.toString());
+            System.out.println("--> Successful");
+
+            System.out.println("\ndeleteById()");
+            boolean deleted = APIFacade.getBidAPI().deleteById(bidId);
+            System.out.println(deleted);
+            String[] ids = new String[]{"2b4cba02-0b4f-4a92-bed6-5428d3cc0298","ca011d8f-9a09-413a-975a-61e71e3e01ba",
+            "c9d7f30d-4d14-4b95-a98f-431beb92a012"};
+            for (String id: ids){
+                boolean a = APIFacade.getBidAPI().deleteById(id);
+                System.out.println(a);
+            }
+        }catch (Exception e){
             e.printStackTrace();
         }
     }

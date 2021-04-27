@@ -12,26 +12,28 @@ import java.util.ArrayList;
 import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class OpenBid implements Bid {
-    @JsonProperty("id")
-    protected String id;
-    @JsonProperty("type")
-    protected String type;
-    @JsonProperty("initiator")
-    protected Poster initiator;
-    @JsonProperty("dateCreated")
-    protected Timestamp dateCreated;
-    @JsonProperty("dateClosedDown")
-    protected Timestamp dateClosedDown;
-    @JsonProperty("subject")
-    protected Subject subject;
-    @JsonProperty("additionalInfo")
-    protected JSONObject additionalInfo;
+public class OpenBid extends Bid{
+//    @JsonProperty("id")
+//    protected String id;
+//    @JsonProperty("type")
+//    protected String type;
+//    @JsonProperty("initiator")
+//    protected Poster initiator;
+//    @JsonProperty("dateCreated")
+//    protected Timestamp dateCreated;
+//    @JsonProperty("dateClosedDown")
+//    protected Timestamp dateClosedDown;
+//    @JsonProperty("subject")
+//    protected Subject subject;
+//    @JsonProperty("additionalInfo")
+//    protected JSONObject additionalInfo;
 
-    protected ArrayList<BidOffer> bidders;
+    protected ArrayList<BidOfferModel> bidders;
     protected boolean closed = false; // indicate if a Bid is closed
 
-    public OpenBid(){}
+    public OpenBid(){
+        super();
+    }
 
     // mapping nested object
     @SuppressWarnings("unchecked")
@@ -56,7 +58,7 @@ public class OpenBid implements Bid {
      * @param offer the offer that the student choose to accept
      */
     @Override
-    public void selectBidder(BidOffer offer){
+    public void selectBidder(BidOfferModel offer){
         if(this.dateClosedDown != null ) {
             this.dateClosedDown = new Timestamp(System.currentTimeMillis());
             additionalInfo.put("successfulBidder",offer.getOfferTutorId());
@@ -117,6 +119,8 @@ public class OpenBid implements Bid {
         return subject;
     }
 
+    public String getId() { return this.id; }
+
     @Override
     public String getNoLessons() {
         if (additionalInfo != null) {
@@ -143,6 +147,10 @@ public class OpenBid implements Bid {
         }
         return null;
 
+    }
+
+    public JSONObject getAdditionalInfo() {
+        return additionalInfo;
     }
 
     @Override
