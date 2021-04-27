@@ -4,9 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.API.APIService;
 import com.matchingSystem.API.ClientInterfaces.BidAPIInterface;
-import com.matchingSystem.Model.Bid;
-import com.matchingSystem.Model.CloseBid;
-import com.matchingSystem.Model.OpenBid;
+import com.matchingSystem.Model.*;
 import com.matchingSystem.Utility;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -48,7 +46,6 @@ public class BidAPI extends APIRouter implements BidAPIInterface {
     @Override
     public ArrayList<Bid> getAll(){
         ArrayList<Bid> bids = new ArrayList<>();
-        try {
             String response = GETRequest(this.route);
             JSONArray arr = new JSONArray(response);
             System.out.println("BIDAPI: " + arr.toString());
@@ -56,22 +53,13 @@ public class BidAPI extends APIRouter implements BidAPIInterface {
             for (int i = 0; i < arr.length(); i++) {
                 JSONObject jsonObj = arr.getJSONObject(i);
                 String jsonStr =  jsonObj.toString();
-                Bid bid = null;
-                if(jsonObj.getString("type").equals("open")){
-                    bid = objMapper.readValue(jsonStr, OpenBid.class);
-                    bids.add(bid);
-                } else if (jsonObj.getString("type").equals("close")){
-                    bid = objMapper.readValue(jsonStr, CloseBid.class);
-                    bids.add(bid);
-                }
+                BidFactory bidFactory = new BidFactory();
+                Bid bid = bidFactory.createBid(jsonStr,jsonObj.getString("type"));
+                bids.add(bid);
             }
             System.out.println("BIDAPI: " + bids.toString());
 
             return bids;
-        }catch (JsonProcessingException e){
-            e.printStackTrace();
-        }
-        return null;
     }
 
     /**

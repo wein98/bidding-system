@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CloseBid implements Bid {
@@ -28,18 +29,38 @@ public class CloseBid implements Bid {
     protected JSONObject additionalInfo;
 
     protected boolean closed = false; // indicate if a Bid is closed
-    private ArrayList<Message> messages; // each tutor sends one message, all content is stored within one message obj
+    private Message tutorMessage;
+    private Message studentMessage;
+
 
     public CloseBid(){
 
     }
 
-    public void addMessage(Message message){
-        this.messages.add(message);
+    @SuppressWarnings("unchecked")
+    @JsonProperty("additionalInfo")
+    private void unpackNested(Map<String,Object> addInfo) {
+        if(addInfo.size() > 0){
+            this.additionalInfo = new JSONObject(addInfo);
+        }else{
+            this.additionalInfo = new JSONObject();
+        }
     }
 
-    public ArrayList<Message> getMessages(){
-        return this.messages;
+    public void updateTutorMsg(String content){
+        this.tutorMessage.updateMessageContent(content);
+    }
+
+    public void updateStudentMsg(String content){
+        this.studentMessage.updateMessageContent(content);
+    }
+
+    public Message getTutorMessage(){
+        return this.tutorMessage;
+    }
+
+    public Message getStudentMessage() {
+        return studentMessage;
     }
 
     /**
@@ -96,26 +117,26 @@ public class CloseBid implements Bid {
 
     @Override
     public Poster getInitiator() {
-        return null;
+        return this.initiator;
     }
 
     @Override
     public Subject getSubject() {
-        return null;
+        return this.subject;
     }
 
     @Override
     public String getNoLessons() {
-        return null;
+        return this.additionalInfo.getString("numOfLesson");
     }
 
     @Override
     public String getRate() {
-        return null;
+        return this.additionalInfo.getString("rate");
     }
 
     @Override
     public String getDayTime() {
-        return null;
+        return this.additionalInfo.getString("prefDay") + " ," + this.additionalInfo.getString("time") + this.additionalInfo.getString("dayNight");
     }
 }

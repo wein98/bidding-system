@@ -45,7 +45,7 @@ public class APIService {
                 if (entity != null) {
                     // return it as a String
                     String result = EntityUtils.toString(entity);
-                    System.out.println(result);
+//                    System.out.println(result);
                     return result;
                 }
 
@@ -105,7 +105,7 @@ public class APIService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(result);
+//        System.out.println(result);
         return result;
     }
 
