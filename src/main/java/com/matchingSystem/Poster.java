@@ -16,6 +16,10 @@ public class Poster {
     @JsonProperty("isTutor")
     private String isTutor;
 
+    public String getGivenName() {
+        return givenName;
+    }
+
     @Override
     public String toString() {
         return "Given name: " + this.givenName + "\nFamily Name: " + this.familyName;

@@ -20,6 +20,7 @@ public class Tutor extends User {
                 ", userName='" + userName + '\'' +
                 ", competencies=" + competencies +
                 ", qualifications=" + qualifications +
+                ", contracts=" + contracts +
                 '}';
     }
 }

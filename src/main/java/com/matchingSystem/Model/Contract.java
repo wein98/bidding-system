@@ -5,6 +5,7 @@ import com.matchingSystem.Poster;
 import org.json.JSONObject;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Map;
 
 public class Contract {
@@ -26,8 +27,8 @@ public class Contract {
     private JSONObject lessonInfo;
     @JsonProperty("additionalInfo")
     private JSONObject additionalInfo;
-
     private Timestamp dateSigned;
+
     public String getId() {
         return id;
     }
@@ -56,5 +57,21 @@ public class Contract {
 
     public void setDateSigned(Timestamp dateTime){
         this.dateSigned = dateTime;
+    }
+
+    public Poster getFirstParty() {
+        return firstParty;
+    }
+
+    public Poster getSecondParty() {
+        return secondParty;
+    }
+
+    public String getDateCreated() {
+        return new SimpleDateFormat("dd/MM/yyyy").format(dateCreated);
+    }
+
+    public Subject getSubject() {
+        return subject;
     }
 }

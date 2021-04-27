@@ -2,7 +2,6 @@ package com.matchingSystem.Controller;
 
 import com.matchingSystem.Constant;
 import com.matchingSystem.Model.DashboardModel;
-import com.matchingSystem.Model.UserFactory;
 import com.matchingSystem.View.DashboardView;
 import com.matchingSystem.View.UserTypeView;
 import com.matchingSystem.UserCookie;
@@ -12,9 +11,11 @@ import java.awt.event.ActionListener;
 
 public class UserTypeController {
     private UserTypeView view;
+    private String jwtCode;
 
-    public UserTypeController(UserTypeView view) {
+    public UserTypeController(UserTypeView view, String jwtCode) {
         this.view = view;
+        this.jwtCode = jwtCode;
         initController();
     }
 
@@ -22,7 +23,7 @@ public class UserTypeController {
         // IsStudentBtn OnClick listener
         view.getIsStudentBtn().addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                UserCookie.getInstance().setUser(Constant.IS_STUDENT);
+                UserCookie.init(Constant.IS_STUDENT, jwtCode);
                 userTypeSelected();
                 view.dispose();
             }
@@ -31,8 +32,7 @@ public class UserTypeController {
         // IsTutorBtn OnClick listener
         view.getIsTutorBtn().addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                System.out.println("ASDASFwrdghWDGFSDGASRGsef");
-                UserCookie.getInstance().setUser(Constant.IS_TUTOR);
+                UserCookie.init(Constant.IS_TUTOR, jwtCode);
                 userTypeSelected();
                 view.dispose();
             }
@@ -40,7 +40,6 @@ public class UserTypeController {
     }
 
     private void userTypeSelected() {
-        // TODO: create dashboard MVC here
         // Create dashboard model
         DashboardModel dashboardModel = new DashboardModel();
         // Create dashboard view

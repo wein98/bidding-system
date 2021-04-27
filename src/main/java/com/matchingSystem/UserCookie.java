@@ -1,14 +1,27 @@
 package com.matchingSystem;
 
-import com.matchingSystem.Model.Student;
-import com.matchingSystem.Model.Tutor;
-import com.matchingSystem.Model.User;
-import com.matchingSystem.Model.UserFactory;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.matchingSystem.API.APIAdapters.ContractAPI;
+import com.matchingSystem.API.APIAdapters.UserAPI;
+import com.matchingSystem.API.ClientInterfaces.ContractAPIInterface;
+import com.matchingSystem.API.ClientInterfaces.UserAPIInterface;
+import com.matchingSystem.Model.*;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class UserCookie {
+    private static final UserAPIInterface userAPI = UserAPI.getInstance();
+    private static final ContractAPIInterface contractAPI = ContractAPI.getInstance();
+    private static final ObjectMapper objMapper = new ObjectMapper();
+    private static final UserFactory userFactory = new UserFactory();
+
     private static UserCookie ourInstance;
-    UserFactory userFactory = new UserFactory();
+    private static int userType;
+    public static String jwtToken = null;
+    private static User user = null;
 
     public static UserCookie getInstance() {
 
@@ -18,44 +31,14 @@ public class UserCookie {
         return ourInstance;
     }
 
-    private String jwtToken = null;
-    private User user = null;
-//    private Student isStudent = null;
-//    private Tutor isTutor = null;
+    private UserCookie() {}
 
-    private UserCookie() {
-
+    public static void init(int userType, String jwtCode) {
+        setUser(userType);
     }
-
-    public void setJwtToken(String jwtToken) {
-        this.jwtToken = jwtToken;
-//        setUser();
-    }
-
-//    private void setUser() {
-//        JSONObject userObj = Utility.decodeJWT(jwtToken);
-//
-//        // user is a Student
-//        if (userObj.getBoolean("isStudent")) {
-//            isStudent = new Student(
-//                userObj.getString("sub"),
-//                userObj.getString("givenName"),
-//                userObj.getString("familyName"),
-//                userObj.getString("username"));
-//        }
-//
-//        // user is a Tutor
-//        if (userObj.getBoolean("isTutor")) {
-//            isTutor = new Tutor(
-//                userObj.getString("sub"),
-//                userObj.getString("givenName"),
-//                userObj.getString("familyName"),
-//                userObj.getString("username"));
-//        }
-//    }
 
     // Function called to set usercookie
-    public void setUser(int userType) {
+    private static void setUser(int _userType) {
         // decode jwt
         JSONObject userObj = Utility.decodeJWT(jwtToken);
 
@@ -64,25 +47,98 @@ public class UserCookie {
         userInfo = userInfo.replace("sub", "id");
         userInfo = userInfo.replace("username", "userName");
 
-        if (userType == Constant.IS_STUDENT) {
-            user = (Student) userFactory.createUser(userInfo, userType);
-        } else if (userType == Constant.IS_TUTOR) {
-            user = (Tutor) userFactory.createUser(userInfo, userType);
+        System.out.println(userInfo);
+
+        if (_userType == Constant.IS_STUDENT) {
+            user = (Student) userFactory.createUser(userInfo, _userType);
+            userType = Constant.IS_STUDENT;
+        } else if (_userType == Constant.IS_TUTOR) {
+            user = (Tutor) userFactory.createUser(userInfo, _userType);
+            userType = Constant.IS_TUTOR;
         }
 
+        setCompetencies();
+        setQualifications();
+        setContracts();
+        setInitiatedBid();
     }
 
-    // get user as a Student
-    public User getUser() {
+    private static void setCompetencies() {
+        // Get list of competencies for this user
+        JSONObject response = (JSONObject) userAPI.getById(UserCookie.getUser().getId(), Constant.COMPETENCIES_SUBJECT_S);;
+        JSONArray competencyArr = response.getJSONArray("competencies");
+
+        // Update the list of competencies to UserCookie
+        if (competencyArr.length() != 0) {
+            for (int i = 0; i < competencyArr.length(); i++) {
+                try {
+                    JSONObject competencyObj = competencyArr.getJSONObject(i);
+                    user.addCompetency(objMapper.readValue(competencyObj.toString(), Competency.class));
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private static void setQualifications() {
+        // Get list of competencies for this user
+        JSONObject response = (JSONObject) userAPI.getById(UserCookie.getUser().getId(), Constant.QUALIFICATIONS_S);;
+        JSONArray qualArr = response.getJSONArray("qualifications");
+
+        // Update the list of qualifications to UserCookie
+        if (qualArr.length() != 0) {
+            for (int i = 0; i < qualArr.length(); i++) {
+                try {
+                    JSONObject qualObj = qualArr.getJSONObject(i);
+                    user.addQualification(objMapper.readValue(qualObj.toString(), Qualification.class));
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private static void setContracts() {
+        ArrayList<Contract> contractArr = (ArrayList<Contract>) contractAPI.getAll();
+
+        for (Contract c: contractArr) {
+            user.addContract(c);
+        }
+    }
+
+    private static void setInitiatedBid() {
+        // Get list of competencies for this user
+        JSONObject response = (JSONObject) userAPI.getById(UserCookie.getUser().getId(), Constant.INITIATEDBIDS_S);
+        JSONArray bidArr = response.getJSONArray("initiatedBids");
+
+        // Update the list of qualifications to UserCookie
+        if (bidArr.length() != 0) {
+            JSONObject obj = bidArr.getJSONObject(0);
+            if (obj.getString("type").equals("open")) {
+                OpenBidFactory openBid = new OpenBidFactory();
+                user.setInitiatedBid(openBid.createBid(obj.toString()));
+            } else {
+                CloseBidFactory closeBid = new CloseBidFactory();
+                user.setInitiatedBid(closeBid.createBid(obj.toString()));
+            }
+        }
+    }
+
+    // return user object
+    public static User getUser() {
         return user;
     }
 
-    // get user as a Tutor
-//    public User getTutor() {
-//        return isTutor;
-//    }
+    public static int getUserType() {
+        return userType;
+    }
 
-    public String getJwtToken() {
+    public static String getJwtToken() {
         return jwtToken;
+    }
+
+    public static void setJwtToken(String jwtcode) {
+        jwtToken = jwtcode;
     }
 }
