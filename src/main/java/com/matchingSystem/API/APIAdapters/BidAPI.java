@@ -51,17 +51,22 @@ public class BidAPI extends APIRouter implements BidAPIInterface {
         try {
             String response = GETRequest(this.route);
             JSONArray arr = new JSONArray(response);
+            System.out.println("BIDAPI: " + arr.toString());
+
             for (int i = 0; i < arr.length(); i++) {
                 JSONObject jsonObj = arr.getJSONObject(i);
                 String jsonStr =  jsonObj.toString();
-                Bid bid;
-                if(jsonObj.getString("type") == "open"){
+                Bid bid = null;
+                if(jsonObj.getString("type").equals("open")){
                     bid = objMapper.readValue(jsonStr, OpenBid.class);
-                }else {
+                    bids.add(bid);
+                } else if (jsonObj.getString("type").equals("close")){
                     bid = objMapper.readValue(jsonStr, CloseBid.class);
+                    bids.add(bid);
                 }
-                bids.add(bid);
             }
+            System.out.println("BIDAPI: " + bids.toString());
+
             return bids;
         }catch (JsonProcessingException e){
             e.printStackTrace();

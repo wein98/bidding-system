@@ -1,7 +1,9 @@
 package com.matchingSystem.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.matchingSystem.Model.Bid;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.matchingSystem.Poster;
 import org.json.JSONObject;
 
@@ -9,6 +11,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Map;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class OpenBid implements Bid {
     @JsonProperty("id")
     protected String id;
@@ -23,7 +26,7 @@ public class OpenBid implements Bid {
     @JsonProperty("subject")
     protected Subject subject;
     @JsonProperty("additionalInfo")
-    protected JSONObject additionalInfo;
+    protected ObjectNode additionalInfo;
 
     protected ArrayList<BidOffer> bidders;
     protected boolean closed = false; // indicate if a Bid is closed
@@ -34,11 +37,15 @@ public class OpenBid implements Bid {
     @SuppressWarnings("unchecked")
     @JsonProperty("additionalInfo")
     private void unpackNested(Map<String,Object> addInfo) {
-        this.additionalInfo = new JSONObject(
-                (String) addInfo.get("rate"), // double
-                (String) addInfo.get("duration"), // int
-                (String) addInfo.get("numberOfSession"), // int
-                (String) addInfo.get("freeLesson")); // boolean
+        if (addInfo.size() > 0) {
+            ObjectMapper objMapper = new ObjectMapper();
+            this.additionalInfo = objMapper.createObjectNode();
+            additionalInfo.put("rate", (String) addInfo.get("rate"));
+            additionalInfo.put("dayNight", (String) addInfo.get("dayNight"));
+            additionalInfo.put("numOfLesson", (String) addInfo.get("numOfLesson"));
+            additionalInfo.put("prefDay", (String) addInfo.get("prefDay"));
+            additionalInfo.put("time", (String) addInfo.get("time"));
+        }
     }
 
     /**
@@ -95,5 +102,58 @@ public class OpenBid implements Bid {
     @Override
     public String getType() {
         return type;
+    }
+
+    @Override
+    public Poster getInitiator() {
+        return initiator;
+    }
+
+    @Override
+    public Subject getSubject() {
+        return subject;
+    }
+
+    @Override
+    public String getNoLessons() {
+        if (additionalInfo != null) {
+            return additionalInfo.get("numOfLesson").asText();
+        }
+        return null;
+    }
+
+    @Override
+    public String getRate() {
+        if (additionalInfo != null) {
+            return additionalInfo.get("rate").asText();
+        }
+        return null;
+    }
+
+    @Override
+    public String getDayTime() {
+        if (additionalInfo != null) {
+            String retVal = additionalInfo.get("prefDay").asText() + ",";
+            retVal += additionalInfo.get("time").asText();
+            retVal += additionalInfo.get("dayNight").asText();
+            return retVal;
+        }
+        return null;
+
+    }
+
+    @Override
+    public String toString() {
+        return "OpenBid{" +
+                "id='" + id + '\'' +
+                ", type='" + type + '\'' +
+                ", initiator=" + initiator +
+                ", dateCreated=" + dateCreated +
+                ", dateClosedDown=" + dateClosedDown +
+                ", subject=" + subject +
+                ", additionalInfo=" + additionalInfo +
+                ", bidders=" + bidders +
+                ", closed=" + closed +
+                '}';
     }
 }
