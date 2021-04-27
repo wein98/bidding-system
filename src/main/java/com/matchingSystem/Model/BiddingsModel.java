@@ -2,6 +2,7 @@ package com.matchingSystem.Model;
 
 import com.matchingSystem.API.APIFacade;
 import com.matchingSystem.Constant;
+import com.matchingSystem.UserCookie;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -29,7 +30,14 @@ public class BiddingsModel extends Observable {
     }
 
     private void setBids() {
-        bids = (ArrayList<Bid>) APIFacade.getBidAPI().getAll();
+        ArrayList<Bid> bidsArr = (ArrayList<Bid>) APIFacade.getBidAPI().getAll();
+
+        ArrayList<Competency> tutorCompetencies = UserCookie.getUser().getCompetencies();
+
+        // filter by competencies of tutor
+        for (Bid b: bidsArr) {
+            // TODO: needs to filter out the competency subjects based on competency level
+        }
 
         setChanged();
         notifyObservers();
