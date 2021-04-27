@@ -20,6 +20,10 @@ public class Poster {
         return givenName;
     }
 
+    public String getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return "Given name: " + this.givenName + "\nFamily Name: " + this.familyName;

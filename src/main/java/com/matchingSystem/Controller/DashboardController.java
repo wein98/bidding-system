@@ -2,9 +2,11 @@ package com.matchingSystem.Controller;
 
 import com.matchingSystem.Constant;
 import com.matchingSystem.Model.BiddingCreationModel;
+import com.matchingSystem.Model.BiddingsModel;
 import com.matchingSystem.Model.DashboardModel;
 import com.matchingSystem.View.BiddingCreationView;
 import com.matchingSystem.View.DashboardView;
+import com.matchingSystem.View.TutorBidOffersView;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -71,6 +73,11 @@ public class DashboardController implements Observer, ActionListener {
             }
         } else if (model.getUserType().equals("Tutor")) {
             // TODO: open view biddings window
+            BiddingsModel biddingsModel = new BiddingsModel();
+            TutorBidOffersView bidOffersView = new TutorBidOffersView(biddingsModel);
+            TutorBidOffersController bidOffersController = new TutorBidOffersController(bidOffersView, biddingsModel);
+//            SignContractView signContractView = new SignContractView();
+//            SignContractController signContractController = new SignContractController(signContractView, "XXX");
         }
     }
 }

@@ -44,8 +44,8 @@ public class Message{
      * Append new content in the conversation
      * @param content
      */
-    public void addMessageContent(String content){
-        this.content += "\n" + content;
+    public void updateMessageContent(String content){
+        this.content = content;
         this.dateLastEdited = new Timestamp(System.currentTimeMillis());
     }
     @Override

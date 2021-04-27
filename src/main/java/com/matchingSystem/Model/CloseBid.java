@@ -1,5 +1,6 @@
 package com.matchingSystem.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.matchingSystem.Model.Bid;
 import com.matchingSystem.Model.Message;
@@ -8,7 +9,9 @@ import org.json.JSONObject;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Map;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CloseBid implements Bid {
     @JsonProperty("id")
     protected String id;
@@ -26,18 +29,38 @@ public class CloseBid implements Bid {
     protected JSONObject additionalInfo;
 
     protected boolean closed = false; // indicate if a Bid is closed
-    private ArrayList<Message> messages; // each tutor sends one message, all content is stored within one message obj
+    private Message tutorMessage;
+    private Message studentMessage;
+
 
     public CloseBid(){
 
     }
 
-    public void addMessage(Message message){
-        this.messages.add(message);
+    @SuppressWarnings("unchecked")
+    @JsonProperty("additionalInfo")
+    private void unpackNested(Map<String,Object> addInfo) {
+        if(addInfo.size() > 0){
+            this.additionalInfo = new JSONObject(addInfo);
+        }else{
+            this.additionalInfo = new JSONObject();
+        }
     }
 
-    public ArrayList<Message> getMessages(){
-        return this.messages;
+    public void updateTutorMsg(String content){
+        this.tutorMessage.updateMessageContent(content);
+    }
+
+    public void updateStudentMsg(String content){
+        this.studentMessage.updateMessageContent(content);
+    }
+
+    public Message getTutorMessage(){
+        return this.tutorMessage;
+    }
+
+    public Message getStudentMessage() {
+        return studentMessage;
     }
 
     /**
@@ -90,5 +113,30 @@ public class CloseBid implements Bid {
 
     public String getType() {
         return type;
+    }
+
+    @Override
+    public Poster getInitiator() {
+        return null;
+    }
+
+    @Override
+    public Subject getSubject() {
+        return null;
+    }
+
+    @Override
+    public String getNoLessons() {
+        return null;
+    }
+
+    @Override
+    public String getRate() {
+        return null;
+    }
+
+    @Override
+    public String getDayTime() {
+        return null;
     }
 }

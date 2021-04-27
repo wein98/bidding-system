@@ -36,20 +36,23 @@ public class Contract {
     @SuppressWarnings("unchecked")
     @JsonProperty("additionalInfo")
     private void unpackAdditionalInfo(Map<String,Object> addInfo) {
-        this.additionalInfo = new JSONObject(addInfo);
+        if(addInfo.size() > 0) {
+            this.additionalInfo = new JSONObject(addInfo);
+        }else{
+            this.additionalInfo = new JSONObject();
+        }
     }
 
     @SuppressWarnings("unchecked")
     @JsonProperty("lessonInfo")
     private void unpackLessonInfo(Map<String, Object> lessonInfo) {
-        this.lessonInfo = new JSONObject(lessonInfo);
-
+        if(lessonInfo.size() > 0) {
+            this.lessonInfo = new JSONObject(lessonInfo);
+        }else{
+            this.lessonInfo = new JSONObject();
+        }
     }
 
-//    public void printNested(){
-//        System.out.println(this.additionalInfo.toString());
-//        System.out.println(this.lessonInfo.toString());
-//    }
     @Override
     public String toString() {
         return super.toString();

@@ -11,7 +11,6 @@ import org.json.JSONObject;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-
 import static com.matchingSystem.API.APIService.*;
 
 public class BidAPI extends APIRouter implements BidAPIInterface {
@@ -19,7 +18,6 @@ public class BidAPI extends APIRouter implements BidAPIInterface {
      * Singleton design pattern
      */
     private static BidAPI ourInstance;
-
     /**
      * BidAPI constructor (private)
      */
@@ -31,7 +29,6 @@ public class BidAPI extends APIRouter implements BidAPIInterface {
 
     /**
      * Global access point
-     *
      * @return the only instance of this class
      */
     public static BidAPI getInstance() {
@@ -44,50 +41,49 @@ public class BidAPI extends APIRouter implements BidAPIInterface {
 
     /**
      * Get all bid requests
-     *
      * @return an array of Bids
      */
     @Override
-    public ArrayList<Bid> getAll() {
+    public ArrayList<Bid> getAll(){
         ArrayList<Bid> bids = new ArrayList<>();
-        String response = GETRequest(this.route);
-        JSONArray arr = new JSONArray(response);
-        for (int i = 0; i < arr.length(); i++) {
-            JSONObject jsonObj = arr.getJSONObject(i);
-            String jsonStr = jsonObj.toString();
-            Bid bid;
-            if (jsonObj.getString("type") == "open") {
-                OpenBidFactory bidFactory = new OpenBidFactory();
-                bid = bidFactory.createBid(jsonStr);
-            } else {
-                CloseBidFactory bidFactory = new CloseBidFactory();
-                bid = bidFactory.createBid(jsonStr);
+            String response = GETRequest(this.route);
+            JSONArray arr = new JSONArray(response);
+            System.out.println("BIDAPI: " + arr.toString());
+
+            for (int i = 0; i < arr.length(); i++) {
+                JSONObject jsonObj = arr.getJSONObject(i);
+                String jsonStr =  jsonObj.toString();
+                Bid bid = null;
+                if(jsonObj.getString("type").equals("open")){
+                    OpenBidFactory bidFactory = new OpenBidFactory();
+                    bid = bidFactory.createBid(jsonStr);
+                    bids.add(bid);
+                } else if (jsonObj.getString("type").equals("close")){
+                    CloseBidFactory bidFactory = new CloseBidFactory();
+                    bid = bidFactory.createBid(jsonStr);
+                    bids.add(bid);
+                }
             }
-            bids.add(bid);
-        }
-        return bids;
+            System.out.println("BIDAPI: " + bids.toString());
+
+            return bids;
     }
 
     /**
-     * Function that parses variables to json needed for the request body for
-     * create()
-     *
-     * @param type           type of bidding (open or close)
-     * @param initiatorId    Id of student who posted the bid request
-     * @param subjectId      Id of the subject requested
+     * Function that parses variables to json needed for the request body for create()
+     * @param type type of bidding (open or close)
+     * @param initiatorId Id of student who posted the bid request
+     * @param subjectId Id of the subject requested
      * @param additionalInfo additional infomation about this bid request
      * @return StringBuilder for the parsed json
      */
-    public StringBuilder parseToJsonForCreate(String type, String initiatorId,
-                                              String subjectId,
-                                              JSONObject additionalInfo) {
+    public StringBuilder parseToJsonForCreate(String type, String initiatorId, String subjectId, JSONObject additionalInfo){
         Timestamp now = new Timestamp(System.currentTimeMillis());
         StringBuilder jsonParam = new StringBuilder();
         jsonParam.append("{");
         jsonParam.append(String.format("\"type\": \"%s\",", type));
         jsonParam.append(String.format("\"initiatorId\": \"%s\",", initiatorId));
-        jsonParam.append(String.format("\"dateCreated\": \"%s\",",
-                Utility.sdf2.format(now)));
+        jsonParam.append(String.format("\"dateCreated\": \"%s\",", Utility.sdf2.format(now)));
         jsonParam.append(String.format("\"subjectId\": \"%s\",", subjectId));
         jsonParam.append("\"additionalInfo\": ");
         jsonParam.append(additionalInfo);
@@ -97,17 +93,14 @@ public class BidAPI extends APIRouter implements BidAPIInterface {
     }
 
     /**
-     * Function that parses variables to json needed for the request body for
-     * updatePartialById()
-     *
+     * Function that parses variables to json needed for the request body for updatePartialById()
      * @param additionalInfo additional information to update
      * @return StringBuilder of the parsed json
      */
-    public StringBuilder parseToJsonForPartialUpdate(JSONObject additionalInfo) {
+    public StringBuilder parseToJsonForPartialUpdate(JSONObject additionalInfo){
         StringBuilder jsonParam = new StringBuilder();
         jsonParam.append("{");
-        jsonParam.append(String.format("\"additionalInfo\": \"%s\"",
-                additionalInfo.toString()));
+        jsonParam.append(String.format("\"additionalInfo\": \"%s\"", additionalInfo.toString()));
         jsonParam.append("}");
 
         return jsonParam;
@@ -115,28 +108,26 @@ public class BidAPI extends APIRouter implements BidAPIInterface {
 
     /**
      * Function to call the API to closed down a Bid
-     *
      * @param id Id of the bid
      * @return true if bid request is successfully closed down
      */
-    public boolean closeDownBidById(String id) {
+    public boolean closeDownBidById(String id){
         try {
             String route = this.route + "/" + id + "/close-down";
             Timestamp now = new Timestamp(System.currentTimeMillis());
             StringBuilder jsonParam = new StringBuilder();
             jsonParam.append("{");
-            jsonParam.append(String.format("\"dateClosedDown\": \"%s\"",
-                    Utility.sdf2.format(now)));
+            jsonParam.append(String.format("\"dateClosedDown\": \"%s\"", Utility.sdf2.format(now)));
             jsonParam.append("}");
             String response = UpdateRequest(route, jsonParam, APIService.POST);
             JSONObject resObj = new JSONObject(response);
             // TODO: add conditions for different status code (400, 401, 409)
-            if (resObj.getInt("statusCode") == 200) {
+            if (resObj.getInt("statusCode") == 200){
                 return true;
-            } else {
+            }else{
                 return false;
             }
-        } catch (Exception e) {
+        } catch (Exception e){
             e.printStackTrace();
         }
         return false;

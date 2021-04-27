@@ -1,30 +1,30 @@
 package com.matchingSystem.Controller;
 
-import com.matchingSystem.Model.BidOffer;
-import com.matchingSystem.View.CloseBidMsgView;
+import com.matchingSystem.API.APIFacade;
+import com.matchingSystem.View.SignContractView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CloseBidMsgController implements ActionListener {
-    private CloseBidMsgView view;
-    private BidOffer bidOffer;
+public class SignContractController implements ActionListener {
+    private SignContractView view;
+    private String contractId;
 
-    public CloseBidMsgController(CloseBidMsgView view, BidOffer bidOffer) {
+    public SignContractController(SignContractView view, String cId) {
         this.view = view;
-        this.bidOffer = bidOffer;
+        this.contractId = cId;
         initController();
     }
 
     private void initController() {
-        view.getSendBtn().addActionListener(this);
+        view.getSignBtn().addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO: sendBtn onclick call MessageAPI
+        // TODO: signBtn onclick call signContractAPI
+        APIFacade.getContractAPI().sign(contractId);
 
-        String message = view.getMessageTextField().getText();
         view.dispose();
     }
 }
