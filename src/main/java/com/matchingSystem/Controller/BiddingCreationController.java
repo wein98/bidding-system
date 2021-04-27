@@ -1,11 +1,7 @@
 package com.matchingSystem.Controller;
 
-import com.matchingSystem.API.APIAdapters.BidAPI;
 import com.matchingSystem.Model.BiddingCreationModel;
-import com.matchingSystem.Model.LoginModel;
-import com.matchingSystem.UserCookie;
 import com.matchingSystem.View.BiddingCreationView;
-import com.matchingSystem.View.LoginView;
 import org.json.JSONObject;
 
 import java.awt.event.ActionEvent;
