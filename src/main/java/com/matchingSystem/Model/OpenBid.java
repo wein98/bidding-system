@@ -89,6 +89,7 @@ public class OpenBid extends Bid{
      */
     @Override
     public void close() {
+        // TODO: should i call the close down API here ?
         this.closed = true;
         this.dateClosedDown = new Timestamp(System.currentTimeMillis());
         additionalInfo.put("successfulBidder","undefined");
