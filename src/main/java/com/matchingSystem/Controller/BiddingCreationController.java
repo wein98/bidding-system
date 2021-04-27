@@ -33,6 +33,7 @@ public class BiddingCreationController implements Observer {
             public void actionPerformed(ActionEvent e){
                 System.out.println("HAHA button is hit!");
                 postBid();
+                view.dispose();
             }
         });
     }

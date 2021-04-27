@@ -23,7 +23,7 @@ public class UserTypeController {
         // IsStudentBtn OnClick listener
         view.getIsStudentBtn().addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                UserCookie.init(Constant.IS_STUDENT, jwtCode);
+                UserCookie.init(Constant.IS_STUDENT);
                 userTypeSelected();
                 view.dispose();
             }
@@ -32,7 +32,7 @@ public class UserTypeController {
         // IsTutorBtn OnClick listener
         view.getIsTutorBtn().addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                UserCookie.init(Constant.IS_TUTOR, jwtCode);
+                UserCookie.init(Constant.IS_TUTOR);
                 userTypeSelected();
                 view.dispose();
             }
