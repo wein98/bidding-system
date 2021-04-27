@@ -6,7 +6,7 @@ import com.matchingSystem.Model.BiddingsModel;
 import com.matchingSystem.Model.DashboardModel;
 import com.matchingSystem.View.BiddingCreationView;
 import com.matchingSystem.View.DashboardView;
-import com.matchingSystem.View.OpenBidView;
+import com.matchingSystem.View.OpenCloseBidView;
 import com.matchingSystem.View.TutorBidOffersView;
 
 import java.util.Observable;
@@ -65,11 +65,14 @@ public class DashboardController implements Observer, ActionListener {
             if (model.getBidType() == Constant.OPENBID) {
                 // open openbid view
                 BiddingsModel biddingsModel = new BiddingsModel();
-                OpenBidView openBidView = new OpenBidView(biddingsModel);
-                new OpenBidController(openBidView, biddingsModel);
+                OpenCloseBidView openBidView = new OpenCloseBidView(biddingsModel, Constant.OPEN_BIDDING_VIEW);
+                new OpenCloseBidController(openBidView, biddingsModel);
 
             } else if (model.getBidType() == Constant.CLOSEBID) {
-                // TODO: open closebid view
+                // open closebid view
+                BiddingsModel biddingsModel = new BiddingsModel();
+                OpenCloseBidView openBidView = new OpenCloseBidView(biddingsModel, Constant.CLOSE_BIDDING_VIEW);
+                new OpenCloseBidController(openBidView, biddingsModel);
 
             } else {
                 // Open student create bid view

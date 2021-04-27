@@ -1,5 +1,6 @@
 package com.matchingSystem.View;
 
+import com.matchingSystem.Constant;
 import com.matchingSystem.Model.*;
 
 import javax.swing.*;
@@ -8,9 +9,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class OpenBidView extends BiddingsView {
+public class OpenCloseBidView extends BiddingsView {
+    private final int bidViewType;
 
-    public OpenBidView(BiddingsModel model) {
+    public OpenCloseBidView(BiddingsModel model, int bidViewType) {
+        this.bidViewType = bidViewType;
         this.model = model;
         initComponents();
         this.setVisible(true);
@@ -18,7 +21,11 @@ public class OpenBidView extends BiddingsView {
 
     @Override
     protected void initComponents() {
-        titleLabel.setText("Open Biddings");
+        if (bidViewType == Constant.OPEN_BIDDING_VIEW) {
+            titleLabel.setText("Open Biddings");
+        } else if (bidViewType == Constant.CLOSE_BIDDING_VIEW){
+            titleLabel.setText("Close Biddings");
+        }
 
         scrollPane.getViewport().setView(panel);
         setContentPane(mainPanel);
@@ -52,6 +59,20 @@ public class OpenBidView extends BiddingsView {
                     }
                 });
 
+                if (bidViewType == Constant.CLOSE_BIDDING_VIEW) {
+                    JButton btn2 = new JButton("Reply message");
+                    panel1.add(btn2);
+
+                    // buttons action listener
+                    btn2.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            // TODO: reply message
+//                            model.selectOffer(b);
+                        }
+                    });
+                }
+
                 GridBagConstraints gbc = new GridBagConstraints();
                 gbc.gridwidth = GridBagConstraints.REMAINDER;
                 gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -78,5 +99,9 @@ public class OpenBidView extends BiddingsView {
         };
         String[] col = {"", ""};
         return new JTable(rec, col);
+    }
+
+    public int getBidViewType() {
+        return bidViewType;
     }
 }
