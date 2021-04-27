@@ -1,5 +1,6 @@
 package com.matchingSystem.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.matchingSystem.Model.Bid;
 import com.matchingSystem.Model.Message;
@@ -9,6 +10,7 @@ import org.json.JSONObject;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CloseBid implements Bid {
     @JsonProperty("id")
     protected String id;
@@ -90,5 +92,30 @@ public class CloseBid implements Bid {
 
     public String getType() {
         return type;
+    }
+
+    @Override
+    public Poster getInitiator() {
+        return null;
+    }
+
+    @Override
+    public Subject getSubject() {
+        return null;
+    }
+
+    @Override
+    public String getNoLessons() {
+        return null;
+    }
+
+    @Override
+    public String getRate() {
+        return null;
+    }
+
+    @Override
+    public String getDayTime() {
+        return null;
     }
 }
