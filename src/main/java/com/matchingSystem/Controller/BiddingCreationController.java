@@ -1,6 +1,7 @@
 package com.matchingSystem.Controller;
 
 import com.matchingSystem.Model.BiddingCreationModel;
+import com.matchingSystem.Model.DashboardModel;
 import com.matchingSystem.View.BiddingCreationView;
 import org.json.JSONObject;
 
@@ -12,10 +13,12 @@ import java.util.Observer;
 public class BiddingCreationController implements Observer {
     private BiddingCreationView view;
     private BiddingCreationModel model;
+    private DashboardModel parentModel;
 
-    public BiddingCreationController(BiddingCreationView view, BiddingCreationModel model) {
+    public BiddingCreationController(BiddingCreationView view, BiddingCreationModel model, DashboardModel parentModel) {
         this.view = view;
         this.model = model;
+        this.parentModel = parentModel;
         initController();
     }
 
@@ -29,6 +32,7 @@ public class BiddingCreationController implements Observer {
             public void actionPerformed(ActionEvent e){
                 System.out.println("HAHA button is hit!");
                 postBid();
+                parentModel.checkPostedBid();
                 view.dispose();
             }
         });

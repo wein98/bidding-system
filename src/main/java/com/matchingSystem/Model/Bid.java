@@ -2,12 +2,11 @@ package com.matchingSystem.Model;
 
 import com.matchingSystem.Poster;
 
-import java.sql.Timestamp;
-
 public interface Bid {
     void selectBidder(BidOffer offer);
 
     boolean isExpired();
+    String getExpireDuration();
 
     void close();
     String getDateCreated();
@@ -17,4 +16,5 @@ public interface Bid {
     String getNoLessons();
     String getRate();
     String getDayTime();
+    int getCompetencyLevel();
 }

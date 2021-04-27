@@ -50,6 +50,12 @@ public class DashboardModel extends Observable {
         contractArrayList = user.getContracts();
     }
 
+    public void checkPostedBid() {
+        ((Student) user).setInitiatedBid();
+        setChanged();
+        notifyObservers();
+    }
+
     public String getTesting() {
         return testing;
     }

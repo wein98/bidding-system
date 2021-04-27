@@ -4,17 +4,13 @@ import com.matchingSystem.API.APIFacade;
 import com.matchingSystem.Constant;
 import com.matchingSystem.UserCookie;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Observable;
 
 public class BiddingsModel extends Observable {
 
     private ArrayList<BidOffer> bidOffersList = new ArrayList<>();
     private ArrayList<Bid> bids = new ArrayList<>();
-    private String duration;
-    private int biddingsViewType;
 
     public void setBiddings(int biddingsViewType) {
         // TODO:
@@ -23,6 +19,9 @@ public class BiddingsModel extends Observable {
         //      - populate additionalInfos to List<BidOffer>
 
         // biddingsViewType = Constant.OPEN_BIDDING_VIEW
+        if (biddingsViewType == Constant.OPEN_BIDDING_VIEW) {
+            setBidOffersList();
+        }
         // biddingsViewType = Constant.CLOSE_BIDDING_VIEW
         // biddingsViewType = Constant.OFFER_BIDS_VIEW
         if (biddingsViewType == Constant.OFFER_BIDS_VIEW) {
@@ -47,14 +46,12 @@ public class BiddingsModel extends Observable {
     }
 
     private void setBidOffersList() {
-
+        setChanged();
+        notifyObservers();
     }
 
-    public void setDuration() {
-//        Timestamp timestamp = new Timestamp();
-        Student studentObj = (Student) UserCookie.getUser();
+    public void selectOffer(BidOffer b) {
 
-        this.duration = duration;
     }
 
     public ArrayList<BidOffer> getBidOffersList() {
@@ -66,6 +63,7 @@ public class BiddingsModel extends Observable {
     }
 
     public String getDuration() {
-        return duration;
+        Student studentObj = (Student) UserCookie.getUser();
+        return studentObj.getInitiatedBid().getExpireDuration();
     }
 }
