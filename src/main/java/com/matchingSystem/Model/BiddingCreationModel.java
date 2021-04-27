@@ -25,7 +25,6 @@ public class BiddingCreationModel extends Observable {
     private static String[] dayNight = {"AM","PM"};
     private static String[] numsForLesson = {"1","2","3","4","5","6","7","8","9","10"};
     private static String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
-    private User user = UserCookie.getInstance().getUser();
 
     public void updateDDL(){
 
@@ -57,13 +56,10 @@ public class BiddingCreationModel extends Observable {
     public static String[] getNumsForLesson() { return numsForLesson; }
 
     public void initiateBid(JSONObject jsonObj){
-        String type = jsonObj.getString("type");
-        String initiatorId = user.getId();
-        String subjectId = getSubjectId(jsonObj.getInt("subjectIndex"));
-        JSONObject additionalInfo = jsonObj.getJSONObject("additionalInfo");
-        StringBuilder jsonParams = bidAPI.parseToJsonForCreate(type, initiatorId, subjectId, additionalInfo);
-        System.out.println("Get all params for bid creation");
-        System.out.println(jsonParams.toString());
-        bidAPI.create(jsonParams);
+        Student studentObj = (Student) UserCookie.getUser();
+        studentObj.postBid(
+                jsonObj.getString("type"),
+                getSubjectId(jsonObj.getInt("subjectIndex")),
+                jsonObj.getJSONObject("additionalInfo"));
     }
 }

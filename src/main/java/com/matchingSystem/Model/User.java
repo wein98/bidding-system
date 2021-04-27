@@ -2,6 +2,13 @@ package com.matchingSystem.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.matchingSystem.API.APIFacade;
+import com.matchingSystem.Constant;
+import com.matchingSystem.UserCookie;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -24,7 +31,8 @@ public abstract class User extends Observable {
     protected ArrayList<Competency> competencies = new ArrayList<Competency>();
     protected ArrayList<Qualification> qualifications = new ArrayList<Qualification>();
     protected ArrayList<Contract> contracts = new ArrayList<Contract>();
-    protected Bid initiatedBid;
+
+    protected ObjectMapper objectMapper = new ObjectMapper();
 
     public User(String id, String givenName, String familyName, String userName) {
         this.id = id;
@@ -51,12 +59,46 @@ public abstract class User extends Observable {
         return userName;
     }
 
+    public void setCompetencies() {
+        JSONObject response = (JSONObject) APIFacade.getUserAPI().getById(this.getId(), Constant.COMPETENCIES_SUBJECT_S);
+        JSONArray arr = response.getJSONArray("competencies");
+
+        // Update the list of competencies to UserCookie
+        if (arr.length() != 0) {
+            for (int i = 0; i < arr.length(); i++) {
+                try {
+                    JSONObject obj = arr.getJSONObject(i);
+                    addCompetency(objectMapper.readValue(obj.toString(), Competency.class));
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     public ArrayList<Competency> getCompetencies() {
         return competencies;
     }
 
     public void addCompetency(Competency c) {
         competencies.add(c);
+    }
+
+    public void setQualifications() {
+        JSONObject response = (JSONObject) APIFacade.getUserAPI().getById(UserCookie.getUser().getId(), Constant.QUALIFICATIONS_S);
+        JSONArray arr = response.getJSONArray("qualifications");
+
+        // Update the list of qualifications to UserCookie
+        if (arr.length() != 0) {
+            for (int i = 0; i < arr.length(); i++) {
+                try {
+                    JSONObject obj = arr.getJSONObject(i);
+                    addQualification(objectMapper.readValue(obj.toString(), Qualification.class));
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     public ArrayList<Qualification> getQualifications() {
@@ -67,20 +109,14 @@ public abstract class User extends Observable {
         qualifications.add(q);
     }
 
+    public void setContracts() {}
+
     public ArrayList<Contract> getContracts() {
         return contracts;
     }
 
     public void addContract(Contract c) {
         contracts.add(c);
-    }
-
-    public Bid getInitiatedBid() {
-        return initiatedBid;
-    }
-
-    public void setInitiatedBid(Bid initiatedBid) {
-        this.initiatedBid = initiatedBid;
     }
 
     public void setGivenName(String givenName) {

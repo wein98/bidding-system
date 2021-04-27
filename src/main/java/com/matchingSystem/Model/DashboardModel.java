@@ -71,8 +71,9 @@ public class DashboardModel extends Observable {
     }
 
     public int getBidType() {
-        if (user.getInitiatedBid() != null) {
-            if (user.getInitiatedBid().getType().equals(Constant.OPENBID_S)) {
+        Student studentObj = (Student) user;
+        if (studentObj.getInitiatedBid() != null) {
+            if (studentObj.getInitiatedBid().getType().equals(Constant.OPENBID_S)) {
                 return Constant.OPENBID;
             } else {
                 return Constant.CLOSEBID;

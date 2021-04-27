@@ -1,21 +1,14 @@
 package com.matchingSystem;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.API.APIAdapters.ContractAPI;
-import com.matchingSystem.API.APIAdapters.UserAPI;
 import com.matchingSystem.API.ClientInterfaces.ContractAPIInterface;
-import com.matchingSystem.API.ClientInterfaces.UserAPIInterface;
 import com.matchingSystem.Model.*;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 public class UserCookie {
-    private static final UserAPIInterface userAPI = UserAPI.getInstance();
     private static final ContractAPIInterface contractAPI = ContractAPI.getInstance();
-    private static final ObjectMapper objMapper = new ObjectMapper();
     private static final UserFactory userFactory = new UserFactory();
 
     private static UserCookie ourInstance;
@@ -33,7 +26,7 @@ public class UserCookie {
 
     private UserCookie() {}
 
-    public static void init(int userType, String jwtCode) {
+    public static void init(int userType) {
         setUser(userType);
     }
 
@@ -47,56 +40,18 @@ public class UserCookie {
         userInfo = userInfo.replace("sub", "id");
         userInfo = userInfo.replace("username", "userName");
 
-        System.out.println(userInfo);
-
+        user = userFactory.createUser(userInfo, _userType);
         if (_userType == Constant.IS_STUDENT) {
-            user = (Student) userFactory.createUser(userInfo, _userType);
             userType = Constant.IS_STUDENT;
+            Student studentObj = (Student) user;
+            studentObj.setInitiatedBid();
         } else if (_userType == Constant.IS_TUTOR) {
-            user = (Tutor) userFactory.createUser(userInfo, _userType);
             userType = Constant.IS_TUTOR;
         }
 
-        setCompetencies();
-        setQualifications();
+        user.setCompetencies();
+        user.setQualifications();
         setContracts();
-        setInitiatedBid();
-    }
-
-    private static void setCompetencies() {
-        // Get list of competencies for this user
-        JSONObject response = (JSONObject) userAPI.getById(UserCookie.getUser().getId(), Constant.COMPETENCIES_SUBJECT_S);;
-        JSONArray competencyArr = response.getJSONArray("competencies");
-
-        // Update the list of competencies to UserCookie
-        if (competencyArr.length() != 0) {
-            for (int i = 0; i < competencyArr.length(); i++) {
-                try {
-                    JSONObject competencyObj = competencyArr.getJSONObject(i);
-                    user.addCompetency(objMapper.readValue(competencyObj.toString(), Competency.class));
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    private static void setQualifications() {
-        // Get list of competencies for this user
-        JSONObject response = (JSONObject) userAPI.getById(UserCookie.getUser().getId(), Constant.QUALIFICATIONS_S);;
-        JSONArray qualArr = response.getJSONArray("qualifications");
-
-        // Update the list of qualifications to UserCookie
-        if (qualArr.length() != 0) {
-            for (int i = 0; i < qualArr.length(); i++) {
-                try {
-                    JSONObject qualObj = qualArr.getJSONObject(i);
-                    user.addQualification(objMapper.readValue(qualObj.toString(), Qualification.class));
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 
     private static void setContracts() {
@@ -104,24 +59,6 @@ public class UserCookie {
 
         for (Contract c: contractArr) {
             user.addContract(c);
-        }
-    }
-
-    private static void setInitiatedBid() {
-        // Get list of competencies for this user
-        JSONObject response = (JSONObject) userAPI.getById(UserCookie.getUser().getId(), Constant.INITIATEDBIDS_S);
-        JSONArray bidArr = response.getJSONArray("initiatedBids");
-
-        // Update the list of qualifications to UserCookie
-        if (bidArr.length() != 0) {
-            JSONObject obj = bidArr.getJSONObject(0);
-            if (obj.getString("type").equals("open")) {
-                OpenBidFactory openBid = new OpenBidFactory();
-                user.setInitiatedBid(openBid.createBid(obj.toString()));
-            } else {
-                CloseBidFactory closeBid = new CloseBidFactory();
-                user.setInitiatedBid(closeBid.createBid(obj.toString()));
-            }
         }
     }
 
