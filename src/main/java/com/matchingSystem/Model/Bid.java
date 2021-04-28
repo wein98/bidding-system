@@ -1,9 +1,9 @@
 package com.matchingSystem.Model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.Poster;
+import com.matchingSystem.Utility;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -38,6 +38,80 @@ public abstract class Bid implements BidInterface{
         if(addInfo.size() > 0){
             this.additionalInfo = new JSONObject(addInfo);
         }
+    }
+
+    @Override
+    public String getId() {
+        return this.id;
+    }
+
+    @Override
+    public String getType() {
+        return type;
+    }
+
+    @Override
+    public Poster getInitiator() {
+        return this.initiator;
+    }
+
+    @Override
+    public String getDateCreated() {
+        return Utility.sdf2.format(this.dateCreated);
+    }
+
+    @Override
+    public Subject getSubject() {
+        return subject;
+    }
+
+    @Override
+    public JSONObject getAdditionalInfo() {
+        return additionalInfo;
+    }
+
+    @Override
+    public String getDuration() {
+        if (additionalInfo != null) {
+            return additionalInfo.getString("duration");
+        }
+        return null;
+    }
+
+    @Override
+    public String getNoLessons() {
+        if (additionalInfo != null) {
+            return additionalInfo.getString("numOfLesson");
+        }
+        return null;
+    }
+
+    @Override
+    public String getDayTime() {
+        if (additionalInfo != null) {
+            String retVal = additionalInfo.getString("prefDay") + ",";
+            retVal += additionalInfo.getString("time");
+            retVal += additionalInfo.getString("dayNight");
+            return retVal;
+        }
+        return null;
+
+    }
+
+    @Override
+    public String getRate() {
+        if (additionalInfo != null) {
+            return additionalInfo.getString("rate");
+        }
+        return null;
+    }
+
+    @Override
+    public int getCompetencyLevel() {
+        if (additionalInfo != null) {
+            return additionalInfo.getInt("competencyLevel");
+        }
+        return 0;
     }
 
     @Override

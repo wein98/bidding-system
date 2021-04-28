@@ -1,6 +1,7 @@
 package com.matchingSystem.Model;
 
 import com.matchingSystem.Poster;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -34,6 +35,7 @@ public interface BidInterface {
     String getDuration();
     Poster getInitiator();
     Subject getSubject();
+    JSONObject getAdditionalInfo();
     String getNoLessons();
     String getRate();
     String getDayTime();

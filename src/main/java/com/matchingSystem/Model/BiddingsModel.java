@@ -24,15 +24,11 @@ public class BiddingsModel extends Observable {
         //      - get the bid and addtionalInfos
         //      - populate additionalInfos to List<BidOffer>
 
-        // biddingsViewType = Constant.OPEN_BIDDING_VIEW
-        if (biddingsViewType == Constant.OPEN_BIDDING_VIEW) {
-            setBidOffersList(bidId);
-        }
-        // biddingsViewType = Constant.CLOSE_BIDDING_VIEW
-
         // biddingsViewType = Constant.OFFER_BIDS_VIEW
         if (biddingsViewType == Constant.OFFER_BIDS_VIEW) {
             setBids();
+        } else {
+            setBidOffersList(bidId);
         }
 
     }
@@ -70,7 +66,8 @@ public class BiddingsModel extends Observable {
     }
 
     public void selectOffer(BidOfferModel b) {
-
+        // TODO: call selectBidder() in bid
+        ((Student) UserCookie.getUser()).getInitiatedBid().selectBidder(b);
     }
 
     public ArrayList<BidOfferModel> getBidOffersList() {

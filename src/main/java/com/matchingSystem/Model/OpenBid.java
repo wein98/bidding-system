@@ -1,8 +1,5 @@
 package com.matchingSystem.Model;
 
-import com.matchingSystem.Poster;
-import com.matchingSystem.Utility;
-import org.json.JSONObject;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -17,6 +14,7 @@ public class OpenBid extends Bid{
 
     @Override
     public void selectBidder(BidOfferModel offer){
+        // TODO: call update bid API
         if(this.dateClosedDown != null ) {
             this.dateClosedDown = new Timestamp(System.currentTimeMillis());
             additionalInfo.put("successfulBidder",offer.getOfferTutorId());
@@ -65,79 +63,6 @@ public class OpenBid extends Bid{
         this.closed = true;
         this.dateClosedDown = new Timestamp(System.currentTimeMillis());
         additionalInfo.put("successfulBidder", tutorId);
-    }
-
-    // Getters
-
-    @Override
-    public String getDateCreated() {
-        return Utility.sdf2.format(this.dateCreated);
-    }
-
-    @Override
-    public String getType() {
-        return type;
-    }
-
-    @Override
-    public String getDuration() {
-        if (additionalInfo != null) {
-            return additionalInfo.getString("duration");
-        }
-        return null;
-    }
-
-    @Override
-    public Poster getInitiator() {
-        return initiator;
-    }
-
-    @Override
-    public Subject getSubject() {
-        return subject;
-    }
-
-    @Override
-    public String getId() { return this.id; }
-
-    @Override
-    public String getNoLessons() {
-        if (additionalInfo != null) {
-            return additionalInfo.getString("numOfLesson");
-        }
-        return null;
-    }
-
-    @Override
-    public String getRate() {
-        if (additionalInfo != null) {
-            return additionalInfo.getString("rate");
-        }
-        return null;
-    }
-
-    @Override
-    public String getDayTime() {
-        if (additionalInfo != null) {
-            String retVal = additionalInfo.getString("prefDay") + ",";
-            retVal += additionalInfo.getString("time");
-            retVal += additionalInfo.getString("dayNight");
-            return retVal;
-        }
-        return null;
-
-    }
-
-    public JSONObject getAdditionalInfo() {
-        return additionalInfo;
-    }
-
-    @Override
-    public int getCompetencyLevel() {
-        if (additionalInfo != null) {
-            return additionalInfo.getInt("competencyLevel");
-        }
-        return 0;
     }
 
     @Override
