@@ -2,28 +2,31 @@ package com.matchingSystem.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.matchingSystem.Model.BidInterface;
+import com.matchingSystem.Model.Message;
 import com.matchingSystem.Poster;
+import com.matchingSystem.Utility;
 import org.json.JSONObject;
 
 import java.sql.Timestamp;
 import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CloseBid implements Bid {
-    @JsonProperty("id")
-    protected String id;
-    @JsonProperty("type")
-    protected String type;
-    @JsonProperty("initiator")
-    protected Poster initiator;
-    @JsonProperty("dateCreated")
-    protected Timestamp dateCreated;
-    @JsonProperty("dateClosedDown")
-    protected Timestamp dateClosedDown;
-    @JsonProperty("subject")
-    protected Subject subject;
-    @JsonProperty("additionalInfo")
-    protected JSONObject additionalInfo;
+public class CloseBid extends Bid{
+//    @JsonProperty("id")
+//    protected String id;
+//    @JsonProperty("type")
+//    protected String type;
+//    @JsonProperty("initiator")
+//    protected Poster initiator;
+//    @JsonProperty("dateCreated")
+//    protected Timestamp dateCreated;
+//    @JsonProperty("dateClosedDown")
+//    protected Timestamp dateClosedDown;
+//    @JsonProperty("subject")
+//    protected Subject subject;
+//    @JsonProperty("additionalInfo")
+//    protected JSONObject additionalInfo;
 
     protected boolean closed = false; // indicate if a Bid is closed
     private Message tutorMessage;
@@ -31,7 +34,7 @@ public class CloseBid implements Bid {
 
 
     public CloseBid(){
-
+        super();
     }
 
     @SuppressWarnings("unchecked")
@@ -60,6 +63,13 @@ public class CloseBid implements Bid {
         return studentMessage;
     }
 
+    public void setTutorMessage(Message message){
+        this.tutorMessage = message;
+    }
+
+    public void setStudentMessage(Message message) {
+        this.studentMessage = message;
+    }
     /**
      * Check if a Bid request is still valid/active
      * @return true if the request already expired, otherwise false
@@ -97,7 +107,7 @@ public class CloseBid implements Bid {
      * @param message the message referred to
      * @return the offer attached to this message
      */
-    public BidOffer getOfferFromMessage(Message message){
+    public BidOfferModel getOfferFromMessage(Message message){
         return message.getLinkedOffer();
     }
 
@@ -106,7 +116,7 @@ public class CloseBid implements Bid {
      * @param offer the offer that the student choose to accept
      */
     @Override
-    public void selectBidder(BidOffer offer){
+    public void selectBidder(BidOfferModel offer){
         if(this.dateClosedDown != null ) {
             this.dateClosedDown = new Timestamp(System.currentTimeMillis());
             additionalInfo.put("successfulBidder",offer.getOfferTutorId());
@@ -125,7 +135,7 @@ public class CloseBid implements Bid {
 
     @Override
     public String getDateCreated() {
-        return null;
+        return Utility.sdf2.format(this.dateCreated);
     }
 
     public String getType() {
@@ -152,16 +162,31 @@ public class CloseBid implements Bid {
         return this.additionalInfo.getString("rate");
     }
 
+    public String getId() { return this.id; }
     @Override
     public String getDayTime() {
         return this.additionalInfo.getString("prefDay") + " ," + this.additionalInfo.getString("time") + this.additionalInfo.getString("dayNight");
     }
-
     @Override
     public int getCompetencyLevel() {
         if (additionalInfo != null) {
             return additionalInfo.getInt("competencyLevel");
         }
         return 0;
+    }
+
+
+    @Override
+    public String toString() {
+        return "CloseBid{" +
+                "id='" + id + '\'' +
+                ", type='" + type + '\'' +
+                ", initiator=" + initiator +
+                ", dateCreated=" + dateCreated +
+                ", dateClosedDown=" + dateClosedDown +
+                ", subject=" + subject +
+                ", additionalInfo=" + additionalInfo +
+                ", closed=" + closed +
+                '}';
     }
 }

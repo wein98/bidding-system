@@ -24,7 +24,7 @@ public class BidAPI extends APIRouter implements BidAPIInterface {
     private BidAPI() {
         this.objMapper = new ObjectMapper();
         route = "/bid";
-        this.c = OpenBid.class;
+        this.c = Bid.class;
     }
 
     /**
@@ -57,6 +57,34 @@ public class BidAPI extends APIRouter implements BidAPIInterface {
             return bids;
     }
 
+    @Override
+    public Bid getById(String id, String queryParam){
+        String urlRoute = route + "/" + id + queryParam;
+        String jsonResponse = APIService.GETRequest(urlRoute);
+        JSONObject jsonObj = new JSONObject(jsonResponse);
+        BidFactory bidFactory = new BidFactory();
+        Bid bid = bidFactory.createBid(jsonObj);
+        return bid;
+    }
+
+    @Override
+    public Bid create(StringBuilder params){
+        String jsonResponse = APIService.UpdateRequest(route, params, APIService.POST);
+        JSONObject jsonObj = new JSONObject(jsonResponse);
+        BidFactory bidFactory = new BidFactory();
+        Bid bid = bidFactory.createBid(jsonObj);
+        return bid;
+    }
+
+    @Override
+    public Bid updatePartialById(String id, StringBuilder params) {
+        String jsonResponse = APIService.UpdateRequest(route + "/" + id, params, APIService.PATCH);
+        System.out.println(jsonResponse);
+        JSONObject jsonObj = new JSONObject(jsonResponse);
+        BidFactory bidFactory = new BidFactory();
+        Bid bid = bidFactory.createBid(jsonObj);
+        return bid;
+    }
     /**
      * Function that parses variables to json needed for the request body for create()
      * @param type type of bidding (open or close)
@@ -88,7 +116,8 @@ public class BidAPI extends APIRouter implements BidAPIInterface {
     public StringBuilder parseToJsonForPartialUpdate(JSONObject additionalInfo){
         StringBuilder jsonParam = new StringBuilder();
         jsonParam.append("{");
-        jsonParam.append(String.format("\"additionalInfo\": \"%s\"", additionalInfo.toString()));
+        jsonParam.append("\"additionalInfo\": ");
+        jsonParam.append(additionalInfo);
         jsonParam.append("}");
 
         return jsonParam;

@@ -32,10 +32,10 @@ public class OpenCloseBidView extends BiddingsView {
         pack();
     }
 
-    public void setPanel(ArrayList<BidOffer> bidOffers) {
+    public void setPanel(ArrayList<BidOfferModel> bidOffers) {
         panel.removeAll();
         if (bidOffers.size() != 0) {
-            for (BidOffer b: bidOffers) {
+            for (BidOfferModel b: bidOffers) {
 //        for (int i=0; i<4; i++) {
                 JPanel panel1 = new JPanel();
                 panel1.getInsets().set(20, 20, 20, 20);
@@ -86,7 +86,7 @@ public class OpenCloseBidView extends BiddingsView {
 
     }
 
-    private JTable getTable(BidOffer b) {
+    private JTable getTable(BidOfferModel b) {
         String[][] rec = {
 //                {"Tutor name", },
 //                {"Tutor qualification", b.getInitiator().getGivenName()},

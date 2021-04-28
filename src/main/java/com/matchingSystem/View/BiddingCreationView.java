@@ -3,6 +3,7 @@ package com.matchingSystem.View;
 import com.matchingSystem.Model.BiddingCreationModel;
 import com.matchingSystem.Model.Qualification;
 import com.matchingSystem.Model.Subject;
+import com.matchingSystem.Utility;
 import org.json.JSONObject;
 
 import javax.swing.*;
@@ -60,19 +61,19 @@ public class BiddingCreationView extends javax.swing.JFrame implements Observer 
             for (String item: subjectNames) {
                 this.subjects.addItem(item);
             }
-            for (String item: BiddingCreationModel.getTimeVals()) {
+            for (String item: Utility.timeVals) {
                 this.timeVal.addItem(item);
             }
-            for (String item: BiddingCreationModel.getDayNight()) {
+            for (String item: Utility.dayNight) {
                 this.dayNight.addItem(item);
             }
-            for (String item: BiddingCreationModel.getNumsForLesson()) {
+            for (String item: Utility.numsForLesson) {
                 this.numOfLesson.addItem(item);
             }
-            for (String item: BiddingCreationModel.getDays()) {
+            for (String item: Utility.days) {
                 this.days.addItem(item);
             }
-            for (String item: BiddingCreationModel.getDuration()) {
+            for (String item: Utility.duration) {
                  this.duration.addItem(item);
             }
             System.out.println("---> Updated all fields in form");
