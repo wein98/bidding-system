@@ -13,4 +13,5 @@ public interface StudentActions {
      * @param addInfo   lesson info of the bid
      */
     void postBid(String bidType, String subjectId, JSONObject addInfo);
+
 }

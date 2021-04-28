@@ -39,6 +39,7 @@ public class OpenCloseBidController implements Observer, ActionListener {
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof BiddingsModel) {
+            System.out.println("POPOSFAF");
             view.setPanel(model.getBidOffersList());
             view.getBidDurationText().setText("Bid duration left: " + model.getDuration());
         }

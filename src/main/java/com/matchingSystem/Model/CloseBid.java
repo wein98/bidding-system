@@ -1,7 +1,5 @@
 package com.matchingSystem.Model;
 
-import com.matchingSystem.Poster;
-import com.matchingSystem.Utility;
 import java.sql.Timestamp;
 
 public class CloseBid extends Bid{
@@ -44,6 +42,7 @@ public class CloseBid extends Bid{
 
     @Override
     public void selectBidder(BidOfferModel offer){
+        // TODO: call update bid api
         if(this.dateClosedDown != null ) {
             this.dateClosedDown = new Timestamp(System.currentTimeMillis());
             additionalInfo.put("successfulBidder",offer.getOfferTutorId());
@@ -83,9 +82,6 @@ public class CloseBid extends Bid{
         return message.getLinkedOffer();
     }
 
-
-    // Getters
-
     public Message getTutorMessage(){
         return this.tutorMessage;
     }
@@ -93,68 +89,6 @@ public class CloseBid extends Bid{
     public Message getStudentMessage() {
         return studentMessage;
     }
-
-    @Override
-    public String getDateCreated() {
-        return Utility.sdf2.format(this.dateCreated);
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    @Override
-    public String getDuration() {
-        if (additionalInfo != null) {
-            return additionalInfo.getString("duration");
-        }
-        return null;
-    }
-
-    @Override
-    public Poster getInitiator() {
-        return this.initiator;
-    }
-
-    @Override
-    public Subject getSubject() {
-        return this.subject;
-    }
-
-    @Override
-    public String getNoLessons() {
-        if (additionalInfo != null) {
-            return additionalInfo.getString("numOfLesson");
-        }
-        return null;
-    }
-
-    @Override
-    public String getRate() {
-        if (additionalInfo != null) {
-            return additionalInfo.getString("rate");
-        }
-        return null;
-    }
-
-    public String getId() { return this.id; }
-    @Override
-    public String getDayTime() {
-        if (additionalInfo != null) {
-            return additionalInfo.getString("prefDay") + " ,"
-                    + this.additionalInfo.getString("time")
-                    + this.additionalInfo.getString("dayNight");
-        }
-        return null;
-    }
-    @Override
-    public int getCompetencyLevel() {
-        if (additionalInfo != null) {
-            return additionalInfo.getInt("competencyLevel");
-        }
-        return 0;
-    }
-
 
     @Override
     public String toString() {
