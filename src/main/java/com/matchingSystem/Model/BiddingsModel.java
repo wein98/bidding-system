@@ -23,6 +23,7 @@ public class BiddingsModel extends Observable {
             setBidOffersList();
         }
         // biddingsViewType = Constant.CLOSE_BIDDING_VIEW
+
         // biddingsViewType = Constant.OFFER_BIDS_VIEW
         if (biddingsViewType == Constant.OFFER_BIDS_VIEW) {
             setBids();
@@ -30,6 +31,9 @@ public class BiddingsModel extends Observable {
 
     }
 
+    /**
+     * Set the biddings view for TutorBidOffersView.
+     */
     private void setBids() {
         ArrayList<Bid> bidsArr = (ArrayList<Bid>) APIFacade.getBidAPI().getAll();
 
@@ -41,10 +45,15 @@ public class BiddingsModel extends Observable {
 
         }
 
+        bids = bidsArr;
+
         setChanged();
         notifyObservers();
     }
 
+    /**
+     * Set the bid offers view for OpenCloseBidView.
+     */
     private void setBidOffersList() {
         setChanged();
         notifyObservers();

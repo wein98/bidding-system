@@ -29,20 +29,24 @@ public class Student extends User implements StudentActions {
                 '}';
     }
 
-    @Override
-    public Bid getInitiatedBid() {
-        return initiatedBid;
-    }
-
+    /**
+     * Student post a bid to initiate a bid.
+     * @param bidType   type of the bid, "open" or "close"
+     * @param subjectId the subject id of the bid
+     * @param addInfo   lesson info of the bid
+     */
     @Override
     public void postBid(String bidType, String subjectId, JSONObject addInfo) {
         StringBuilder jsonParams = APIFacade.getBidAPI().parseToJsonForCreate(bidType, getId(), subjectId, addInfo);
         APIFacade.getBidAPI().create(jsonParams);
     }
 
+    /**
+     * Store student's initiated bid if there exists.
+     */
     @Override
     public void setInitiatedBid() {
-        JSONObject response = (JSONObject) APIFacade.getUserAPI().getById(getId(), Constant.INITIATEDBIDS_S);
+        JSONObject response = (JSONObject) APIFacade.getUserAPI().getById(getId(), Constant.INITIATEDBIDS);
         JSONArray arr = response.getJSONArray("initiatedBids");
 
         if (arr.length() != 0) {
@@ -53,4 +57,8 @@ public class Student extends User implements StudentActions {
         }
     }
 
+    @Override
+    public Bid getInitiatedBid() {
+        return initiatedBid;
+    }
 }

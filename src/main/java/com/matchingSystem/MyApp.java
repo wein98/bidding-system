@@ -1,6 +1,5 @@
 package com.matchingSystem;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.API.APIAdapters.*;
 import com.matchingSystem.API.APIFacade;
 import com.matchingSystem.API.ClientInterfaces.CompetencyAPIInterface;
@@ -242,7 +241,7 @@ public class MyApp {
             System.out.println("--> Successful");
 
             System.out.println("\ngetById()");
-            Contract contract2 = (Contract) contractAPI.getById(contractId, Constant.NONE_S);
+            Contract contract2 = (Contract) contractAPI.getById(contractId, Constant.NONE);
             System.out.println("--> Successful");
 
             System.out.println("\nupdatePartialById()");

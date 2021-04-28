@@ -1,7 +1,5 @@
 package com.matchingSystem.Model;
 
-import com.matchingSystem.API.APIFacade;
-import com.matchingSystem.Constant;
 import com.matchingSystem.UserCookie;
 import org.json.JSONObject;
 
@@ -23,7 +21,9 @@ public class BidOfferModel extends Observable {
         this.freeLesson = freeLesson;
     }
 
-    public BidOfferModel(){}
+    public BidOfferModel(Bid b){
+        this.bidId = b.getId();
+    }
 
     public String getOfferTutorId() {
         return offerTutorId;

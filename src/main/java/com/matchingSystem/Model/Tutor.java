@@ -2,7 +2,6 @@ package com.matchingSystem.Model;
 
 import com.matchingSystem.API.APIFacade;
 import com.matchingSystem.Constant;
-import com.matchingSystem.Model.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -26,7 +25,7 @@ public class Tutor extends User {
      * @param additionalObject
      */
     public void makeOfferToOpenBidding(String bidId, JSONObject additionalObject) {
-        OpenBid bid = (OpenBid) APIFacade.getBidAPI().getById(bidId, Constant.NONE_S);
+        OpenBid bid = (OpenBid) APIFacade.getBidAPI().getById(bidId, Constant.NONE);
         JSONObject additionalInfo = bid.getAdditionalInfo();
         if (additionalInfo.has("openBidOffers")) {
             JSONArray bidOffersJson = additionalInfo.getJSONArray("openBidOffers");
@@ -39,7 +38,7 @@ public class Tutor extends User {
             additionalInfo.put("openBidOffers", bidOffersJson);
         }
         StringBuilder params = APIFacade.getBidAPI().parseToJsonForPartialUpdate(additionalInfo);
-//        APIFacade.getBidAPI().updatePartialById(bidId, params);
+        APIFacade.getBidAPI().updatePartialById(bidId, params);
     }
 
     // TODO: student should also have the function to reply to a message that is sent by a tutor on a close bid

@@ -2,12 +2,11 @@ package com.matchingSystem.Model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.matchingSystem.Poster;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.sql.Array;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 // holds the common fields of OpenBid and CloseBid
 public abstract class Bid implements BidInterface{
@@ -28,4 +27,12 @@ public abstract class Bid implements BidInterface{
 
     @JsonProperty(value = "messages",required = false)
     protected List<Message> messages;
+
+    @SuppressWarnings("unchecked")
+    @JsonProperty("additionalInfo")
+    private void unpackNested(Map<String,Object> addInfo) {
+        if(addInfo.size() > 0){
+            this.additionalInfo = new JSONObject(addInfo);
+        }
+    }
 }
