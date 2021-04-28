@@ -4,6 +4,8 @@ import com.matchingSystem.Constant;
 import com.matchingSystem.Model.BiddingCreationModel;
 import com.matchingSystem.Model.BiddingsModel;
 import com.matchingSystem.Model.DashboardModel;
+import com.matchingSystem.Model.Student;
+import com.matchingSystem.UserCookie;
 import com.matchingSystem.View.BiddingCreationView;
 import com.matchingSystem.View.DashboardView;
 import com.matchingSystem.View.OpenCloseBidView;
@@ -61,16 +63,17 @@ public class DashboardController implements Observer, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (model.getUserType().equals("Student")) {
+            Student studentObj = (Student) UserCookie.getUser();
 
             if (model.getBidType() == Constant.OPENBID) {
                 // open openbid view
-                BiddingsModel biddingsModel = new BiddingsModel();
+                BiddingsModel biddingsModel = new BiddingsModel(studentObj.getInitiatedBid().getId());
                 OpenCloseBidView openBidView = new OpenCloseBidView(biddingsModel, Constant.OPEN_BIDDING_VIEW);
                 new OpenCloseBidController(openBidView, biddingsModel);
 
             } else if (model.getBidType() == Constant.CLOSEBID) {
                 // open closebid view
-                BiddingsModel biddingsModel = new BiddingsModel();
+                BiddingsModel biddingsModel = new BiddingsModel(studentObj.getInitiatedBid().getId());
                 OpenCloseBidView openBidView = new OpenCloseBidView(biddingsModel, Constant.CLOSE_BIDDING_VIEW);
                 new OpenCloseBidController(openBidView, biddingsModel);
 

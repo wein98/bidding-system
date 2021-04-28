@@ -20,14 +20,15 @@ public class TutorBidOffersView extends BiddingsView {
     protected void initComponents() {
         titleLabel.setText("Offer Bids");
         BidDurationText.setVisible(false);
-
-        scrollPane.getViewport().setView(panel);
+        OpenBidDetailsPanel.setVisible(false);
         setContentPane(mainPanel);
         pack();
     }
 
     public void setPanel(ArrayList<Bid> bids) {
         panel.removeAll();
+        scrollPane.getViewport().setView(panel);
+
         for (Bid b: bids) {
 
             JPanel panel1 = new JPanel();

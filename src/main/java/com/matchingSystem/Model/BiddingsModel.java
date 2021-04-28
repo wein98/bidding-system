@@ -3,7 +3,6 @@ package com.matchingSystem.Model;
 import com.matchingSystem.API.APIFacade;
 import com.matchingSystem.Constant;
 import com.matchingSystem.UserCookie;
-
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -11,6 +10,13 @@ public class BiddingsModel extends Observable {
 
     private ArrayList<BidOfferModel> bidOffersList = new ArrayList<>();
     private ArrayList<Bid> bids = new ArrayList<>();
+    private String bidId;
+
+    public BiddingsModel() {}
+
+    public BiddingsModel(String bidId) {
+        this.bidId = bidId;
+    }
 
     public void setBiddings(int biddingsViewType) {
         // TODO:
@@ -20,7 +26,7 @@ public class BiddingsModel extends Observable {
 
         // biddingsViewType = Constant.OPEN_BIDDING_VIEW
         if (biddingsViewType == Constant.OPEN_BIDDING_VIEW) {
-            setBidOffersList();
+            setBidOffersList(bidId);
         }
         // biddingsViewType = Constant.CLOSE_BIDDING_VIEW
 
@@ -54,7 +60,11 @@ public class BiddingsModel extends Observable {
     /**
      * Set the bid offers view for OpenCloseBidView.
      */
-    private void setBidOffersList() {
+    private void setBidOffersList(String bidId) {
+        // TODO: parse bid.addtionalInfo.bidOffers here
+        Bid b = (Bid) APIFacade.getBidAPI().getById(bidId, Constant.NONE);
+        bidOffersList = b.getBidOffers();
+
         setChanged();
         notifyObservers();
     }

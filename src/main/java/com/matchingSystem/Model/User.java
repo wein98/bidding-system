@@ -59,6 +59,10 @@ public abstract class User extends Observable {
         return userName;
     }
 
+    public String getFullName() {
+        return givenName + " " + familyName;
+    }
+
     public void setCompetencies() {
         JSONObject response = (JSONObject) APIFacade.getUserAPI().getById(this.getId(), Constant.COMPETENCIES_SUBJECT);
         JSONArray arr = response.getJSONArray("competencies");

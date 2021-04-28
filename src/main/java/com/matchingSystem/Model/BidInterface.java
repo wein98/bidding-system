@@ -2,6 +2,8 @@ package com.matchingSystem.Model;
 
 import com.matchingSystem.Poster;
 
+import java.util.ArrayList;
+
 public interface BidInterface {
     /**
      * Select successful bidder
@@ -37,4 +39,5 @@ public interface BidInterface {
     String getDayTime();
     String getDateCreated();
     int getCompetencyLevel();
+    ArrayList<BidOfferModel> getBidOffers();
 }

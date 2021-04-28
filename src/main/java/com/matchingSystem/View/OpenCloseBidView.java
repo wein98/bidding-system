@@ -27,13 +27,14 @@ public class OpenCloseBidView extends BiddingsView {
             titleLabel.setText("Close Biddings");
         }
 
-        scrollPane.getViewport().setView(panel);
         setContentPane(mainPanel);
         pack();
     }
 
     public void setPanel(ArrayList<BidOfferModel> bidOffers) {
         panel.removeAll();
+        scrollPane.getViewport().setView(panel);
+
         if (bidOffers.size() != 0) {
             for (BidOfferModel b: bidOffers) {
 //        for (int i=0; i<4; i++) {
@@ -87,16 +88,19 @@ public class OpenCloseBidView extends BiddingsView {
     }
 
     private JTable getTable(BidOfferModel b) {
-        String[][] rec = {
-//                {"Tutor name", },
-//                {"Tutor qualification", b.getInitiator().getGivenName()},
-//                {"Competency level", b.getSubject().getName()},
-//                {"Subject", b.getSubject().getName()},
-//                {"No. of sessions", b.getNoLessons()},
-//                {"Day & Time", b.getDayTime()},
-//                {"Duration", b.getDayTime()},
-//                {"Rate (per hour)", b.getRate()},
-        };
+        String [][] rec = null;
+        if (bidViewType == Constant.OPEN_BIDDING_VIEW) {
+            rec = new String[][] {
+                {"Tutor name", b.getTutorName()},
+                {"Tutor competency level", String.valueOf(b.getTutorCompLvl())},
+                {"Subject", b.getSubjectName()},
+                {"No. of sessions", String.valueOf(b.getNumberOfLesson())},
+                {"Day & Time", b.getDayTime()},
+                {"Duration (hours per session)", b.getDuration()},
+                {"Rate (per hour)", b.getOfferRate()}
+            };
+        }
+
         String[] col = {"", ""};
         return new JTable(rec, col);
     }
