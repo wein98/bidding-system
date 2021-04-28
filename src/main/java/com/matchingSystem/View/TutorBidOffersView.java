@@ -1,10 +1,7 @@
 package com.matchingSystem.View;
 
-import com.matchingSystem.Model.Bid;
-import com.matchingSystem.Model.BiddingsModel;
-import com.matchingSystem.Model.CloseBid;
-import com.matchingSystem.Model.OpenBid;
-
+import com.matchingSystem.Controller.BidOfferController;
+import com.matchingSystem.Model.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -23,14 +20,15 @@ public class TutorBidOffersView extends BiddingsView {
     protected void initComponents() {
         titleLabel.setText("Offer Bids");
         BidDurationText.setVisible(false);
-
-        scrollPane.getViewport().setView(panel);
+        OpenBidDetailsPanel.setVisible(false);
         setContentPane(mainPanel);
         pack();
     }
 
     public void setPanel(ArrayList<Bid> bids) {
         panel.removeAll();
+        scrollPane.getViewport().setView(panel);
+
         for (Bid b: bids) {
 
             JPanel panel1 = new JPanel();
@@ -62,9 +60,11 @@ public class TutorBidOffersView extends BiddingsView {
                 btn2.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        // TODO: opens offer bid window
+                        // opens offer bid window
                         System.out.println("OFFER: " + b.getInitiator().toString());
-
+                        BidOfferModel offerModel = new BidOfferModel(b);
+                        BidOfferView offerView = new BidOfferView(offerModel, "open");
+                        new BidOfferController(offerView, offerModel);
                     }
                 });
 

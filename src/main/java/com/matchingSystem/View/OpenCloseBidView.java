@@ -1,5 +1,6 @@
 package com.matchingSystem.View;
 
+import com.matchingSystem.Constant;
 import com.matchingSystem.Model.*;
 
 import javax.swing.*;
@@ -8,9 +9,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class OpenBidView extends BiddingsView {
+public class OpenCloseBidView extends BiddingsView {
+    private final int bidViewType;
 
-    public OpenBidView(BiddingsModel model) {
+    public OpenCloseBidView(BiddingsModel model, int bidViewType) {
+        this.bidViewType = bidViewType;
         this.model = model;
         initComponents();
         this.setVisible(true);
@@ -18,15 +21,20 @@ public class OpenBidView extends BiddingsView {
 
     @Override
     protected void initComponents() {
-        titleLabel.setText("Open Biddings");
+        if (bidViewType == Constant.OPEN_BIDDING_VIEW) {
+            titleLabel.setText("Open Biddings");
+        } else if (bidViewType == Constant.CLOSE_BIDDING_VIEW){
+            titleLabel.setText("Close Biddings");
+        }
 
-        scrollPane.getViewport().setView(panel);
         setContentPane(mainPanel);
         pack();
     }
 
     public void setPanel(ArrayList<BidOfferModel> bidOffers) {
         panel.removeAll();
+        scrollPane.getViewport().setView(panel);
+
         if (bidOffers.size() != 0) {
             for (BidOfferModel b: bidOffers) {
 //        for (int i=0; i<4; i++) {
@@ -52,6 +60,20 @@ public class OpenBidView extends BiddingsView {
                     }
                 });
 
+                if (bidViewType == Constant.CLOSE_BIDDING_VIEW) {
+                    JButton btn2 = new JButton("Reply message");
+                    panel1.add(btn2);
+
+                    // buttons action listener
+                    btn2.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            // TODO: reply message
+//                            model.selectOffer(b);
+                        }
+                    });
+                }
+
                 GridBagConstraints gbc = new GridBagConstraints();
                 gbc.gridwidth = GridBagConstraints.REMAINDER;
                 gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -66,17 +88,24 @@ public class OpenBidView extends BiddingsView {
     }
 
     private JTable getTable(BidOfferModel b) {
-        String[][] rec = {
-//                {"Tutor name", },
-//                {"Tutor qualification", b.getInitiator().getGivenName()},
-//                {"Competency level", b.getSubject().getName()},
-//                {"Subject", b.getSubject().getName()},
-//                {"No. of sessions", b.getNoLessons()},
-//                {"Day & Time", b.getDayTime()},
-//                {"Duration", b.getDayTime()},
-//                {"Rate (per hour)", b.getRate()},
-        };
+        String [][] rec = null;
+        if (bidViewType == Constant.OPEN_BIDDING_VIEW) {
+            rec = new String[][] {
+                {"Tutor name", b.getTutorName()},
+                {"Tutor competency level", String.valueOf(b.getTutorCompLvl())},
+                {"Subject", b.getSubjectName()},
+                {"No. of sessions", String.valueOf(b.getNumberOfLesson())},
+                {"Day & Time", b.getDayTime()},
+                {"Duration (hours per session)", b.getDuration()},
+                {"Rate (per hour)", b.getOfferRate()}
+            };
+        }
+
         String[] col = {"", ""};
         return new JTable(rec, col);
+    }
+
+    public int getBidViewType() {
+        return bidViewType;
     }
 }

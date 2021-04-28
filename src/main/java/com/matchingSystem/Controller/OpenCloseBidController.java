@@ -1,19 +1,18 @@
 package com.matchingSystem.Controller;
 
-import com.matchingSystem.Constant;
 import com.matchingSystem.Model.BiddingsModel;
-import com.matchingSystem.View.OpenBidView;
+import com.matchingSystem.View.OpenCloseBidView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
-public class OpenBidController implements Observer, ActionListener {
-    private OpenBidView view;
+public class OpenCloseBidController implements Observer, ActionListener {
+    private OpenCloseBidView view;
     private BiddingsModel model;
 
-    public OpenBidController(OpenBidView view, BiddingsModel model) {
+    public OpenCloseBidController(OpenCloseBidView view, BiddingsModel model) {
         this.view = view;
         this.model = model;
         model.addObserver(this);    // subscribe to observable
@@ -23,17 +22,17 @@ public class OpenBidController implements Observer, ActionListener {
     private void initController() {
         model.addObserver(this);    // subscribe to observable
         view.getBiddingRefreshBtn().addActionListener(this);
-        updateBidOffers();
+        updateBidOffers(view.getBidViewType());
     }
 
-    private void updateBidOffers() {
-        model.setBiddings(Constant.OPEN_BIDDING_VIEW);
+    private void updateBidOffers(int bidViewType) {
+        model.setBiddings(bidViewType);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(view.getBiddingRefreshBtn())) {
-            updateBidOffers();
+            updateBidOffers(view.getBidViewType());
         }
     }
 

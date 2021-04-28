@@ -27,7 +27,6 @@ public class BidOfferController implements Observer {
         // Initialise action listeners in view to interpret user input.
         getView().getMakeOfferButton().addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                System.out.println("BLEK!");
                 sendOffer();
                 view.dispose();
             }

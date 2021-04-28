@@ -59,8 +59,12 @@ public abstract class User extends Observable {
         return userName;
     }
 
+    public String getFullName() {
+        return givenName + " " + familyName;
+    }
+
     public void setCompetencies() {
-        JSONObject response = (JSONObject) APIFacade.getUserAPI().getById(this.getId(), Constant.COMPETENCIES_SUBJECT_S);
+        JSONObject response = (JSONObject) APIFacade.getUserAPI().getById(this.getId(), Constant.COMPETENCIES_SUBJECT);
         JSONArray arr = response.getJSONArray("competencies");
 
         // Update the list of competencies to UserCookie
@@ -85,7 +89,7 @@ public abstract class User extends Observable {
     }
 
     public void setQualifications() {
-        JSONObject response = (JSONObject) APIFacade.getUserAPI().getById(UserCookie.getUser().getId(), Constant.QUALIFICATIONS_S);
+        JSONObject response = (JSONObject) APIFacade.getUserAPI().getById(UserCookie.getUser().getId(), Constant.QUALIFICATIONS);
         JSONArray arr = response.getJSONArray("qualifications");
 
         // Update the list of qualifications to UserCookie
