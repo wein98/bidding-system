@@ -1,5 +1,7 @@
 package com.matchingSystem.Model;
 
+import com.matchingSystem.API.APIFacade;
+import com.matchingSystem.Constant;
 import com.matchingSystem.UserCookie;
 import org.json.JSONObject;
 
@@ -18,6 +20,7 @@ public class BidOfferModel extends Observable {
     private String duration;
     private String offerRate;
     private String subjectName;
+    private String msgId;
 
     public BidOfferModel(String linkedBidId, String offerTutorId, String offerRate, String numOfLesson,
                         boolean freeLesson) {
@@ -41,6 +44,10 @@ public class BidOfferModel extends Observable {
                 + o.getString("time")
                 + o.getString("dayNight");
         this.offerRate = o.getString("rate");
+
+        if (this.bid.getType().equals("close")) {
+            this.msgId = o.getString("msgId");
+        }
     }
 
     public BidOfferModel(Bid b) {
@@ -81,9 +88,21 @@ public class BidOfferModel extends Observable {
             tutorObj.makeOfferToOpenBidding(bidId, jsonObj);
 
         }else if(jsonObj.getString("type").equals("close")) {
+            /*
+               TODO: make sure jsonObj contains message property! Refer tutorObj.sendMessage to get the message property's key
+             */
             jsonObj.remove("type");
-            tutorObj.sendMessage(bidId, jsonObj);
+//            tutorObj.makeCloseBidOffer(bidId, jsonObj);
         }
+    }
+
+    /**
+     * Function to be called when Student picked this Bid Offer to reply message.
+     * @param msgContent content of the student's reply
+     */
+    public void studentReplyMsg(String msgContent) {
+        Message msgObj = (Message) APIFacade.getMessageAPI().getById(msgId, Constant.NONE);
+        msgObj.studentReplyMsg(msgContent);
     }
 
     // Getters

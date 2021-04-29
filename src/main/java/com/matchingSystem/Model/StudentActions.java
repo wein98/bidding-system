@@ -3,9 +3,6 @@ package com.matchingSystem.Model;
 import org.json.JSONObject;
 
 public interface StudentActions {
-    void setInitiatedBid();
-    Bid getInitiatedBid();
-
     /**
      * Student can post a bid by calling Bid.create() api
      * @param bidType   type of the bid, "open" or "close"
@@ -14,4 +11,5 @@ public interface StudentActions {
      */
     void postBid(String bidType, String subjectId, JSONObject addInfo);
 
+    void replyBidOfferMsg(String msgContent);
 }

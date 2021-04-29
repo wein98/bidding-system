@@ -1,6 +1,7 @@
 package com.matchingSystem.Model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.matchingSystem.API.APIFacade;
 import com.matchingSystem.Poster;
 import org.json.JSONObject;
 import java.sql.Timestamp;
@@ -51,13 +52,47 @@ public class Message{
     }
 
     /**
-     * Append new content in the conversation
+     * Update new content in the conversation
      * @param content
      */
-    public void updateMessageContent(String content){
+    public void tutorUpdateMessageContent(String content){
         this.content = content;
         this.dateLastEdited = new Timestamp(System.currentTimeMillis());
     }
+
+    /**
+     * Function for Student to reply the message.
+     * @param msgContent
+     */
+    public void studentReplyMsg(String msgContent) {
+        additionalInfo.put("studentReply", msgContent);
+        StringBuilder params = APIFacade.getMessageAPI().parseToJsonForPartialUpdate(getContent(), getAdditionalInfo());
+        APIFacade.getMessageAPI().updatePartialById(getId(), params);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Poster getPoster() {
+        return poster;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public String getStudentReply() {
+        if (additionalInfo != null) {
+            return additionalInfo.getString("studentReply");
+        }
+        return null;
+    }
+
+    public JSONObject getAdditionalInfo() {
+        return additionalInfo;
+    }
+
     @Override
     public String toString() {
         return "messageId: " + this.id + "\nbidId: " + this.bidId + "\nposter" + this.poster.toString()+ "\ncontent: " + this.content;

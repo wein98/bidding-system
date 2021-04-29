@@ -41,10 +41,14 @@ public class Student extends User implements StudentActions {
         APIFacade.getBidAPI().create(jsonParams);
     }
 
+    @Override
+    public void replyBidOfferMsg(String msgContent) {
+
+    }
+
     /**
      * Store student's initiated bid if there exists.
      */
-    @Override
     public void setInitiatedBid() {
         JSONObject response = (JSONObject) APIFacade.getUserAPI().getById(getId(), Constant.INITIATEDBIDS);
         JSONArray arr = response.getJSONArray("initiatedBids");
@@ -57,7 +61,6 @@ public class Student extends User implements StudentActions {
         }
     }
 
-    @Override
     public Bid getInitiatedBid() {
         return initiatedBid;
     }

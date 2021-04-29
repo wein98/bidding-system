@@ -46,6 +46,7 @@ public class DashboardView extends javax.swing.JFrame implements Observer {
     }
 
     private void setContractsPanel(ArrayList<Contract> contracts) {
+        panel1.removeAll();
 //        for (int i=0; i<=4; i++) {
         for (Contract c: contracts) {
             JPanel panel = new JPanel();

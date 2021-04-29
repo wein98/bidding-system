@@ -75,7 +75,7 @@ public class MessageAPI extends APIRouter implements MessageAPIInterface {
         jsonParam.append(String.format("\"posterId\": \"%s\",", posterId));
         jsonParam.append(String.format("\"datePosted\": \"%s\",", Utility.sdf2.format(now)));
         jsonParam.append(String.format("\"content\": \"%s\",", content));
-        jsonParam.append(String.format("\"additionalInfo\": {}"));
+        jsonParam.append(String.format("\"additionalInfo\": { \"studentReply\": \"\" }"));
         jsonParam.append("}");
 
         return jsonParam;

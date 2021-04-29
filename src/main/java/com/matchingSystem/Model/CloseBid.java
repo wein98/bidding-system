@@ -58,11 +58,11 @@ public class CloseBid extends Bid{
     }
 
     public void updateTutorMsg(String content){
-        this.tutorMessage.updateMessageContent(content);
+        this.tutorMessage.tutorUpdateMessageContent(content);
     }
 
     public void updateStudentMsg(String content){
-        this.studentMessage.updateMessageContent(content);
+        this.studentMessage.tutorUpdateMessageContent(content);
     }
 
     public void setTutorMessage(Message message){
