@@ -12,6 +12,7 @@ public abstract class BiddingsView extends JFrame{
     protected JPanel mainPanel;
     protected JLabel titleLabel;
     protected JPanel OpenBidDetailsPanel;
+    private JButton offerButton;
 
     protected BiddingsModel model;
 
@@ -35,5 +36,9 @@ public abstract class BiddingsView extends JFrame{
 
     public JPanel getOpenBidDetailsPanel() {
         return OpenBidDetailsPanel;
+    }
+
+    public JButton getOfferButton() {
+        return offerButton;
     }
 }

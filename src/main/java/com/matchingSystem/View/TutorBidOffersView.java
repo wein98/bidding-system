@@ -1,6 +1,8 @@
 package com.matchingSystem.View;
 
+import com.matchingSystem.Constant;
 import com.matchingSystem.Controller.BidOfferController;
+import com.matchingSystem.Controller.OpenCloseBidController;
 import com.matchingSystem.Model.*;
 import javax.swing.*;
 import java.awt.*;
@@ -33,20 +35,35 @@ public class TutorBidOffersView extends BiddingsView {
 
             JPanel panel1 = new JPanel();
             panel1.getInsets().set(20, 20, 20, 20);
+            panel1.setLayout(new GridBagLayout());
+            GridBagConstraints c = new GridBagConstraints();
+
             JTable table = getTable(b);
             // resize table columns
             table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             table.getColumnModel().getColumn(0).setPreferredWidth(150);
             table.getColumnModel().getColumn(1).setPreferredWidth(150);
-
-            panel1.add(table);
+            c.gridheight = 2;
+            c.gridx = 0;
+            c.gridy = 0;
+            c.weighty = 1.0;
+            panel1.add(table, c);
 
             // Set different buttons for different bidType
             if (b instanceof OpenBid) {
                 JButton btn1 = new JButton("Buy out");
-                JButton btn2 = new JButton("Offer");
-                panel1.add(btn1);
-                panel1.add(btn2);
+                JButton btn2 = new JButton("View all bidders");
+                c.gridheight = 1;
+                c.gridx = 1;
+                c.gridy = 0;
+                c.weighty = 0.5;
+                panel1.add(btn1, c);
+
+                c.gridheight = 1;
+                c.gridx = 1;
+                c.gridy = 1;
+                c.weighty = 0.5;
+                panel1.add(btn2, c);
 
                 // buttons action listener
                 btn1.addActionListener(new ActionListener() {
@@ -60,17 +77,21 @@ public class TutorBidOffersView extends BiddingsView {
                 btn2.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        // opens offer bid window
                         System.out.println("OFFER: " + b.getInitiator().toString());
-                        BidOfferModel offerModel = new BidOfferModel(b);
-                        BidOfferView offerView = new BidOfferView(offerModel, "open");
-                        new BidOfferController(offerView, offerModel);
+                        // opens open bidding offers
+                        BiddingsModel biddingsModel = new BiddingsModel(b.getId());
+                        OpenCloseBidView biddingsView = new OpenCloseBidView(biddingsModel, Constant.TUTOR_OPEN_BIDDING_VIEW);
+                        new OpenCloseBidController(biddingsView, biddingsModel);
                     }
                 });
 
             } else if (b instanceof CloseBid) {
                 JButton btn1 = new JButton("Message bid");
-                panel1.add(btn1);
+                c.gridheight = 1;
+                c.gridx = 1;
+                c.gridy = 0;
+                c.weighty = 0.5;
+                panel1.add(btn1, c);
 
                 btn1.addActionListener(new ActionListener() {
                     @Override
@@ -79,6 +100,7 @@ public class TutorBidOffersView extends BiddingsView {
                     }
                 });
             }
+
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.gridwidth = GridBagConstraints.REMAINDER;
             gbc.fill = GridBagConstraints.HORIZONTAL;

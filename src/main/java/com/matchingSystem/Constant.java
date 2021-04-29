@@ -22,5 +22,6 @@ public class Constant {
     public static final int OPEN_BIDDING_VIEW = 10;
     public static final int CLOSE_BIDDING_VIEW = 11;
     public static final int OFFER_BIDS_VIEW = 12;
+    public static final int TUTOR_OPEN_BIDDING_VIEW = 13;
 
 }
