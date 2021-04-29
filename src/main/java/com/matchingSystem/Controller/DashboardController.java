@@ -84,12 +84,10 @@ public class DashboardController implements Observer, ActionListener {
                 new BiddingCreationController(bidCreateView,bidCreateModel, model);
             }
         } else if (model.getUserType().equals("Tutor")) {
-            // TODO: open view biddings window
+            // open view biddings window
             BiddingsModel biddingsModel = new BiddingsModel();
             TutorBidOffersView bidOffersView = new TutorBidOffersView(biddingsModel);
             new TutorBidOffersController(bidOffersView, biddingsModel);
-//            SignContractView signContractView = new SignContractView();
-//            SignContractController signContractController = new SignContractController(signContractView, "XXX");
         }
     }
 }

@@ -1,6 +1,8 @@
 package com.matchingSystem.Controller;
 
+import com.matchingSystem.Model.BidOfferModel;
 import com.matchingSystem.Model.BiddingsModel;
+import com.matchingSystem.View.BidOfferView;
 import com.matchingSystem.View.OpenCloseBidView;
 
 import java.awt.event.ActionEvent;
@@ -22,6 +24,9 @@ public class OpenCloseBidController implements Observer, ActionListener {
     private void initController() {
         model.addObserver(this);    // subscribe to observable
         view.getBiddingRefreshBtn().addActionListener(this);
+        if(view.getOfferButton().isVisible()) {
+            view.getOfferButton().addActionListener(this);
+        }
         updateBidOffers(view.getBidViewType());
     }
 
@@ -33,13 +38,16 @@ public class OpenCloseBidController implements Observer, ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(view.getBiddingRefreshBtn())) {
             updateBidOffers(view.getBidViewType());
+        } else if (e.getSource().equals(view.getOfferButton())) {
+            BidOfferModel offerModel = new BidOfferModel(model.getBid());
+            BidOfferView offerView = new BidOfferView(offerModel, "open");
+            new BidOfferController(offerView, offerModel);
         }
     }
 
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof BiddingsModel) {
-            System.out.println("POPOSFAF");
             view.setPanel(model.getBidOffersList());
             view.getBidDurationText().setText("Bid duration left: " + model.getDuration());
         }

@@ -11,11 +11,14 @@ public class BiddingsModel extends Observable {
     private ArrayList<BidOfferModel> bidOffersList = new ArrayList<>();
     private ArrayList<Bid> bids = new ArrayList<>();
     private String bidId;
+    private Bid bid;
 
     public BiddingsModel() {}
 
     public BiddingsModel(String bidId) {
         this.bidId = bidId;
+        // get Bid object with bidId
+        this.bid = (Bid) APIFacade.getBidAPI().getById(this.bidId, Constant.NONE);
     }
 
     public void setBiddings(int biddingsViewType) {
@@ -28,7 +31,7 @@ public class BiddingsModel extends Observable {
         if (biddingsViewType == Constant.OFFER_BIDS_VIEW) {
             setBids();
         } else {
-            setBidOffersList(bidId);
+            setBidOffersList();
         }
 
     }
@@ -56,10 +59,9 @@ public class BiddingsModel extends Observable {
     /**
      * Set the bid offers view for OpenCloseBidView.
      */
-    private void setBidOffersList(String bidId) {
+    private void setBidOffersList() {
         // TODO: parse bid.addtionalInfo.bidOffers here
-        Bid b = (Bid) APIFacade.getBidAPI().getById(bidId, Constant.NONE);
-        bidOffersList = b.getBidOffers();
+        bidOffersList = bid.getBidOffers();
 
         setChanged();
         notifyObservers();
@@ -68,6 +70,11 @@ public class BiddingsModel extends Observable {
     public void selectOffer(BidOfferModel b) {
         // TODO: call selectBidder() in bid
         ((Student) UserCookie.getUser()).getInitiatedBid().selectBidder(b);
+    }
+
+    // getters
+    public Bid getBid() {
+        return bid;
     }
 
     public ArrayList<BidOfferModel> getBidOffersList() {
@@ -79,7 +86,6 @@ public class BiddingsModel extends Observable {
     }
 
     public String getDuration() {
-        Student studentObj = (Student) UserCookie.getUser();
-        return studentObj.getInitiatedBid().getExpireDuration();
+        return bid.getExpireDuration();
     }
 }
