@@ -27,6 +27,7 @@ public class OpenCloseBidView extends BiddingsView {
             titleLabel.setText("Close Biddings");
         } else if (bidViewType == Constant.TUTOR_OPEN_BIDDING_VIEW) {
             titleLabel.setText("Open Bidders");
+            OpenBidDetailsPanel.setVisible(false);
             getOfferButton().setVisible(true);
         }
 
@@ -123,6 +124,11 @@ public class OpenCloseBidView extends BiddingsView {
 
         String[] col = {"", ""};
         return new JTable(rec, col);
+    }
+
+    public void setBidDetailsPanel(String subjectName, String compLvl) {
+        subjectLabel.setText("Subject: " + subjectName);
+        compLvlLabel.setText("Competency level: " + compLvl);
     }
 
     public int getBidViewType() {
