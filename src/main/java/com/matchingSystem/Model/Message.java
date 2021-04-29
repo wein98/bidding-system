@@ -55,9 +55,9 @@ public class Message{
      * Update new content in the conversation
      * @param content
      */
-    public void tutorUpdateMessageContent(String content){
-        this.content = content;
-        this.dateLastEdited = new Timestamp(System.currentTimeMillis());
+    public void tutorUpdateMessageContent(String content) {
+        StringBuilder params = APIFacade.getMessageAPI().parseToJsonForPartialUpdate(content, getAdditionalInfo());
+        APIFacade.getMessageAPI().updatePartialById(getId(), params);
     }
 
     /**
@@ -78,10 +78,18 @@ public class Message{
         return poster;
     }
 
+    /**
+     * Get tutor's message.
+     * @return tutor's message.
+     */
     public String getContent() {
         return content;
     }
 
+    /**
+     * Get student's reply.
+     * @return student's reply message.
+     */
     public String getStudentReply() {
         if (additionalInfo != null) {
             return additionalInfo.getString("studentReply");

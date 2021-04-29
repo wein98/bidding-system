@@ -85,7 +85,9 @@ public class CloseBid extends Bid{
         if (toRemoveIndex >= 0) {    // if there's a previous bid offers offered
             // get bid offer msgId
             String msgId = getBidOffers().get(toRemoveIndex).getMsgId();
-            sendMessage(msgId, bidOffer.getString("msgContent"));
+            Message msg = (Message) APIFacade.getMessageAPI().getById(msgId, Constant.NONE);
+            msg.tutorUpdateMessageContent(bidOffer.getString("msgContent"));
+//            sendMessage(msgId, bidOffer.getString("msgContent"));
 
             getBidOffers().remove(toRemoveIndex);
 

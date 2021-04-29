@@ -9,8 +9,6 @@ public class Tutor extends User {
         super();
     }
 
-    // TODO: student should also have the function to reply to a message that is sent by a tutor on a close bid
-
     public int getCompetencyLvlFromSubject(Subject s) {
         for (Competency c: competencies) {
             if (c.getSubject().equals(s)) {
@@ -22,7 +20,15 @@ public class Tutor extends User {
 
     @Override
     public String toString() {
-        return "Tutor{" + "id='" + id + '\'' + ", givenName='" + givenName + '\'' + ", familyName='" + familyName + '\'' + ", userName='" + userName + '\'' + ", competencies=" + competencies + ", qualifications=" + qualifications + ", contracts=" + contracts + '}';
+        return "Tutor{" +
+                "id='" + id + '\'' +
+                ", givenName='" + givenName + '\'' +
+                ", familyName='" + familyName + '\'' +
+                ", userName='" + userName + '\'' +
+                ", competencies=" + competencies +
+                ", qualifications=" + qualifications +
+                ", contracts=" + contracts +
+                ", objectMapper=" + objectMapper +
+                '}';
     }
-
 }
