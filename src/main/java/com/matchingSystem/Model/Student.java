@@ -5,8 +5,9 @@ import com.matchingSystem.Constant;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class Student extends User implements StudentActions {
+public class Student extends User {
     protected Bid initiatedBid = null;
+
     public Student(String id, String givenName, String familyName, String userName) {
         super(id, givenName, familyName, userName);
     }
@@ -15,35 +16,15 @@ public class Student extends User implements StudentActions {
         super();
     }
 
-    @Override
-    public String toString() {
-        return "Student{" +
-                "bid=" + initiatedBid +
-                ", id='" + id + '\'' +
-                ", givenName='" + givenName + '\'' +
-                ", familyName='" + familyName + '\'' +
-                ", userName='" + userName + '\'' +
-                ", competencies=" + competencies +
-                ", qualifications=" + qualifications +
-                ", contracts=" + contracts +
-                '}';
-    }
-
     /**
-     * Student post a bid to initiate a bid.
+     * Student can post a bid by calling Bid.create() api
      * @param bidType   type of the bid, "open" or "close"
      * @param subjectId the subject id of the bid
      * @param addInfo   lesson info of the bid
      */
-    @Override
     public void postBid(String bidType, String subjectId, JSONObject addInfo) {
         StringBuilder jsonParams = APIFacade.getBidAPI().parseToJsonForCreate(bidType, getId(), subjectId, addInfo);
         APIFacade.getBidAPI().create(jsonParams);
-    }
-
-    @Override
-    public void replyBidOfferMsg(String msgContent) {
-
     }
 
     /**
@@ -63,5 +44,19 @@ public class Student extends User implements StudentActions {
 
     public Bid getInitiatedBid() {
         return initiatedBid;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "bid=" + initiatedBid +
+                ", id='" + id + '\'' +
+                ", givenName='" + givenName + '\'' +
+                ", familyName='" + familyName + '\'' +
+                ", userName='" + userName + '\'' +
+                ", competencies=" + competencies +
+                ", qualifications=" + qualifications +
+                ", contracts=" + contracts +
+                '}';
     }
 }

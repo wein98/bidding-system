@@ -1,10 +1,5 @@
 package com.matchingSystem.Model;
 
-import com.matchingSystem.API.APIFacade;
-import com.matchingSystem.Constant;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 public class Tutor extends User {
     public Tutor(String id, String givenName, String familyName, String userName) {
         super(id, givenName, familyName, userName);
@@ -14,110 +9,7 @@ public class Tutor extends User {
         super();
     }
 
-    /**
-     * Function to send an offer for Open Bidding
-     * @param bidId
-     * @param additionalObject
-     */
-    public void makeOfferToOpenBidding(String bidId, JSONObject additionalObject) {
-        OpenBid bid = (OpenBid) APIFacade.getBidAPI().getById(bidId, Constant.NONE);
-        JSONObject additionalInfo = bid.getAdditionalInfo();
-        JSONArray bidOffersArr = additionalInfo.getJSONArray("bidOffers");
-        int toRemoveIndex = -1;
-
-        // look for the bidoffers offered by the tutorId previously
-        for (int i=0; i<bidOffersArr.length(); i++) {
-            JSONObject o = bidOffersArr.getJSONObject(i);
-            if (this.id.equals(o.getString("tutorId"))) {
-                toRemoveIndex = i;
-                break;
-            }
-        }
-
-        // remove old bidoffer and add new updated one
-        if (toRemoveIndex >= 0) {    // if there's a previous bid offers offered
-            bidOffersArr.remove(toRemoveIndex);
-        }
-        bidOffersArr.put(additionalObject);
-
-        // remove the whole list and insert again
-        additionalInfo.remove("bidOffers");
-        additionalInfo.put("bidOffers", bidOffersArr);
-
-        StringBuilder params = APIFacade.getBidAPI().parseToJsonForPartialUpdate(additionalInfo);
-        APIFacade.getBidAPI().updatePartialById(bidId, params);
-    }
-
     // TODO: student should also have the function to reply to a message that is sent by a tutor on a close bid
-
-    /**
-     * Function to send a message for Close Bidding for an existed Bid offer
-     * @param msgId
-     * @param msgContent
-     */
-    private void sendMessage(String msgId, String msgContent) {
-        // get msg api
-        Message msg = (Message) APIFacade.getMessageAPI().getById(msgId, Constant.NONE);
-
-        StringBuilder params = APIFacade.getMessageAPI().parseToJsonForPartialUpdate(msgContent, msg.getAdditionalInfo());
-
-        APIFacade.getMessageAPI().updatePartialById(msgId, params);
-    }
-
-    /**
-     * Function to create a bidoffer with message attached to it.
-     * @param bidId
-     * @param additionalObject
-     */
-    public void makeCloseBidOffer (String bidId, JSONObject additionalObject) {
-        OpenBid bid = (OpenBid) APIFacade.getBidAPI().getById(bidId, Constant.NONE);
-        JSONObject additionalInfo = bid.getAdditionalInfo();
-        JSONArray bidOffersArr = additionalInfo.getJSONArray("bidOffers");
-        int toRemoveIndex = -1;
-
-        // look for the bidoffers offered by the tutorId previously
-        for (int i=0; i<bidOffersArr.length(); i++) {
-            JSONObject o = bidOffersArr.getJSONObject(i);
-            if (this.id.equals(o.getString("tutorId"))) {
-                toRemoveIndex = i;
-                break;
-            }
-        }
-
-        // remove old bidoffer and add new updated one
-        if (toRemoveIndex >= 0) {    // if there's a previous bid offers offered
-            // get bid offer msgId
-            String msgId = bidOffersArr.getJSONObject(toRemoveIndex).getString("msgId");
-
-            sendMessage(msgId, additionalObject.getString("msgContent"));
-
-            bidOffersArr.remove(toRemoveIndex);
-
-             // attach old bidOffer's msdId to this bidoffer
-            additionalObject.put("msgId", msgId);
-        } else {    // else it's a new bid offer
-            // create a msg object for this bid offer
-            Message msgObj = (Message) APIFacade
-                .getMessageAPI()
-                .create(
-                        APIFacade.getMessageAPI().parseToJsonForCreate(
-                                bidId,
-                                getId(),
-                                additionalObject.getString("msgContent")
-                        ));
-
-            // attach msgId to this bidoffer
-            additionalObject.put("msgId", msgObj.getId());
-        }
-        bidOffersArr.put(additionalObject);
-
-        // remove the whole list and insert again
-        additionalInfo.remove("bidOffers");
-        additionalInfo.put("bidOffers", bidOffersArr);
-
-        StringBuilder params = APIFacade.getBidAPI().parseToJsonForPartialUpdate(additionalInfo);
-        APIFacade.getBidAPI().updatePartialById(bidId, params);
-    }
 
     public int getCompetencyLvlFromSubject(Subject s) {
         for (Competency c: competencies) {

@@ -1,5 +1,10 @@
 package com.matchingSystem.Model;
 
+import com.matchingSystem.API.APIFacade;
+import com.matchingSystem.Constant;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.sql.Timestamp;
 
 public class CloseBid extends Bid{
@@ -56,6 +61,76 @@ public class CloseBid extends Bid{
         this.closed = true;
         this.dateClosedDown = new Timestamp(System.currentTimeMillis());
     }
+
+    /**
+     * Tutor offers an open bid.
+     * @param bidOffer
+     */
+    public void tutorOfferBid(JSONObject bidOffer) {
+        String tutorId = bidOffer.getString("offerTutorId");
+        int toRemoveIndex = -1;
+
+        // check if there's any other bid offers to find previously offered by this tutor
+        if (getBidOffers() != null) {
+            // look for the bidoffers offered by the tutorId previously
+            for (int i=0; i<getBidOffers().size(); i++) {
+                if (tutorId.equals(getBidOffers().get(i).getOfferTutorId())) {
+                    toRemoveIndex = i;
+                    break;
+                }
+            }
+        }
+
+        // remove old bidoffer and add new updated one
+        if (toRemoveIndex >= 0) {    // if there's a previous bid offers offered
+            // get bid offer msgId
+            String msgId = getBidOffers().get(toRemoveIndex).getMsgId();
+            sendMessage(msgId, bidOffer.getString("msgContent"));
+
+            getBidOffers().remove(toRemoveIndex);
+
+            // attach old bidOffer's msdId to this bidoffer
+            bidOffer.put("msgId", msgId);
+        } else {    // else it's a new bid offer
+            // create a msg object for this bid offer
+            Message msgObj = (Message) APIFacade
+                    .getMessageAPI()
+                    .create(
+                            APIFacade.getMessageAPI().parseToJsonForCreate(
+                                    getId(),
+                                    getId(),
+                                    bidOffer.getString("msgContent")
+                            ));
+
+            // attach msgId to this bidoffer
+            bidOffer.put("msgId", msgObj.getId());
+        }
+
+        JSONArray bidOffers = new JSONArray(getBidOffers());
+        bidOffers.put(bidOffer);
+
+        // remove the whole list and insert again
+        getAdditionalInfo().remove("bidOffers");
+        getAdditionalInfo().put("bidOffers", bidOffers);
+
+        StringBuilder params = APIFacade.getBidAPI().parseToJsonForPartialUpdate(getAdditionalInfo());
+        APIFacade.getBidAPI().updatePartialById(getId(), params);
+    }
+
+    /**
+     * Function to send a message for Close Bidding for an existed Bid offer
+     * @param msgId
+     * @param msgContent
+     */
+    private void sendMessage(String msgId, String msgContent) {
+        // get msg api
+        Message msg = (Message) APIFacade.getMessageAPI().getById(msgId, Constant.NONE);
+
+        StringBuilder params = APIFacade.getMessageAPI().parseToJsonForPartialUpdate(msgContent, msg.getAdditionalInfo());
+
+        APIFacade.getMessageAPI().updatePartialById(msgId, params);
+    }
+
 
     public void updateTutorMsg(String content){
         this.tutorMessage.tutorUpdateMessageContent(content);

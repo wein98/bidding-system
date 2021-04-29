@@ -114,7 +114,7 @@ public class OpenCloseBidView extends BiddingsView {
                 {"Tutor name", b.getTutorName()},
                 {"Tutor competency level", String.valueOf(b.getTutorCompLvl())},
                 {"Subject", b.getSubjectName()},
-                {"No. of sessions", String.valueOf(b.getNumberOfLesson())},
+                {"No. of sessions", String.valueOf(b.getNumOfLesson())},
                 {"Day & Time", b.getDayTime()},
                 {"Duration (hours per session)", b.getDuration()},
                 {"Rate (per hour)", b.getOfferRate()}
