@@ -59,16 +59,15 @@ public class Tutor extends User {
 //            }
 //        }
 //    }
-    // TODO: student should also have the function to reply to a message that is sent by a tutor on a close bid
-
-    /**
-     * Function to send a message for Close Bidding
-     * @param bidId
-     * @param messageContent
-     */
-    public void sendMessage(String bidId, JSONObject messageContent) {
-
-    }
+//
+//    /**
+//     * Function to send a message for Close Bidding
+//     * @param bidId
+//     * @param messageContent
+//     */
+//    public void sendMessage(String bidId, JSONObject messageContent) {
+//
+//    }
 
     public int getCompetencyLvlFromSubject(Subject s) {
         for (Competency c: competencies) {
