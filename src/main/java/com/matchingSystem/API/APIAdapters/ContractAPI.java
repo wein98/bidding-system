@@ -55,13 +55,14 @@ public class ContractAPI extends APIRouter implements ContractAPIInterface {
             for (int i = 0; i < arr.length(); i++) {
                 JSONObject jsonObj = arr.getJSONObject(i);
 //                System.out.println(jsonObj);
-                String dateSigned = jsonObj.getString("dateSigned");
+                Object dateSigned = jsonObj.get("dateSigned");
+                String dateSignedString = dateSigned.toString();
                 jsonObj.remove("dateSigned");
 //                System.out.println(jsonObj);
                 String jsonStr = jsonObj.toString();
                 Contract contract = objMapper.readValue(jsonStr, Contract.class);
-                if (dateSigned != null) {
-                    Date d = Utility.sdf2.parse(dateSigned);
+                if (!dateSignedString.equals("null")) {
+                    Date d = Utility.sdf2.parse(dateSignedString);
                     Timestamp t = new Timestamp(d.getTime());
                     contract.setDateSigned(t);
                 }

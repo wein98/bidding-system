@@ -89,9 +89,15 @@ public class APIFacade {
         JSONObject response = (JSONObject) userAPI.getById(id, Constant.INITIATEDBIDS);
         JSONArray arr = response.getJSONArray("initiatedBids");
 
+        // get the active bid
         if (arr.length() != 0) {
-            BidFactory bidFactory = new BidFactory();
-            return bidFactory.createBid(arr.getJSONObject(0));
+            for (int i = 0; i < arr.length(); i++) {
+                if(arr.getJSONObject(i).get("dateClosedDown") == null){
+                    BidFactory bidFactory = new BidFactory();
+                    return bidFactory.createBid(arr.getJSONObject(i));
+                }
+            }
+
         }
 
         return null;
