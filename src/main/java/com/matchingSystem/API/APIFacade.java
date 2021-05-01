@@ -9,6 +9,8 @@ import com.matchingSystem.Model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class APIFacade {
@@ -121,8 +123,8 @@ public class APIFacade {
         bidAPI.updatePartialById(id, bidAPI.parseToJsonForPartialUpdate(requestBody));
     }
 
-    public static void closeDownBidById(String id) {
-        bidAPI.closeDownBidById(id);
+    public static void closeDownBidById(String id, Timestamp closeDownTime) {
+        bidAPI.closeDownBidById(id, closeDownTime);
     }
 
     // Message APIs

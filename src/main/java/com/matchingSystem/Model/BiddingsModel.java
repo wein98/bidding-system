@@ -41,11 +41,20 @@ public class BiddingsModel extends Observable {
 
         // filter by competencies of tutor
         for (Bid b: bidsArr) {
+            // get subject in bid
+            Subject bidSubject = b.getSubject();
+            int bidCompetency = b.getCompetencyLevel();
             // TODO: needs to filter out the competency subjects based on competency level
-
+            for (Competency competency: tutorCompetencies){
+                if (competency.getSubject().getId().equals(bidSubject.getId())){
+                    if (competency.getLevel() >= bidCompetency + 2){
+                        bids.add(b);
+                    }
+                }
+            }
         }
 
-        bids = bidsArr;
+//        bids = bidsArr;
 
         setChanged();
         notifyObservers();

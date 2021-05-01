@@ -144,4 +144,8 @@ public class BidOfferModel extends Observable {
     public JSONObject getAddInfoJson() {
         return bidOfferObj;
     }
+
+    public String getSubjectName(){
+        return this.bid.getSubject().getName();
+    }
 }

@@ -32,6 +32,7 @@ public abstract class Bid implements BidInterface{
     @JsonProperty(value = "messages",required = false)
     protected List<Message> messages;
 
+    protected boolean closed = false;
     @SuppressWarnings("unchecked")
     @JsonProperty("additionalInfo")
     private void unpackNested(Map<String,Object> addInfo) {
@@ -40,30 +41,30 @@ public abstract class Bid implements BidInterface{
         }
     }
 
-    @Override
-    public void selectBidder(BidOfferModel offer){
-        if (this.dateClosedDown != null) {
-            this.dateClosedDown = new Timestamp(System.currentTimeMillis());
-            additionalInfo.put("successfulBidder",offer.getAddInfoJson());
-
-            APIFacade.updateBidById(getId(), getAdditionalInfo());
-
-            // TODO: create Contract API here
-
-            close();
-
-        } else {
-            System.out.println("Bid already closed!");
-        }
-    }
-
-    @Override
-    public void close() {
-        this.dateClosedDown = new Timestamp(System.currentTimeMillis());
-        APIFacade.closeDownBidById(getId());
-
-        System.out.println("Close bid successful.");
-    }
+//    @Override
+//    public void selectBidder(BidOfferModel offer){
+//        if (this.dateClosedDown != null) {
+//            this.dateClosedDown = new Timestamp(System.currentTimeMillis());
+//            additionalInfo.put("successfulBidder",offer.getAddInfoJson());
+//
+//            APIFacade.updateBidById(getId(), getAdditionalInfo());
+//
+//            // TODO: create Contract API here
+//
+//            close();
+//
+//        } else {
+//            System.out.println("Bid already closed!");
+//        }
+//    }
+//
+//    @Override
+//    public void close() {
+//        this.dateClosedDown = new Timestamp(System.currentTimeMillis());
+//        APIFacade.closeDownBidById(getId());
+//
+//        System.out.println("Close bid successful.");
+//    }
 
 
     @Override
@@ -140,6 +141,10 @@ public abstract class Bid implements BidInterface{
         return 0;
     }
 
+    /**
+     * Get offers attached to this bid
+     * @return the list of bid offers object
+     */
     @Override
     public ArrayList<BidOfferModel> getBidOffers() {
         ArrayList<BidOfferModel> retVal = new ArrayList<>();
@@ -157,5 +162,32 @@ public abstract class Bid implements BidInterface{
             return retVal;
         }
         return null;
+    }
+
+    /**
+     * Select the successful bidder and close down the bid
+     * @param offer the offer that the student choose to accept
+     */
+    @Override
+    public void selectBidder(BidOfferModel offer) {
+        if (this.dateClosedDown == null) {
+            this.additionalInfo.put("successfulBidder", offer.getOfferTutorId());
+            // update Bid additionalInfo with successfulBidder property
+            APIFacade.updateBidById(this.id, this.additionalInfo);
+            close();
+        } else {
+            System.out.println("Bid already closed!");
+        }
+    }
+
+    /**
+     * Close down the bid
+     */
+    public void close() {
+        this.closed = true;
+        Timestamp closeDownTime = new Timestamp(System.currentTimeMillis());
+        this.dateClosedDown = closeDownTime;
+        // close down the bid
+        APIFacade.closeDownBidById(this.id, closeDownTime);
     }
 }

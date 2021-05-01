@@ -26,7 +26,7 @@ public interface BidInterface {
     String getExpireDuration();
 
     /**
-     * Close out the Bid Request.
+     * Close out the Bid Request when no action is carried out by the student before expiry
      */
     void close();
 

@@ -29,6 +29,12 @@ public class DashboardView extends javax.swing.JFrame implements Observer {
     public DashboardView(DashboardModel model) {
         this.model = model;
         model.addObserver(this);    // subscribe to observable
+        // disable creation of new Bid request if student already have more than 5 contracts
+        if (model.getUserType().equals("Student") && model.getContractArrayList().size() == 5){
+            this.BidActionBtn.setVisible(false);
+        }else{
+            this.BidActionBtn.setVisible(true);
+        }
         initComponents();
         this.setVisible(true);
     }

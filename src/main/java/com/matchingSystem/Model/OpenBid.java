@@ -7,13 +7,24 @@ import org.json.JSONObject;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-public class OpenBid extends Bid {
+public class OpenBid extends Bid{
 
     protected ArrayList<BidOfferModel> bidders;
+    protected boolean closed = false; // indicate if a Bid is closed
 
     public OpenBid(){
         super();
     }
+
+//    @Override
+//    public void selectBidder(BidOfferModel offer){
+//        if(this.dateClosedDown != null ) {
+//            this.dateClosedDown = new Timestamp(System.currentTimeMillis());
+//            additionalInfo.put("successfulBidder",offer.getOfferTutorId());
+//        }else{
+//            System.out.println("Bid already closed!");
+//        }
+//    }
 
     @Override
     public boolean isExpired(){
@@ -35,8 +46,7 @@ public class OpenBid extends Bid {
                 close();
             }
             return true;
-
-        } else {
+        }else {
             return false;
         }
     }
@@ -48,14 +58,23 @@ public class OpenBid extends Bid {
         Long interval = now.getTime() - creation.getTime();
         long minutes = 30 - ((interval / 1000) / 60);
         return minutes + " minutes";
+
+        // TODO: do something if duration is negative
     }
+
+//    @Override
+//    public void close() {
+//        this.closed = true;
+//        this.dateClosedDown = new Timestamp(System.currentTimeMillis());
+//        additionalInfo.put("successfulBidder","undefined");
+//    }
 
     /**
      * Tutor can perform the buy out of a Bid request
      * @param tutorId the ID of the tutor who buy out the request
      */
     public void buyOut(String tutorId){
-        this.dateClosedDown = new Timestamp(System.currentTimeMillis());
+//        this.dateClosedDown = new Timestamp(System.currentTimeMillis()); // this is handled in close()
 
         JSONObject bidInfo = new JSONObject();
         bidInfo.put("offerTutorId", tutorId);
@@ -122,6 +141,7 @@ public class OpenBid extends Bid {
                 ", subject=" + subject +
                 ", additionalInfo=" + additionalInfo +
                 ", bidders=" + bidders +
+                ", closed=" + closed +
                 '}';
     }
 }
