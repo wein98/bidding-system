@@ -1,10 +1,15 @@
 package com.matchingSystem.View;
 
+import com.matchingSystem.Constant;
+import com.matchingSystem.Controller.SignContractController;
 import com.matchingSystem.Model.Contract;
 import com.matchingSystem.Model.DashboardModel;
+import com.matchingSystem.UserCookie;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -29,18 +34,18 @@ public class DashboardView extends javax.swing.JFrame implements Observer {
     public DashboardView(DashboardModel model) {
         this.model = model;
         model.addObserver(this);    // subscribe to observable
-        // disable creation of new Bid request if student already have more than 5 contracts
-        if (model.getUserType().equals("Student") && model.getContractArrayList().size() == 5){
-            this.BidActionBtn.setVisible(false);
-        }else{
-            this.BidActionBtn.setVisible(true);
-        }
         initComponents();
         this.setVisible(true);
     }
 
     @SuppressWarnings("unchecked")
     private void initComponents() {
+        // disable creation of new Bid request if student already have more than 5 contracts
+//        if (this.model.getUserType().equals("Student") && this.model.getContractArrayList().size() == 5){
+//            this.BidActionBtn.setVisible(false);
+//        }else{
+//            this.BidActionBtn.setVisible(true);
+//        }
         scrollPane.getViewport().setView(panel1);
         setContentPane(window2);
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -54,17 +59,60 @@ public class DashboardView extends javax.swing.JFrame implements Observer {
     private void setContractsPanel(ArrayList<Contract> contracts) {
         panel1.removeAll();
 //        for (int i=0; i<=4; i++) {
+//         disable creation of new Bid request if student already have more than 5 contracts
+        if (this.model.getUserType().equals("Student") && this.model.getContractArrayList().size() == 5){
+            this.BidActionBtn.setVisible(false);
+        }else{
+            this.BidActionBtn.setVisible(true);
+        }
         for (Contract c: contracts) {
             JPanel panel = new JPanel();
             panel.getInsets().set(20, 20, 20, 20);
-            JTable table = getTable(contracts.get(0));
+            JTable table = getTable(c);
             // resize table columns
             table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             table.getColumnModel().getColumn(0).setPreferredWidth(150);
             table.getColumnModel().getColumn(1).setPreferredWidth(150);
 
             panel.add(table);
-            panel.add(new JButton("Sign"));
+            if(UserCookie.getUserType() == Constant.IS_TUTOR && c.getDateSigned() == null) {
+                JButton signBut = new JButton();
+                signBut.setText("Sign");
+                signBut.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // when the sign button is hit, trigger the sign contract view and controller
+                        SignContractView signView = new SignContractView(c,"sign");
+                        SignContractController controller = new SignContractController(signView, c.getId());
+                    }
+                });
+                panel.add(signBut);
+            }else if(UserCookie.getUserType() == Constant.IS_TUTOR && c.getDateSigned() != null){
+                JButton signBut = new JButton();
+                signBut.setText("View");
+                signBut.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // when the sign button is hit, trigger the sign contract view and controller
+                        SignContractView signView = new SignContractView(c,"view");
+                        SignContractController controller = new SignContractController(signView, c.getId());
+                    }
+                });
+                panel.add(signBut);
+            }
+            else{
+                JButton signBut = new JButton();
+                signBut.setText("View"); // view contract
+                signBut.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // when the sign button is hit, trigger the sign contract view and controller
+                        SignContractView signView = new SignContractView(c,"view");
+                        SignContractController controller = new SignContractController(signView, c.getId());
+                    }
+                });
+                panel.add(signBut);
+            }
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.gridwidth = GridBagConstraints.REMAINDER;
             gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -75,7 +123,7 @@ public class DashboardView extends javax.swing.JFrame implements Observer {
 
     private JTable getTable(Contract c) {
         String[][] rec = {
-                {"Tutor name", c.getSecondParty().getGivenName()},
+                {"Tutor name", c.getSecondParty().getName()},
                 {"Subject name", c.getSubject().getName()},
                 // TODO: add c.getAdditionalInfo()
         };

@@ -62,6 +62,10 @@ public class Contract {
         this.dateSigned = dateTime;
     }
 
+    public Timestamp getDateSigned() {
+        return dateSigned;
+    }
+
     public Poster getFirstParty() {
         return firstParty;
     }

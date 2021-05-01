@@ -51,16 +51,16 @@ public class UserCookie {
 
         user.setCompetencies();
         user.setQualifications();
-        setContracts();
+        user.setContracts();
     }
 
-    private static void setContracts() {
-        ArrayList<Contract> contractArr = (ArrayList<Contract>) contractAPI.getAll();
-
-        for (Contract c: contractArr) {
-            user.addContract(c);
-        }
-    }
+//    private static void setContracts() {
+//        ArrayList<Contract> contractArr = (ArrayList<Contract>) contractAPI.getAll();
+//
+//        for (Contract c: contractArr) {
+//            user.addContract(c);
+//        }
+//    }
 
     // return user object
     public static User getUser() {

@@ -80,7 +80,7 @@ public abstract class User extends Observable {
     }
 
     public void setContracts() {
-        contracts = APIFacade.getContractsByUserId(getId());
+        contracts = APIFacade.getContractsByUserId(this.id);
     }
 
     public ArrayList<Contract> getContracts() {

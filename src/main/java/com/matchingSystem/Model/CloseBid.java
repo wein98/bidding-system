@@ -87,7 +87,7 @@ public class CloseBid extends Bid{
             // create a msg object for this bid offer
             Message msgObj = APIFacade.createMessage(
                     getId(),
-                    getId(),
+                    tutorId,
                     bidOffer.getString("msgContent")
             );
             // attach msgId to this bidoffer
