@@ -40,7 +40,11 @@ public class SignContractView extends JFrame {
             this.titleLabel.setText("View Contract");
             this.signBtn.setVisible(false);
             this.dateSignedLabel.setVisible(true);
-            this.dateSignedField.setText(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(contract.getDateSigned()));
+            if(contract.getDateSigned() != null) {
+                this.dateSignedField.setText(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(contract.getDateSigned()));
+            }else{
+                this.dateSignedField.setText("none");
+            }
             this.dateSignedField.setVisible(true);
         }else if(type.equals("sign")){
             this.dateSignedField.setVisible(false);

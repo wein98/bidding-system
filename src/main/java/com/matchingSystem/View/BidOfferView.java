@@ -84,7 +84,7 @@ public class BidOfferView extends javax.swing.JFrame implements Observer {
         fields.put("rate", (String) this.rateText.getText());
         fields.put("duration", (String) this.durationDDL.getSelectedItem());
         if (this.type.equals("close")){
-            fields.put("message",this.messageText.getText());
+            fields.put("msgContent",this.messageText.getText());
         }
         return fields;
     }
