@@ -56,8 +56,7 @@ public class Message{
      * @param content
      */
     public void tutorUpdateMessageContent(String content) {
-        StringBuilder params = APIFacade.getMessageAPI().parseToJsonForPartialUpdate(content, getAdditionalInfo());
-        APIFacade.getMessageAPI().updatePartialById(getId(), params);
+        APIFacade.updateMessageById(getId(), content, getAdditionalInfo());
     }
 
     /**
@@ -66,8 +65,7 @@ public class Message{
      */
     public void studentReplyMsg(String msgContent) {
         additionalInfo.put("studentReply", msgContent);
-        StringBuilder params = APIFacade.getMessageAPI().parseToJsonForPartialUpdate(getContent(), getAdditionalInfo());
-        APIFacade.getMessageAPI().updatePartialById(getId(), params);
+        APIFacade.updateMessageById(getId(), getContent(), getAdditionalInfo());
     }
 
     public String getId() {

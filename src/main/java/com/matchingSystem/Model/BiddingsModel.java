@@ -18,7 +18,7 @@ public class BiddingsModel extends Observable {
     public BiddingsModel(String bidId) {
         this.bidId = bidId;
         // get Bid object with bidId
-        this.bid = (Bid) APIFacade.getBidAPI().getById(this.bidId, Constant.NONE);
+        this.bid = APIFacade.getBidById(this.bidId);
     }
 
     public void setBiddings(int biddingsViewType) {
@@ -35,7 +35,7 @@ public class BiddingsModel extends Observable {
      * Set the biddings view for TutorBidOffersView.
      */
     private void setBids() {
-        ArrayList<Bid> bidsArr = (ArrayList<Bid>) APIFacade.getBidAPI().getAll();
+        ArrayList<Bid> bidsArr = APIFacade.getAllBids();
 
         ArrayList<Competency> tutorCompetencies = UserCookie.getUser().getCompetencies();
 

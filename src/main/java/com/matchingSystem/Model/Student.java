@@ -1,8 +1,6 @@
 package com.matchingSystem.Model;
 
 import com.matchingSystem.API.APIFacade;
-import com.matchingSystem.Constant;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class Student extends User {
@@ -23,23 +21,14 @@ public class Student extends User {
      * @param addInfo   lesson info of the bid
      */
     public void postBid(String bidType, String subjectId, JSONObject addInfo) {
-        StringBuilder jsonParams = APIFacade.getBidAPI().parseToJsonForCreate(bidType, getId(), subjectId, addInfo);
-        APIFacade.getBidAPI().create(jsonParams);
+        initiatedBid = APIFacade.createBid(bidType, getId(), subjectId, addInfo);
     }
 
     /**
      * Store student's initiated bid if there exists.
      */
     public void setInitiatedBid() {
-        JSONObject response = (JSONObject) APIFacade.getUserAPI().getById(getId(), Constant.INITIATEDBIDS);
-        JSONArray arr = response.getJSONArray("initiatedBids");
-
-        if (arr.length() != 0) {
-
-            BidFactory bidFactory = new BidFactory();
-            this.initiatedBid = bidFactory.createBid(arr.getJSONObject(0));
-
-        }
+        this.initiatedBid = APIFacade.getUserInitiatedBidById(getId());
     }
 
     public Bid getInitiatedBid() {

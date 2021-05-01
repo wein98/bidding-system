@@ -46,9 +46,7 @@ public abstract class Bid implements BidInterface{
             this.dateClosedDown = new Timestamp(System.currentTimeMillis());
             additionalInfo.put("successfulBidder",offer.getAddInfoJson());
 
-            // call update bid API
-            StringBuilder params = APIFacade.getBidAPI().parseToJsonForPartialUpdate(getAdditionalInfo());
-            APIFacade.getBidAPI().updatePartialById(getId(), params);
+            APIFacade.updateBidById(getId(), getAdditionalInfo());
 
             // TODO: create Contract API here
 
@@ -62,7 +60,7 @@ public abstract class Bid implements BidInterface{
     @Override
     public void close() {
         this.dateClosedDown = new Timestamp(System.currentTimeMillis());
-        APIFacade.getBidAPI().closeDownBidById(getId());
+        APIFacade.closeDownBidById(getId());
 
         System.out.println("Close bid successful.");
     }

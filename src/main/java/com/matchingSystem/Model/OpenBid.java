@@ -30,8 +30,7 @@ public class OpenBid extends Bid {
                 // no bidders, close the bid
                 additionalInfo.put("successfulBidder","undefined");
                 // call update bid API
-                StringBuilder params = APIFacade.getBidAPI().parseToJsonForPartialUpdate(getAdditionalInfo());
-                APIFacade.getBidAPI().updatePartialById(getId(), params);
+                APIFacade.updateBidById(getId(), getAdditionalInfo());
 
                 close();
             }
@@ -70,8 +69,7 @@ public class OpenBid extends Bid {
 
         additionalInfo.put("successfulBidder", bidInfo);
 
-        StringBuilder params = APIFacade.getBidAPI().parseToJsonForPartialUpdate(getAdditionalInfo());
-        APIFacade.getBidAPI().updatePartialById(getId(), params);
+        APIFacade.updateBidById(getId(), getAdditionalInfo());
 
         // TODO: create Contract API here
 
@@ -110,8 +108,7 @@ public class OpenBid extends Bid {
         getAdditionalInfo().remove("bidOffers");
         getAdditionalInfo().put("bidOffers", bidOffers);
 
-        StringBuilder params = APIFacade.getBidAPI().parseToJsonForPartialUpdate(getAdditionalInfo());
-        APIFacade.getBidAPI().updatePartialById(getId(), params);
+        APIFacade.updateBidById(getId(), getAdditionalInfo());
     }
 
     @Override

@@ -20,7 +20,6 @@ public class BidOfferModel extends Observable {
     private String duration;
     private String offerRate;
     private String msgId;
-    private Message msg;
     private JSONObject bidOfferObj;
 
 //    public BidOfferModel(String linkedBidId, String offerTutorId, String offerRate, String numOfLesson,
@@ -139,8 +138,7 @@ public class BidOfferModel extends Observable {
     }
 
     public Message getMsg() {
-        msg = (Message) APIFacade.getMessageAPI().getById(msgId, Constant.NONE);
-        return msg;
+        return APIFacade.getMessageById(msgId);
     }
 
     public JSONObject getAddInfoJson() {

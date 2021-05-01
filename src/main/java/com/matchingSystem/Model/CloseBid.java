@@ -26,8 +26,7 @@ public class CloseBid extends Bid {
             // automatically closes the bid
             additionalInfo.put("successfulBidder","undefined");
             // call update bid API
-            StringBuilder params = APIFacade.getBidAPI().parseToJsonForPartialUpdate(getAdditionalInfo());
-            APIFacade.getBidAPI().updatePartialById(getId(), params);
+            APIFacade.updateBidById(getId(), getAdditionalInfo());
 
             close();
             return true;
@@ -75,7 +74,7 @@ public class CloseBid extends Bid {
         if (toRemoveIndex >= 0) {    // if there's a previous bid offers offered
             // get bid offer msgId
             String msgId = getBidOffers().get(toRemoveIndex).getMsgId();
-            Message msg = (Message) APIFacade.getMessageAPI().getById(msgId, Constant.NONE);
+            Message msg = APIFacade.getMessageById(msgId);
             msg.tutorUpdateMessageContent(bidOffer.getString("msgContent"));
 
             // remove this old bid offer
@@ -86,15 +85,11 @@ public class CloseBid extends Bid {
 
         } else {    // else it's a new bid offer
             // create a msg object for this bid offer
-            Message msgObj = (Message) APIFacade
-                    .getMessageAPI()
-                    .create(
-                            APIFacade.getMessageAPI().parseToJsonForCreate(
-                                    getId(),
-                                    getId(),
-                                    bidOffer.getString("msgContent")
-                            ));
-
+            Message msgObj = APIFacade.createMessage(
+                    getId(),
+                    getId(),
+                    bidOffer.getString("msgContent")
+            );
             // attach msgId to this bidoffer
             bidOffer.put("msgId", msgObj.getId());
         }
@@ -106,8 +101,7 @@ public class CloseBid extends Bid {
         getAdditionalInfo().remove("bidOffers");
         getAdditionalInfo().put("bidOffers", bidOffers);
 
-        StringBuilder params = APIFacade.getBidAPI().parseToJsonForPartialUpdate(getAdditionalInfo());
-        APIFacade.getBidAPI().updatePartialById(getId(), params);
+        APIFacade.updateBidById(getId(), getAdditionalInfo());
     }
 
     public void updateTutorMsg(String content){
