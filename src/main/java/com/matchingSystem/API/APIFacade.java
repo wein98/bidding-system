@@ -147,8 +147,8 @@ public class APIFacade {
 
     // Contract APIs
     // only Tutor need to call this
-    public static void signContractById(String id) {
-        contractAPI.sign(id);
+    public static boolean signContractById(String id) {
+        return contractAPI.sign(id);
     }
 
     // only a Student can initiate a contract
