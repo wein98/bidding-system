@@ -64,56 +64,24 @@ public abstract class User extends Observable {
     }
 
     public void setCompetencies() {
-        JSONObject response = (JSONObject) APIFacade.getUserAPI().getById(this.getId(), Constant.COMPETENCIES_SUBJECT);
-        JSONArray arr = response.getJSONArray("competencies");
-
-        // Update the list of competencies to UserCookie
-        if (arr.length() != 0) {
-            for (int i = 0; i < arr.length(); i++) {
-                try {
-                    JSONObject obj = arr.getJSONObject(i);
-                    addCompetency(objectMapper.readValue(obj.toString(), Competency.class));
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        competencies = APIFacade.getUserCompetenciesById(getId());
     }
 
     public ArrayList<Competency> getCompetencies() {
         return competencies;
     }
 
-    public void addCompetency(Competency c) {
-        competencies.add(c);
-    }
-
     public void setQualifications() {
-        JSONObject response = (JSONObject) APIFacade.getUserAPI().getById(UserCookie.getUser().getId(), Constant.QUALIFICATIONS);
-        JSONArray arr = response.getJSONArray("qualifications");
-
-        // Update the list of qualifications to UserCookie
-        if (arr.length() != 0) {
-            for (int i = 0; i < arr.length(); i++) {
-                try {
-                    JSONObject obj = arr.getJSONObject(i);
-                    addQualification(objectMapper.readValue(obj.toString(), Qualification.class));
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        qualifications = APIFacade.getUserQualificationsById(getId());
     }
 
     public ArrayList<Qualification> getQualifications() {
         return qualifications;
     }
 
-    public void addQualification(Qualification q) {
-        qualifications.add(q);
+    public void setContracts() {
+        contracts = APIFacade.getContractsByUserId(getId());
     }
-
-    public void setContracts() {}
 
     public ArrayList<Contract> getContracts() {
         return contracts;
@@ -121,14 +89,6 @@ public abstract class User extends Observable {
 
     public void addContract(Contract c) {
         contracts.add(c);
-    }
-
-    public void setGivenName(String givenName) {
-        this.givenName = givenName;
-    }
-
-    public void setFamilyName(String familyName) {
-        this.familyName = familyName;
     }
 
 }

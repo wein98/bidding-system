@@ -23,7 +23,7 @@ public class BiddingCreationModel extends Observable {
         }
         this.subjects = userSubjects;
         // TODO: change this dummy data
-        this.qualifications = (ArrayList<Qualification>) APIFacade.getQualificationAPI().getAll();
+        this.qualifications = APIFacade.getAllQualifications();
         // notify observers
         setChanged();
         notifyObservers();

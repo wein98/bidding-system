@@ -131,7 +131,6 @@ public class BidAPI extends APIRouter implements BidAPIInterface {
     public boolean closeDownBidById(String id, Timestamp closeDownTime){
         try {
             String route = this.route + "/" + id + "/close-down";
-//            Timestamp now = new Timestamp(System.currentTimeMillis());
             StringBuilder jsonParam = new StringBuilder();
             jsonParam.append("{");
             jsonParam.append(String.format("\"dateClosedDown\": \"%s\"", Utility.sdf2.format(closeDownTime)));

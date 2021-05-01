@@ -41,6 +41,32 @@ public abstract class Bid implements BidInterface{
         }
     }
 
+//    @Override
+//    public void selectBidder(BidOfferModel offer){
+//        if (this.dateClosedDown != null) {
+//            this.dateClosedDown = new Timestamp(System.currentTimeMillis());
+//            additionalInfo.put("successfulBidder",offer.getAddInfoJson());
+//
+//            APIFacade.updateBidById(getId(), getAdditionalInfo());
+//
+//            // TODO: create Contract API here
+//
+//            close();
+//
+//        } else {
+//            System.out.println("Bid already closed!");
+//        }
+//    }
+//
+//    @Override
+//    public void close() {
+//        this.dateClosedDown = new Timestamp(System.currentTimeMillis());
+//        APIFacade.closeDownBidById(getId());
+//
+//        System.out.println("Close bid successful.");
+//    }
+
+
     @Override
     public String getId() {
         return this.id;
@@ -128,7 +154,9 @@ public abstract class Bid implements BidInterface{
             if (arr.length() != 0) {
                 for (int i=0; i<arr.length(); i++) {
                     JSONObject o = arr.getJSONObject(i);
-                    retVal.add(new BidOfferModel(this, o));
+                    if (!isExpired()) {
+                        retVal.add(new BidOfferModel(this, o));
+                    }
                 }
             }
             return retVal;
@@ -144,9 +172,8 @@ public abstract class Bid implements BidInterface{
     public void selectBidder(BidOfferModel offer) {
         if (this.dateClosedDown == null) {
             this.additionalInfo.put("successfulBidder", offer.getOfferTutorId());
-            StringBuilder params = APIFacade.getBidAPI().parseToJsonForPartialUpdate(this.additionalInfo);
             // update Bid additionalInfo with successfulBidder property
-            APIFacade.getBidAPI().updatePartialById(this.id, params);
+            APIFacade.updateBidById(this.id, this.additionalInfo);
             close();
         } else {
             System.out.println("Bid already closed!");
@@ -161,6 +188,6 @@ public abstract class Bid implements BidInterface{
         Timestamp closeDownTime = new Timestamp(System.currentTimeMillis());
         this.dateClosedDown = closeDownTime;
         // close down the bid
-        APIFacade.getBidAPI().closeDownBidById(this.id, closeDownTime);
+        APIFacade.closeDownBidById(this.id, closeDownTime);
     }
 }

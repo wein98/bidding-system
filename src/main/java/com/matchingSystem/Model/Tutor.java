@@ -20,7 +20,7 @@ public class Tutor extends User {
      * @param additionalObject
      */
     public void makeOfferToOpenBidding(String bidId, JSONObject additionalObject) {
-        OpenBid bid = (OpenBid) APIFacade.getBidAPI().getById(bidId, Constant.NONE);
+        OpenBid bid = (OpenBid) APIFacade.getBidById(bidId);
         JSONObject additionalInfo = bid.getAdditionalInfo();
         JSONArray bidOffersArr = additionalInfo.getJSONArray("bidOffers");
         int toRemoveIndex = -1;
@@ -44,22 +44,21 @@ public class Tutor extends User {
         additionalInfo.remove("bidOffers");
         additionalInfo.put("bidOffers", bidOffersArr);
 
-        StringBuilder params = APIFacade.getBidAPI().parseToJsonForPartialUpdate(additionalInfo);
-        APIFacade.getBidAPI().updatePartialById(bidId, params);
+        APIFacade.updateBidById(bidId, additionalInfo);
     }
 
-    public void buyOutOpenBid(OpenBid bid, BidOfferModel offer){
-        int requiredCompetency = bid.getCompetencyLevel();
-        Subject requiredSubject = bid.getSubject();
-        for(Competency competency: this.competencies){
-            if(competency.getSubject().getId().equals(requiredSubject.getId())){
-                if(competency.getLevel() >= requiredCompetency + 2){
-                    // able to trigger buy out of bid
-                    bid.selectBidder(offer);
-                }
-            }
-        }
-    }
+//    public void buyOutOpenBid(OpenBid bid, BidOfferModel offer){
+//        int requiredCompetency = bid.getCompetencyLevel();
+//        Subject requiredSubject = bid.getSubject();
+//        for(Competency competency: this.competencies){
+//            if(competency.getSubject().getId().equals(requiredSubject.getId())){
+//                if(competency.getLevel() >= requiredCompetency + 2){
+//                    // able to trigger buy out of bid
+//                    bid.selectBidder(offer);
+//                }
+//            }
+//        }
+//    }
     // TODO: student should also have the function to reply to a message that is sent by a tutor on a close bid
 
     /**
@@ -82,7 +81,16 @@ public class Tutor extends User {
 
     @Override
     public String toString() {
-        return "Tutor{" + "id='" + id + '\'' + ", givenName='" + givenName + '\'' + ", familyName='" + familyName + '\'' + ", userName='" + userName + '\'' + ", competencies=" + competencies + ", qualifications=" + qualifications + ", contracts=" + contracts + '}';
+        return "Tutor{" +
+                "id='" + id + '\'' +
+                ", givenName='" + givenName + '\'' +
+                ", familyName='" + familyName + '\'' +
+                ", userName='" + userName + '\'' +
+                ", competencies=" + competencies +
+                ", qualifications=" + qualifications +
+                ", contracts=" + contracts +
+                ", objectMapper=" + objectMapper +
+                '}';
     }
 
 }
