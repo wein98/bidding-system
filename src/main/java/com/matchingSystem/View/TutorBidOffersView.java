@@ -97,6 +97,10 @@ public class TutorBidOffersView extends BiddingsView {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         // TODO: opens Reply Bid window
+                        BidOfferModel bidOfferModel = new BidOfferModel(b);
+                        BidOfferView bidOfferView = new BidOfferView(bidOfferModel,"close");
+                        BidOfferController bidOfferController = new BidOfferController(bidOfferView, bidOfferModel);
+
                     }
                 });
             }

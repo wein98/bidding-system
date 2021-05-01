@@ -3,6 +3,7 @@ package com.matchingSystem.Model;
 import com.matchingSystem.Poster;
 import org.json.JSONObject;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public interface BidInterface {
@@ -25,7 +26,7 @@ public interface BidInterface {
     String getExpireDuration();
 
     /**
-     * Close out the Bid Request when no action is carried out by the student before expiry
+     * Return the close down time of the bid
      */
     void close();
 

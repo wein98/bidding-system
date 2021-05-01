@@ -6,22 +6,21 @@ import java.util.ArrayList;
 public class OpenBid extends Bid{
 
     protected ArrayList<BidOfferModel> bidders;
-    protected boolean closed = false; // indicate if a Bid is closed
+//    protected boolean closed = false; // indicate if a Bid is closed
 
     public OpenBid(){
         super();
     }
 
-    @Override
-    public void selectBidder(BidOfferModel offer){
-        // TODO: call update bid API
-        if(this.dateClosedDown != null ) {
-            this.dateClosedDown = new Timestamp(System.currentTimeMillis());
-            additionalInfo.put("successfulBidder",offer.getOfferTutorId());
-        }else{
-            System.out.println("Bid already closed!");
-        }
-    }
+//    @Override
+//    public void selectBidder(BidOfferModel offer){
+//        if(this.dateClosedDown != null ) {
+//            this.dateClosedDown = new Timestamp(System.currentTimeMillis());
+//            additionalInfo.put("successfulBidder",offer.getOfferTutorId());
+//        }else{
+//            System.out.println("Bid already closed!");
+//        }
+//    }
 
     @Override
     public boolean isExpired(){
@@ -47,13 +46,12 @@ public class OpenBid extends Bid{
         // TODO: do something if duration is negative
     }
 
-    @Override
-    public void close() {
-        // TODO: should i call the close down API here ?
-        this.closed = true;
-        this.dateClosedDown = new Timestamp(System.currentTimeMillis());
-        additionalInfo.put("successfulBidder","undefined");
-    }
+//    @Override
+//    public void close() {
+//        this.closed = true;
+//        this.dateClosedDown = new Timestamp(System.currentTimeMillis());
+//        additionalInfo.put("successfulBidder","undefined");
+//    }
 
     /**
      * Tutor can perform the buy out of a Bid request

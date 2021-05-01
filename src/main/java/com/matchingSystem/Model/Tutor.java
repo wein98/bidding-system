@@ -48,6 +48,18 @@ public class Tutor extends User {
         APIFacade.getBidAPI().updatePartialById(bidId, params);
     }
 
+    public void buyOutOpenBid(OpenBid bid, BidOfferModel offer){
+        int requiredCompetency = bid.getCompetencyLevel();
+        Subject requiredSubject = bid.getSubject();
+        for(Competency competency: this.competencies){
+            if(competency.getSubject().getId().equals(requiredSubject.getId())){
+                if(competency.getLevel() >= requiredCompetency + 2){
+                    // able to trigger buy out of bid
+                    bid.selectBidder(offer);
+                }
+            }
+        }
+    }
     // TODO: student should also have the function to reply to a message that is sent by a tutor on a close bid
 
     /**
