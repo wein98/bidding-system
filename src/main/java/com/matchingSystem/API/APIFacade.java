@@ -6,6 +6,7 @@ import com.matchingSystem.API.APIAdapters.*;
 import com.matchingSystem.API.ClientInterfaces.*;
 import com.matchingSystem.Constant;
 import com.matchingSystem.Model.*;
+import com.matchingSystem.UserCookie;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -144,9 +145,18 @@ public class APIFacade {
         messageAPI.updatePartialById(id, messageAPI.parseToJsonForPartialUpdate(content, requestBody));
     }
 
-    // Contract
+    // Contract APIs
+    // only Tutor need to call this
     public static void signContractById(String id) {
         contractAPI.sign(id);
+    }
+
+    // only a Student can initiate a contract
+    public static Contract createContract(String studentId, String tutorId, String subjectId, Timestamp expiry,
+                                          JSONObject paymentInfo,
+                                          JSONObject lessonInfo, JSONObject additionalInfo){
+        return (Contract) contractAPI.create(contractAPI.parseToJsonForCreate(studentId,tutorId,
+                subjectId, expiry, paymentInfo, lessonInfo, additionalInfo));
     }
 
     public static ArrayList<Contract> getContractsByUserId(String userId) {
