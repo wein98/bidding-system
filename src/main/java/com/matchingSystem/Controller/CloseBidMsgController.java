@@ -2,17 +2,16 @@ package com.matchingSystem.Controller;
 
 import com.matchingSystem.Model.BidOfferModel;
 import com.matchingSystem.View.CloseBidMsgView;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CloseBidMsgController implements ActionListener {
     private CloseBidMsgView view;
-    private BidOfferModel bidOffer;
+    private BidOfferModel model;
 
-    public CloseBidMsgController(CloseBidMsgView view, BidOfferModel bidOffer) {
+    public CloseBidMsgController(CloseBidMsgView view, BidOfferModel model) {
         this.view = view;
-        this.bidOffer = bidOffer;
+        this.model = model;
         initController();
     }
 
@@ -22,9 +21,9 @@ public class CloseBidMsgController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO: sendBtn onclick call MessageAPI
-
-        String message = view.getMessageTextField().getText();
+        if (view.getMessageTextField().getText().length() != 0) {
+            model.studentReplyMsg(view.getMessageTextField().getText());
+        }
         view.dispose();
     }
 }

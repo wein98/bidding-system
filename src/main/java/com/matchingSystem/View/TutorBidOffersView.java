@@ -1,7 +1,6 @@
 package com.matchingSystem.View;
 
 import com.matchingSystem.Constant;
-import com.matchingSystem.Controller.BidOfferController;
 import com.matchingSystem.Controller.OpenCloseBidController;
 import com.matchingSystem.Model.*;
 import javax.swing.*;

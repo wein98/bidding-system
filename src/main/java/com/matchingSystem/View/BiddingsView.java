@@ -12,7 +12,9 @@ public abstract class BiddingsView extends JFrame{
     protected JPanel mainPanel;
     protected JLabel titleLabel;
     protected JPanel OpenBidDetailsPanel;
-    private JButton offerButton;
+    protected JButton offerButton;
+    protected JLabel subjectLabel;
+    protected JLabel compLvlLabel;
 
     protected BiddingsModel model;
 

@@ -18,15 +18,10 @@ public class BiddingsModel extends Observable {
     public BiddingsModel(String bidId) {
         this.bidId = bidId;
         // get Bid object with bidId
-        this.bid = (Bid) APIFacade.getBidAPI().getById(this.bidId, Constant.NONE);
+        this.bid = APIFacade.getBidById(this.bidId);
     }
 
     public void setBiddings(int biddingsViewType) {
-        // TODO:
-        //      - call bidAPI by id from user.getInitiateBid().getById()
-        //      - get the bid and addtionalInfos
-        //      - populate additionalInfos to List<BidOffer>
-
         // biddingsViewType = Constant.OFFER_BIDS_VIEW
         if (biddingsViewType == Constant.OFFER_BIDS_VIEW) {
             setBids();
@@ -40,7 +35,7 @@ public class BiddingsModel extends Observable {
      * Set the biddings view for TutorBidOffersView.
      */
     private void setBids() {
-        ArrayList<Bid> bidsArr = (ArrayList<Bid>) APIFacade.getBidAPI().getAll();
+        ArrayList<Bid> bidsArr = APIFacade.getAllBids();
 
         ArrayList<Competency> tutorCompetencies = UserCookie.getUser().getCompetencies();
 
@@ -60,19 +55,22 @@ public class BiddingsModel extends Observable {
      * Set the bid offers view for OpenCloseBidView.
      */
     private void setBidOffersList() {
-        // TODO: parse bid.addtionalInfo.bidOffers here
         bidOffersList = bid.getBidOffers();
 
         setChanged();
         notifyObservers();
     }
 
+    /**
+     * Function is called when Student press Select Offer button.
+     * @param b this bid offer selected by the Student
+     */
     public void selectOffer(BidOfferModel b) {
-        // TODO: call selectBidder() in bid
         ((Student) UserCookie.getUser()).getInitiatedBid().selectBidder(b);
     }
 
-    // getters
+    // Getters
+
     public Bid getBid() {
         return bid;
     }

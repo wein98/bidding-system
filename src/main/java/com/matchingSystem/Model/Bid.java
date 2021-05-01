@@ -1,6 +1,7 @@
 package com.matchingSystem.Model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.matchingSystem.API.APIFacade;
 import com.matchingSystem.Poster;
 import com.matchingSystem.Utility;
 import org.json.JSONArray;
@@ -38,6 +39,32 @@ public abstract class Bid implements BidInterface{
             this.additionalInfo = new JSONObject(addInfo);
         }
     }
+
+    @Override
+    public void selectBidder(BidOfferModel offer){
+        if (this.dateClosedDown != null) {
+            this.dateClosedDown = new Timestamp(System.currentTimeMillis());
+            additionalInfo.put("successfulBidder",offer.getAddInfoJson());
+
+            APIFacade.updateBidById(getId(), getAdditionalInfo());
+
+            // TODO: create Contract API here
+
+            close();
+
+        } else {
+            System.out.println("Bid already closed!");
+        }
+    }
+
+    @Override
+    public void close() {
+        this.dateClosedDown = new Timestamp(System.currentTimeMillis());
+        APIFacade.closeDownBidById(getId());
+
+        System.out.println("Close bid successful.");
+    }
+
 
     @Override
     public String getId() {
@@ -122,7 +149,9 @@ public abstract class Bid implements BidInterface{
             if (arr.length() != 0) {
                 for (int i=0; i<arr.length(); i++) {
                     JSONObject o = arr.getJSONObject(i);
-                    retVal.add(new BidOfferModel(this, o));
+                    if (!isExpired()) {
+                        retVal.add(new BidOfferModel(this, o));
+                    }
                 }
             }
             return retVal;

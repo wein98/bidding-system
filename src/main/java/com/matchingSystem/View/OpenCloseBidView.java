@@ -27,6 +27,7 @@ public class OpenCloseBidView extends BiddingsView {
             titleLabel.setText("Close Biddings");
         } else if (bidViewType == Constant.TUTOR_OPEN_BIDDING_VIEW) {
             titleLabel.setText("Open Bidders");
+            OpenBidDetailsPanel.setVisible(false);
             getOfferButton().setVisible(true);
         }
 
@@ -113,16 +114,34 @@ public class OpenCloseBidView extends BiddingsView {
                 {"Tutor name", b.getTutorName()},
                 {"Tutor competency level", String.valueOf(b.getTutorCompLvl())},
                 {"Subject", b.getSubjectName()},
-                {"No. of sessions", String.valueOf(b.getNumberOfLesson())},
+                {"No. of sessions", String.valueOf(b.getNumOfLesson())},
                 {"Day & Time", b.getDayTime()},
                 {"Duration (hours per session)", b.getDuration()},
                 {"Rate (per hour)", b.getOfferRate()}
             };
+        } else {
+            // close bid offer table view
+            rec = new String[][]{
+                    {"Tutor name", b.getTutorName()},
+                    {"Tutor competency level", String.valueOf(b.getTutorCompLvl())},
+                    {"Subject", b.getSubjectName()},
+                    {"No. of sessions", String.valueOf(b.getNumOfLesson())},
+                    {"Day & Time", b.getDayTime()},
+                    {"Duration (hours per session)", b.getDuration()},
+                    {"Rate (per hour)", b.getOfferRate()},
+//                    {"Free lesson?",}
+                    {"Tutor message", b.getMsg().getContent()},
+                    {"Your reply", b.getMsg().getStudentReply()}
+            };
         }
-        // TODO: close bid table
 
         String[] col = {"", ""};
         return new JTable(rec, col);
+    }
+
+    public void setBidDetailsPanel(String subjectName, String compLvl) {
+        subjectLabel.setText("Subject: " + subjectName);
+        compLvlLabel.setText("Competency level: " + compLvl);
     }
 
     public int getBidViewType() {

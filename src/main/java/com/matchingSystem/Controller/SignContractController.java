@@ -22,9 +22,7 @@ public class SignContractController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO: signBtn onclick call signContractAPI
-        APIFacade.getContractAPI().sign(contractId);
-
+        APIFacade.signContractById(contractId);
         view.dispose();
     }
 }

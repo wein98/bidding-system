@@ -13,7 +13,8 @@ public interface BidInterface {
     void selectBidder(BidOfferModel offer);
 
     /**
-     * Check if a Bid request is still valid/active
+     * Check if a Bid request is still valid/active.
+     * Called whenever Student or Tutor trying to interact with this Bid.
      * @return true if the request already expired, otherwise false
      */
     boolean isExpired();
@@ -25,7 +26,7 @@ public interface BidInterface {
     String getExpireDuration();
 
     /**
-     * Close out the Bid Request when no action is carried out by the student before expiry
+     * Close out the Bid Request.
      */
     void close();
 

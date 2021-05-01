@@ -1,5 +1,7 @@
 package com.matchingSystem.Model;
 
+import com.matchingSystem.API.APIFacade;
+import com.matchingSystem.Constant;
 import com.matchingSystem.UserCookie;
 import org.json.JSONObject;
 
@@ -7,26 +9,27 @@ import java.util.Observable;
 
 public class BidOfferModel extends Observable {
     private String bidId;
-    private String offerTutorId;
     private boolean freeLesson;
 
     private Bid bid;
     private String tutorName;
+    private String offerTutorId;
     private int tutorCompLvl;
-    private String numberOfLesson;
+    private String numOfLesson;
     private String dayTime;
     private String duration;
     private String offerRate;
-    private String subjectName;
+    private String msgId;
+    private JSONObject bidOfferObj;
 
-    public BidOfferModel(String linkedBidId, String offerTutorId, String offerRate, String numOfLesson,
-                        boolean freeLesson) {
-        this.bidId = linkedBidId;
-        this.offerTutorId = offerTutorId;
-        this.offerRate = offerRate;
-        this.numberOfLesson = numOfLesson;
-        this.freeLesson = freeLesson;
-    }
+//    public BidOfferModel(String linkedBidId, String offerTutorId, String offerRate, String numOfLesson,
+//                        boolean freeLesson) {
+//        this.bidId = linkedBidId;
+//        this.offerTutorId = offerTutorId;
+//        this.offerRate = offerRate;
+//        this.numberOfLesson = numOfLesson;
+//        this.freeLesson = freeLesson;
+//    }
 
     public BidOfferModel(Bid b, JSONObject o){
         this.bid = b;
@@ -35,12 +38,19 @@ public class BidOfferModel extends Observable {
         // unpack JSONObject o
         this.duration = o.getString("duration");
         this.tutorCompLvl = o.getInt("tutorCompLvl");
+        this.offerTutorId = o.getString("offerTutorId");
         this.tutorName = o.getString("tutorName");
-        this.numberOfLesson = o.getString("numOfLesson");
+        this.numOfLesson = o.getString("numOfLesson");
         this.dayTime = o.getString("prefDay") + ","
                 + o.getString("time")
                 + o.getString("dayNight");
         this.offerRate = o.getString("rate");
+
+        if (this.bid.getType().equals("close")) {
+            this.msgId = o.getString("msgId");
+        }
+
+        bidOfferObj = o;
     }
 
     public BidOfferModel(Bid b) {
@@ -63,27 +73,38 @@ public class BidOfferModel extends Observable {
         jsonObj.put("bidId", this.bidId);
         jsonObj.put("offerTutorId", this.offerTutorId);
         jsonObj.put("offerRate", this.offerRate);
-        jsonObj.put("numOfLesson", this.numberOfLesson);
-        jsonObj.put("freeLesson", this.freeLesson);
+        jsonObj.put("numOfLesson", this.numOfLesson);
+//        jsonObj.put("freeLesson", this.freeLesson);
         return jsonObj;
     }
 
-    public void sendOffer(JSONObject jsonObj){
+    public void sendOffer(JSONObject jsonObj) {
         Tutor tutorObj = (Tutor) UserCookie.getUser();
 
         // add in tutor's info
-        jsonObj.put("tutorId", tutorObj.getId());
+        jsonObj.put("offerTutorId", tutorObj.getId());
         jsonObj.put("tutorName", tutorObj.getFullName());
         jsonObj.put("tutorCompLvl", tutorObj.getCompetencyLvlFromSubject(bid.getSubject()));
 
         if (jsonObj.getString("type").equals("open")) {
             jsonObj.remove("type");
-            tutorObj.makeOfferToOpenBidding(bidId, jsonObj);
+            ((OpenBid) this.bid).tutorOfferBid(jsonObj);
 
-        }else if(jsonObj.getString("type").equals("close")) {
+        } else if(jsonObj.getString("type").equals("close")) {
+            /*
+               TODO: make sure jsonObj contains message property! Refer tutorObj.sendMessage to get the message property's key
+             */
             jsonObj.remove("type");
-            tutorObj.sendMessage(bidId, jsonObj);
+            ((CloseBid) this.bid).tutorOfferBid(jsonObj);
         }
+    }
+
+    /**
+     * Function to be called when Student picked this Bid Offer to reply message.
+     * @param msgContent content of the student's reply
+     */
+    public void studentReplyMsg(String msgContent) {
+        getMsg().studentReplyMsg(msgContent);
     }
 
     // Getters
@@ -96,8 +117,8 @@ public class BidOfferModel extends Observable {
         return tutorCompLvl;
     }
 
-    public String getNumberOfLesson() {
-        return numberOfLesson;
+    public String getNumOfLesson() {
+        return numOfLesson;
     }
 
     public String getDayTime() {
@@ -112,7 +133,15 @@ public class BidOfferModel extends Observable {
         return offerRate;
     }
 
-    public String getSubjectName() {
-        return subjectName;
+    public String getMsgId() {
+        return msgId;
+    }
+
+    public Message getMsg() {
+        return APIFacade.getMessageById(msgId);
+    }
+
+    public JSONObject getAddInfoJson() {
+        return bidOfferObj;
     }
 }

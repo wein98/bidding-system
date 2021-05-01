@@ -49,6 +49,8 @@ public class OpenCloseBidController implements Observer, ActionListener {
     public void update(Observable o, Object arg) {
         if (o instanceof BiddingsModel) {
             view.setPanel(model.getBidOffersList());
+            view.setBidDetailsPanel(model.getBid().getSubject().getName(),
+                    String.valueOf(model.getBid().getCompetencyLevel()));
             view.getBidDurationText().setText("Bid duration left: " + model.getDuration());
         }
     }
