@@ -113,7 +113,6 @@ public class OpenCloseBidView extends BiddingsView {
             rec = new String[][] {
                 {"Tutor name", b.getTutorName()},
                 {"Tutor competency level", String.valueOf(b.getTutorCompLvl())},
-                {"Subject", b.getSubjectName()},
                 {"No. of sessions", String.valueOf(b.getNumOfLesson())},
                 {"Day & Time", b.getDayTime()},
                 {"Duration (hours per session)", b.getDuration()},
@@ -124,7 +123,6 @@ public class OpenCloseBidView extends BiddingsView {
             rec = new String[][]{
                     {"Tutor name", b.getTutorName()},
                     {"Tutor competency level", String.valueOf(b.getTutorCompLvl())},
-                    {"Subject", b.getSubjectName()},
                     {"No. of sessions", String.valueOf(b.getNumOfLesson())},
                     {"Day & Time", b.getDayTime()},
                     {"Duration (hours per session)", b.getDuration()},

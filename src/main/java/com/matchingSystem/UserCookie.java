@@ -1,14 +1,9 @@
 package com.matchingSystem;
 
-import com.matchingSystem.API.APIAdapters.ContractAPI;
-import com.matchingSystem.API.ClientInterfaces.ContractAPIInterface;
 import com.matchingSystem.Model.*;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 public class UserCookie {
-    private static final ContractAPIInterface contractAPI = ContractAPI.getInstance();
     private static final UserFactory userFactory = new UserFactory();
 
     private static UserCookie ourInstance;
@@ -51,15 +46,7 @@ public class UserCookie {
 
         user.setCompetencies();
         user.setQualifications();
-        setContracts();
-    }
-
-    private static void setContracts() {
-        ArrayList<Contract> contractArr = (ArrayList<Contract>) contractAPI.getAll();
-
-        for (Contract c: contractArr) {
-            user.addContract(c);
-        }
+        user.setContracts();
     }
 
     // return user object

@@ -41,6 +41,10 @@ public class APIFacade {
         return (User) userAPI.getById(id, Constant.NONE);
     }
 
+    public static JSONObject userLogin(String username, String password) {
+        return userAPI.userLogin(username, password);
+    }
+
     public static ArrayList<Competency> getUserCompetenciesById(String id) {
         JSONObject response = (JSONObject) userAPI.getById(id, Constant.COMPETENCIES_SUBJECT);
         JSONArray arr = response.getJSONArray("competencies");

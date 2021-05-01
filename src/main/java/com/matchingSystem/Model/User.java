@@ -87,8 +87,4 @@ public abstract class User extends Observable {
         return contracts;
     }
 
-    public void addContract(Contract c) {
-        contracts.add(c);
-    }
-
 }
