@@ -1,6 +1,5 @@
 package com.matchingSystem.API.APIAdapters;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.API.APIService;
 import com.matchingSystem.API.ClientInterfaces.BidAPIInterface;
@@ -85,6 +84,7 @@ public class BidAPI extends APIRouter implements BidAPIInterface {
         Bid bid = bidFactory.createBid(jsonObj);
         return bid;
     }
+
     /**
      * Function that parses variables to json needed for the request body for create()
      * @param type type of bidding (open or close)

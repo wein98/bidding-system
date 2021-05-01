@@ -3,7 +3,6 @@ package com.matchingSystem.API.APIAdapters;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.API.APIService;
 import com.matchingSystem.API.ClientInterfaces.UserAPIInterface;
-import com.matchingSystem.Model.UserFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -12,7 +11,6 @@ public class UserAPI extends APIRouter implements UserAPIInterface {
      * Singleton design pattern
      */
     private static UserAPI ourInstance;
-    UserFactory userFactory = new UserFactory();
 
     /**
      * UserAPI constructor (private)
@@ -40,10 +38,6 @@ public class UserAPI extends APIRouter implements UserAPIInterface {
     @Override
     public JSONArray getAll() {
         return new JSONArray(APIService.GETRequest(route));
-    }
-
-    public JSONObject create() {
-        return null;
     }
 
     /**
