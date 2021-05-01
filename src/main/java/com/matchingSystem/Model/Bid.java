@@ -70,6 +70,10 @@ public abstract class Bid implements BidInterface{
 //    }
 
 
+    public Timestamp getDateClosedDown() {
+        return dateClosedDown;
+    }
+
     @Override
     public String getId() {
         return this.id;

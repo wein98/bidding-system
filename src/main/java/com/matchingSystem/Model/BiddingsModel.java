@@ -35,6 +35,7 @@ public class BiddingsModel extends Observable {
      * Set the biddings view for TutorBidOffersView.
      */
     private void setBids() {
+        bids = new ArrayList<>();
         ArrayList<Bid> bidsArr = APIFacade.getAllBids();
 
         ArrayList<Competency> tutorCompetencies = UserCookie.getUser().getCompetencies();

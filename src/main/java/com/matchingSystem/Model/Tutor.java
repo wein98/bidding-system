@@ -71,7 +71,7 @@ public class Tutor extends User {
 
     public int getCompetencyLvlFromSubject(Subject s) {
         for (Competency c: competencies) {
-            if (c.getSubject().equals(s)) {
+            if (c.getSubject().getId().equals(s.getId())) {
                 return c.getLevel();
             }
         }
