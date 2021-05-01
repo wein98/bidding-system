@@ -70,6 +70,28 @@ public class Contract {
         return secondParty;
     }
 
+    public JSONObject getLessonInfo() {
+        return this.lessonInfo;
+    }
+
+    public String getDayTime() {
+        if(lessonInfo!=null) {
+            String retVal = lessonInfo.getString("prefDay") + ",";
+            retVal += lessonInfo.getString("time");
+            retVal += lessonInfo.getString("dayNight");
+            return retVal;
+        }
+        return null;
+    }
+
+    public JSONObject getAdditionalInfo() {
+        return this.additionalInfo;
+    }
+
+    public Timestamp getExpiryDate() {
+        return expiryDate;
+    }
+
     public String getDateCreated() {
         return new SimpleDateFormat("dd/MM/yyyy").format(dateCreated);
     }
