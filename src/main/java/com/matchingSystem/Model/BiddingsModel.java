@@ -22,11 +22,6 @@ public class BiddingsModel extends Observable {
     }
 
     public void setBiddings(int biddingsViewType) {
-        // TODO:
-        //      - call bidAPI by id from user.getInitiateBid().getById()
-        //      - get the bid and addtionalInfos
-        //      - populate additionalInfos to List<BidOffer>
-
         // biddingsViewType = Constant.OFFER_BIDS_VIEW
         if (biddingsViewType == Constant.OFFER_BIDS_VIEW) {
             setBids();
@@ -60,19 +55,22 @@ public class BiddingsModel extends Observable {
      * Set the bid offers view for OpenCloseBidView.
      */
     private void setBidOffersList() {
-        // TODO: parse bid.addtionalInfo.bidOffers here
         bidOffersList = bid.getBidOffers();
 
         setChanged();
         notifyObservers();
     }
 
+    /**
+     * Function is called when Student press Select Offer button.
+     * @param b this bid offer selected by the Student
+     */
     public void selectOffer(BidOfferModel b) {
-        // TODO: call selectBidder() in bid
         ((Student) UserCookie.getUser()).getInitiatedBid().selectBidder(b);
     }
 
-    // getters
+    // Getters
+
     public Bid getBid() {
         return bid;
     }

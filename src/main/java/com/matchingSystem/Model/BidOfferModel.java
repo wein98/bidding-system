@@ -19,8 +19,9 @@ public class BidOfferModel extends Observable {
     private String dayTime;
     private String duration;
     private String offerRate;
-    private String subjectName;
     private String msgId;
+    private Message msg;
+    private JSONObject bidOfferObj;
 
 //    public BidOfferModel(String linkedBidId, String offerTutorId, String offerRate, String numOfLesson,
 //                        boolean freeLesson) {
@@ -49,6 +50,8 @@ public class BidOfferModel extends Observable {
         if (this.bid.getType().equals("close")) {
             this.msgId = o.getString("msgId");
         }
+
+        bidOfferObj = o;
     }
 
     public BidOfferModel(Bid b) {
@@ -72,7 +75,7 @@ public class BidOfferModel extends Observable {
         jsonObj.put("offerTutorId", this.offerTutorId);
         jsonObj.put("offerRate", this.offerRate);
         jsonObj.put("numOfLesson", this.numOfLesson);
-        jsonObj.put("freeLesson", this.freeLesson);
+//        jsonObj.put("freeLesson", this.freeLesson);
         return jsonObj;
     }
 
@@ -102,8 +105,7 @@ public class BidOfferModel extends Observable {
      * @param msgContent content of the student's reply
      */
     public void studentReplyMsg(String msgContent) {
-        Message msgObj = (Message) APIFacade.getMessageAPI().getById(msgId, Constant.NONE);
-        msgObj.studentReplyMsg(msgContent);
+        getMsg().studentReplyMsg(msgContent);
     }
 
     // Getters
@@ -132,11 +134,16 @@ public class BidOfferModel extends Observable {
         return offerRate;
     }
 
-    public String getSubjectName() {
-        return subjectName;
-    }
-
     public String getMsgId() {
         return msgId;
+    }
+
+    public Message getMsg() {
+        msg = (Message) APIFacade.getMessageAPI().getById(msgId, Constant.NONE);
+        return msg;
+    }
+
+    public JSONObject getAddInfoJson() {
+        return bidOfferObj;
     }
 }

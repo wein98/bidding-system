@@ -7,9 +7,8 @@ import org.json.JSONObject;
 
 import java.sql.Timestamp;
 
-public class CloseBid extends Bid{
+public class CloseBid extends Bid {
 
-    protected boolean closed = false; // indicate if a Bid is closed
     private Message tutorMessage;
     private Message studentMessage;
 
@@ -18,14 +17,22 @@ public class CloseBid extends Bid{
     }
 
     @Override
-    public boolean isExpired(){
+    public boolean isExpired() {
         Timestamp now = new Timestamp(System.currentTimeMillis());
         Timestamp creation = this.dateCreated;
         Long interval = now.getTime() - creation.getTime();
         long day = (((interval / 1000) / 60)/ 60)/ 24;
         if (day >= 7){
+            // automatically closes the bid
+            additionalInfo.put("successfulBidder","undefined");
+            // call update bid API
+            StringBuilder params = APIFacade.getBidAPI().parseToJsonForPartialUpdate(getAdditionalInfo());
+            APIFacade.getBidAPI().updatePartialById(getId(), params);
+
+            close();
             return true;
-        }else {
+
+        } else {
             return false;
         }
     }
@@ -43,23 +50,6 @@ public class CloseBid extends Bid{
             long minutes = (interval / 1000) / 60;
             return minutes + " minutes";
         }
-    }
-
-    @Override
-    public void selectBidder(BidOfferModel offer){
-        // TODO: call update bid api
-        if(this.dateClosedDown != null ) {
-            this.dateClosedDown = new Timestamp(System.currentTimeMillis());
-            additionalInfo.put("successfulBidder",offer.getOfferTutorId());
-        }else{
-            System.out.println("Bid already closed!");
-        }
-    }
-
-    @Override
-    public void close() {
-        this.closed = true;
-        this.dateClosedDown = new Timestamp(System.currentTimeMillis());
     }
 
     /**
@@ -87,12 +77,13 @@ public class CloseBid extends Bid{
             String msgId = getBidOffers().get(toRemoveIndex).getMsgId();
             Message msg = (Message) APIFacade.getMessageAPI().getById(msgId, Constant.NONE);
             msg.tutorUpdateMessageContent(bidOffer.getString("msgContent"));
-//            sendMessage(msgId, bidOffer.getString("msgContent"));
 
+            // remove this old bid offer
             getBidOffers().remove(toRemoveIndex);
 
             // attach old bidOffer's msdId to this bidoffer
             bidOffer.put("msgId", msgId);
+
         } else {    // else it's a new bid offer
             // create a msg object for this bid offer
             Message msgObj = (Message) APIFacade
@@ -118,21 +109,6 @@ public class CloseBid extends Bid{
         StringBuilder params = APIFacade.getBidAPI().parseToJsonForPartialUpdate(getAdditionalInfo());
         APIFacade.getBidAPI().updatePartialById(getId(), params);
     }
-
-    /**
-     * Function to send a message for Close Bidding for an existed Bid offer
-     * @param msgId
-     * @param msgContent
-     */
-    private void sendMessage(String msgId, String msgContent) {
-        // get msg api
-        Message msg = (Message) APIFacade.getMessageAPI().getById(msgId, Constant.NONE);
-
-        StringBuilder params = APIFacade.getMessageAPI().parseToJsonForPartialUpdate(msgContent, msg.getAdditionalInfo());
-
-        APIFacade.getMessageAPI().updatePartialById(msgId, params);
-    }
-
 
     public void updateTutorMsg(String content){
         this.tutorMessage.tutorUpdateMessageContent(content);
@@ -177,7 +153,6 @@ public class CloseBid extends Bid{
                 ", dateClosedDown=" + dateClosedDown +
                 ", subject=" + subject +
                 ", additionalInfo=" + additionalInfo +
-                ", closed=" + closed +
                 '}';
     }
 }

@@ -119,8 +119,21 @@ public class OpenCloseBidView extends BiddingsView {
                 {"Duration (hours per session)", b.getDuration()},
                 {"Rate (per hour)", b.getOfferRate()}
             };
+        } else {
+            // close bid offer table view
+            rec = new String[][]{
+                    {"Tutor name", b.getTutorName()},
+                    {"Tutor competency level", String.valueOf(b.getTutorCompLvl())},
+                    {"Subject", b.getSubjectName()},
+                    {"No. of sessions", String.valueOf(b.getNumOfLesson())},
+                    {"Day & Time", b.getDayTime()},
+                    {"Duration (hours per session)", b.getDuration()},
+                    {"Rate (per hour)", b.getOfferRate()},
+//                    {"Free lesson?",}
+                    {"Tutor message", b.getMsg().getContent()},
+                    {"Your reply", b.getMsg().getStudentReply()}
+            };
         }
-        // TODO: close bid table
 
         String[] col = {"", ""};
         return new JTable(rec, col);
