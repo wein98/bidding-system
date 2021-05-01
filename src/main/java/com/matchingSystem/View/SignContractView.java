@@ -5,6 +5,7 @@ import com.matchingSystem.Model.Contract;
 import com.matchingSystem.Utility;
 
 import javax.swing.*;
+import java.text.SimpleDateFormat;
 
 public class SignContractView extends JFrame {
     private JButton signBtn;
@@ -21,24 +22,44 @@ public class SignContractView extends JFrame {
     private JLabel lessonDayTimeField;
     private JLabel rateField;
     private JLabel expiryField;
+    private JLabel titleLabel;
+    private JLabel numOfLessonLabel;
+    private JLabel numOfLessonField;
+    private JLabel dateSignedLabel;
+    private JLabel dateSignedField;
 
-    public SignContractView(Contract contract) {
-        setContent(contract);
+    // type indicate whether to VIEW or SIGN a contract
+    public SignContractView(Contract contract, String type) {
+        setContent(contract, type);
         initComponents();
         this.setVisible(true);
     }
 
-    private void setContent(Contract contract){
+    private void setContent(Contract contract, String type){
+        if(type.equals("view")){
+            this.titleLabel.setText("View Contract");
+            this.signBtn.setVisible(false);
+            this.dateSignedLabel.setVisible(true);
+            this.dateSignedField.setText(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(contract.getDateSigned()));
+            this.dateSignedField.setVisible(true);
+        }else if(type.equals("sign")){
+            this.dateSignedField.setVisible(false);
+            this.dateSignedLabel.setVisible(false);
+            this.signBtn.setVisible(true);
+        }
         this.studentNameField.setText(contract.getFirstParty().getName());
         this.tutorNameField.setText(contract.getSecondParty().getName());
         this.subjectNameField.setText(contract.getSubject().getName());
         this.lessonDayTimeField.setText(contract.getDayTime());
         this.rateField.setText(contract.getAdditionalInfo().getString("rate"));
-        this.expiryField.setText(Utility.sdf2.format(contract.getExpiryDate()));
+        this.numOfLessonField.setText(contract.getLessonInfo().getString("numOfLesson"));
+        String formattedTime = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(contract.getExpiryDate());
+        this.expiryField.setText(formattedTime);
     }
 
     private void initComponents() {
         setContentPane(panel);
+//        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         pack();
     }
 

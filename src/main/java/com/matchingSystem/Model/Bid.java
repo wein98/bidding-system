@@ -3,11 +3,14 @@ package com.matchingSystem.Model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.matchingSystem.API.APIFacade;
 import com.matchingSystem.Poster;
+import com.matchingSystem.UserCookie;
 import com.matchingSystem.Utility;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -174,6 +177,20 @@ public abstract class Bid implements BidInterface{
             this.additionalInfo.put("successfulBidder", offer.getOfferTutorId());
             // update Bid additionalInfo with successfulBidder property
             APIFacade.updateBidById(this.id, this.additionalInfo);
+            // create Contract , set expiry to be 6 months
+            Timestamp now = new Timestamp(System.currentTimeMillis());
+            LocalDateTime sixMonthsFuture = LocalDate.now().plusMonths(6).atTime(0, 0);
+            Timestamp expiry = Timestamp.valueOf(sixMonthsFuture);
+            JSONObject lessonInfo = new JSONObject();
+            lessonInfo.put("time",offer.getTime());
+            lessonInfo.put("dayNight",offer.getDayNight());
+            lessonInfo.put("prefDay",offer.getDay());
+            lessonInfo.put("numOfLesson",offer.getNumOfLesson());
+            lessonInfo.put("duration",offer.getDuration());
+            JSONObject additionalInfo = new JSONObject();
+            additionalInfo.put("rate",this.getRate());
+            APIFacade.createContract(UserCookie.getUser().getId(), offer.getOfferTutorId(), this.getSubject().getId()
+                    ,expiry,new JSONObject(),lessonInfo,additionalInfo);
             close();
         } else {
             System.out.println("Bid already closed!");

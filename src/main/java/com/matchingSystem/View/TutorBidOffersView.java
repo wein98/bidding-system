@@ -4,6 +4,8 @@ import com.matchingSystem.Constant;
 import com.matchingSystem.Controller.BidOfferController;
 import com.matchingSystem.Controller.OpenCloseBidController;
 import com.matchingSystem.Model.*;
+import com.matchingSystem.UserCookie;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -69,7 +71,8 @@ public class TutorBidOffersView extends BiddingsView {
                 btn1.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        // TODO: buy out this b
+                        // TODO: buy out this bid
+                        ((OpenBid) b).buyOut(UserCookie.getUser().getId());
                         System.out.println("BUY OUT: " + b.getInitiator().toString());
                     }
                 });
@@ -116,7 +119,7 @@ public class TutorBidOffersView extends BiddingsView {
     private JTable getTable(Bid b) {
         String[][] rec = {
             {"Bid Type", b.getType()},
-            {"Student name", b.getInitiator().getGivenName()},
+            {"Student name", b.getInitiator().getName()},
             {"Subject", b.getSubject().getName()},
             {"No. of sessions", b.getNoLessons()},
             {"Day & Time", b.getDayTime()},
