@@ -1,8 +1,8 @@
 package com.matchingSystem.View;
 
 import com.matchingSystem.Model.BiddingCreationModel;
-import com.matchingSystem.Model.Qualification;
-import com.matchingSystem.Model.Subject;
+import com.matchingSystem.LoginSystem.Qualification;
+import com.matchingSystem.BiddingSystem.Subject;
 import com.matchingSystem.Utility;
 import org.json.JSONObject;
 

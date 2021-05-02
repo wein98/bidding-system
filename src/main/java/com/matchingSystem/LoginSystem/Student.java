@@ -1,6 +1,8 @@
-package com.matchingSystem.Model;
+package com.matchingSystem.LoginSystem;
 
 import com.matchingSystem.API.APIFacade;
+import com.matchingSystem.BiddingSystem.Bid;
+import com.matchingSystem.LoginSystem.User;
 import org.json.JSONObject;
 
 public class Student extends User {

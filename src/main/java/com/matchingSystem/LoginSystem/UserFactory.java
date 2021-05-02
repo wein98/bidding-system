@@ -1,9 +1,8 @@
-package com.matchingSystem.Model;
+package com.matchingSystem.LoginSystem;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.Constant;
-import org.json.JSONObject;
 
 public class UserFactory {
     public User createUser(String userInfo, int userType) {

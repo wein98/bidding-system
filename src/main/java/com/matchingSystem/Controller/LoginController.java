@@ -3,7 +3,7 @@ package com.matchingSystem.Controller;
 import com.matchingSystem.API.APIFacade;
 import com.matchingSystem.View.LoginView;
 import com.matchingSystem.View.UserTypeView;
-import com.matchingSystem.UserCookie;
+import com.matchingSystem.LoginSystem.UserCookie;
 import org.json.JSONObject;
 
 import java.awt.event.ActionEvent;

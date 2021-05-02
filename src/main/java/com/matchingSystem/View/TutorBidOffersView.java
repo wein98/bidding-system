@@ -1,10 +1,13 @@
 package com.matchingSystem.View;
 
+import com.matchingSystem.BiddingSystem.Bid;
+import com.matchingSystem.BiddingSystem.CloseBid;
+import com.matchingSystem.BiddingSystem.OpenBid;
 import com.matchingSystem.Constant;
 import com.matchingSystem.Controller.BidOfferController;
 import com.matchingSystem.Controller.OpenCloseBidController;
 import com.matchingSystem.Model.*;
-import com.matchingSystem.UserCookie;
+import com.matchingSystem.LoginSystem.UserCookie;
 
 import javax.swing.*;
 import java.awt.*;

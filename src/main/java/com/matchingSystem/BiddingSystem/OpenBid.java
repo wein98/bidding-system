@@ -1,13 +1,15 @@
-package com.matchingSystem.Model;
+package com.matchingSystem.BiddingSystem;
 
 import com.matchingSystem.API.APIFacade;
+import com.matchingSystem.BiddingSystem.Bid;
+import com.matchingSystem.Model.BidOfferModel;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-public class OpenBid extends Bid{
+public class OpenBid extends Bid {
 
     protected ArrayList<BidOfferModel> bidders;
     protected boolean closed = false; // indicate if a Bid is closed

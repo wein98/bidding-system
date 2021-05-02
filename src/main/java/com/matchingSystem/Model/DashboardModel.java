@@ -1,7 +1,10 @@
 package com.matchingSystem.Model;
 
 import com.matchingSystem.Constant;
-import com.matchingSystem.UserCookie;
+import com.matchingSystem.ContractDev.Contract;
+import com.matchingSystem.LoginSystem.Student;
+import com.matchingSystem.LoginSystem.User;
+import com.matchingSystem.LoginSystem.UserCookie;
 import java.util.ArrayList;
 import java.util.Observable;
 

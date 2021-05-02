@@ -3,7 +3,8 @@ package com.matchingSystem.API.APIAdapters;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.API.APIService;
 import com.matchingSystem.API.ClientInterfaces.BidAPIInterface;
-import com.matchingSystem.Model.*;
+import com.matchingSystem.BiddingSystem.Bid;
+import com.matchingSystem.BiddingSystem.BidFactory;
 import com.matchingSystem.Utility;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,29 +14,10 @@ import java.util.ArrayList;
 import static com.matchingSystem.API.APIService.*;
 
 public class BidAPI extends APIRouter implements BidAPIInterface {
-    /**
-     * Singleton design pattern
-     */
-    private static BidAPI ourInstance;
-    /**
-     * BidAPI constructor (private)
-     */
-    private BidAPI() {
+    public BidAPI() {
         this.objMapper = new ObjectMapper();
         route = "/bid";
         this.c = Bid.class;
-    }
-
-    /**
-     * Global access point
-     * @return the only instance of this class
-     */
-    public static BidAPI getInstance() {
-
-        if (ourInstance == null) {
-            ourInstance = new BidAPI();
-        }
-        return ourInstance;
     }
 
     /**

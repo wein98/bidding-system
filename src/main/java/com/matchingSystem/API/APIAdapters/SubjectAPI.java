@@ -4,11 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.API.APIService;
 import com.matchingSystem.API.ClientInterfaces.SubjectAPIInterface;
-import com.matchingSystem.Constant;
-import com.matchingSystem.Model.Bid;
-import com.matchingSystem.Model.Competency;
-import com.matchingSystem.Model.Qualification;
-import com.matchingSystem.Model.Subject;
+import com.matchingSystem.BiddingSystem.Subject;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import static com.matchingSystem.API.APIService.*;
@@ -17,27 +13,12 @@ import java.util.ArrayList;
 
 public class SubjectAPI extends APIRouter implements SubjectAPIInterface {
     /**
-     * Singleton design pattern
-     */
-    private static SubjectAPI ourInstance;
-    /**
      * SubjectAPI constructor (private)
      */
-    private SubjectAPI() {
+    public SubjectAPI() {
         this.objMapper = new ObjectMapper();
         route = "/subject";
         c = Subject.class;
-    }
-    /**
-     * Global access point
-     * @return the only instance of this class
-     */
-    public static SubjectAPI getInstance() {
-
-        if (ourInstance == null) {
-            ourInstance = new SubjectAPI();
-        }
-        return ourInstance;
     }
 
     /**

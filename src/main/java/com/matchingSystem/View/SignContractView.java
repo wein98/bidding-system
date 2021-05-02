@@ -1,8 +1,6 @@
 package com.matchingSystem.View;
 
-import com.matchingSystem.Constant;
-import com.matchingSystem.Model.Contract;
-import com.matchingSystem.Utility;
+import com.matchingSystem.ContractDev.Contract;
 
 import javax.swing.*;
 import java.text.SimpleDateFormat;

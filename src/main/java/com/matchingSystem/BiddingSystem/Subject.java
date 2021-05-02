@@ -1,4 +1,4 @@
-package com.matchingSystem.Model;
+package com.matchingSystem.BiddingSystem;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

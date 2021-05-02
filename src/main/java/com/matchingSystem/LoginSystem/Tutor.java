@@ -1,7 +1,10 @@
-package com.matchingSystem.Model;
+package com.matchingSystem.LoginSystem;
 
 import com.matchingSystem.API.APIFacade;
-import com.matchingSystem.Constant;
+import com.matchingSystem.BiddingSystem.Competency;
+import com.matchingSystem.BiddingSystem.OpenBid;
+import com.matchingSystem.BiddingSystem.Subject;
+import com.matchingSystem.LoginSystem.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

@@ -1,6 +1,6 @@
 package com.matchingSystem.View;
 
-import com.matchingSystem.UserCookie;
+import com.matchingSystem.LoginSystem.UserCookie;
 import com.matchingSystem.Utility;
 import org.json.JSONObject;
 

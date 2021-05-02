@@ -1,8 +1,12 @@
 package com.matchingSystem.Model;
 
 import com.matchingSystem.API.APIFacade;
+import com.matchingSystem.BiddingSystem.Bid;
+import com.matchingSystem.BiddingSystem.Competency;
+import com.matchingSystem.BiddingSystem.Subject;
 import com.matchingSystem.Constant;
-import com.matchingSystem.UserCookie;
+import com.matchingSystem.LoginSystem.Student;
+import com.matchingSystem.LoginSystem.UserCookie;
 import java.util.ArrayList;
 import java.util.Observable;
 

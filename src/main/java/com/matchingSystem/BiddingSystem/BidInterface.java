@@ -1,6 +1,6 @@
-package com.matchingSystem.Model;
+package com.matchingSystem.BiddingSystem;
 
-import com.matchingSystem.Poster;
+import com.matchingSystem.Model.BidOfferModel;
 import org.json.JSONObject;
 
 import java.util.ArrayList;

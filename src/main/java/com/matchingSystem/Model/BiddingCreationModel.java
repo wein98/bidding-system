@@ -1,7 +1,11 @@
 package com.matchingSystem.Model;
 
 import com.matchingSystem.API.APIFacade;
-import com.matchingSystem.UserCookie;
+import com.matchingSystem.BiddingSystem.Competency;
+import com.matchingSystem.BiddingSystem.Subject;
+import com.matchingSystem.LoginSystem.Qualification;
+import com.matchingSystem.LoginSystem.Student;
+import com.matchingSystem.LoginSystem.UserCookie;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

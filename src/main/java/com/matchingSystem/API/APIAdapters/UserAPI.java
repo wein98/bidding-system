@@ -7,30 +7,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class UserAPI extends APIRouter implements UserAPIInterface {
-    /**
-     * Singleton design pattern
-     */
-    private static UserAPI ourInstance;
-
-    /**
-     * UserAPI constructor (private)
-     */
-    private UserAPI() {
+    public UserAPI() {
         this.objMapper = new ObjectMapper();
         route = "/user";
     }
 
-    /**
-     * Global access point
-     * @return the only instance of this class
-     */
-    public static UserAPI getInstance() {
-
-        if (ourInstance == null) {
-            ourInstance = new UserAPI();
-        }
-        return ourInstance;
-    }
     /**
      * Get all users
      * @return JSONArray of all the users

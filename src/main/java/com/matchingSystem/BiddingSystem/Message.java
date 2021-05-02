@@ -1,8 +1,8 @@
-package com.matchingSystem.Model;
+package com.matchingSystem.BiddingSystem;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.matchingSystem.API.APIFacade;
-import com.matchingSystem.Poster;
+import com.matchingSystem.Model.BidOfferModel;
 import org.json.JSONObject;
 import java.sql.Timestamp;
 import java.util.Map;

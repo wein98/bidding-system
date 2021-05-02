@@ -1,9 +1,11 @@
-package com.matchingSystem.Model;
+package com.matchingSystem.LoginSystem;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.API.APIFacade;
+import com.matchingSystem.BiddingSystem.Competency;
+import com.matchingSystem.ContractDev.Contract;
 
 import java.util.ArrayList;
 

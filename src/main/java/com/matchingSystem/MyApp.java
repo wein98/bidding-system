@@ -1,20 +1,9 @@
 package com.matchingSystem;
 
-import com.matchingSystem.API.APIAdapters.*;
-import com.matchingSystem.API.APIFacade;
-import com.matchingSystem.API.ClientInterfaces.CompetencyAPIInterface;
-import com.matchingSystem.API.ClientInterfaces.ContractAPIInterface;
-import com.matchingSystem.API.ClientInterfaces.QualificationAPIInterface;
-import com.matchingSystem.API.ClientInterfaces.SubjectAPIInterface;
 import com.matchingSystem.API.APIAdapters.MessageAPI;
-import com.matchingSystem.Model.*;
-import org.json.JSONObject;
+import com.matchingSystem.BiddingSystem.Message;
 
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class MyApp {
     public static final String USER_ID = "f5449b1f-6f55-408a-88ee" + "-194958f52219";
