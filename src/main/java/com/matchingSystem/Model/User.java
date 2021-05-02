@@ -2,19 +2,13 @@ package com.matchingSystem.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.API.APIFacade;
-import com.matchingSystem.Constant;
-import com.matchingSystem.UserCookie;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Observable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public abstract class User extends Observable {
+public abstract class User {
 
     @JsonProperty("id")
     protected String id;
@@ -45,14 +39,6 @@ public abstract class User extends Observable {
 
     public String getId() {
         return id;
-    }
-
-    public String getGivenName() {
-        return givenName;
-    }
-
-    public String getFamilyName() {
-        return familyName;
     }
 
     public String getUserName() {

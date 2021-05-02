@@ -8,7 +8,7 @@ public class UserCookie {
 
     private static UserCookie ourInstance;
     private static int userType;
-    public static String jwtToken = null;
+    private static String jwtToken = null;
     private static User user = null;
 
     public static UserCookie getInstance() {
@@ -21,12 +21,8 @@ public class UserCookie {
 
     private UserCookie() {}
 
-    public static void init(int userType) {
-        setUser(userType);
-    }
-
     // Function called to set usercookie
-    private static void setUser(int _userType) {
+    public static void init(int _userType) {
         // decode jwt
         JSONObject userObj = Utility.decodeJWT(jwtToken);
 
@@ -38,8 +34,7 @@ public class UserCookie {
         user = userFactory.createUser(userInfo, _userType);
         if (_userType == Constant.IS_STUDENT) {
             userType = Constant.IS_STUDENT;
-            Student studentObj = (Student) user;
-            studentObj.setInitiatedBid();
+            ((Student) user).setInitiatedBid();
         } else if (_userType == Constant.IS_TUTOR) {
             userType = Constant.IS_TUTOR;
         }

@@ -11,9 +11,7 @@ public class DashboardModel extends Observable {
     private User user;
     private String username;
     private String userType;
-    private String familyName;
-    private String givenName;
-    private String testing;
+    private String fullName;
 
     public ArrayList<Contract> getContractArrayList() {
         return contractArrayList;
@@ -34,30 +32,18 @@ public class DashboardModel extends Observable {
 
         // set username
         username = user.getUserName();
-        familyName = user.getFamilyName();
-        givenName = user.getGivenName();
-        testing = user.getCompetencies().toString();
-
-        setContractArrayList();
+        fullName = user.getFullName();
+        contractArrayList = user.getContracts();
 
         // notify observers
         setChanged();
         notifyObservers();
     }
 
-    private void setContractArrayList() {
-        // TODO: filter out getAll contracts that matches current user and update to model.contractList
-        contractArrayList = user.getContracts();
-    }
-
     public void checkPostedBid() {
         ((Student) user).setInitiatedBid();
         setChanged();
         notifyObservers();
-    }
-
-    public String getTesting() {
-        return testing;
     }
 
     public String getUsername() {
@@ -68,12 +54,8 @@ public class DashboardModel extends Observable {
         return userType;
     }
 
-    public String getFamilyName() {
-        return familyName;
-    }
-
-    public String getGivenName() {
-        return givenName;
+    public String getFullName() {
+        return fullName;
     }
 
     public int getBidType() {

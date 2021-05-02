@@ -1,7 +1,6 @@
 package com.matchingSystem.Controller;
 
 import com.matchingSystem.API.APIFacade;
-import com.matchingSystem.Model.LoginModel;
 import com.matchingSystem.View.LoginView;
 import com.matchingSystem.View.UserTypeView;
 import com.matchingSystem.UserCookie;
@@ -12,11 +11,9 @@ import java.awt.event.ActionListener;
 
 public class LoginController {
     private LoginView view;
-    private LoginModel model;
 
-    public LoginController(LoginView view, LoginModel model) {
+    public LoginController(LoginView view) {
         this.view = view;
-        this.model = model;
         initController();
     }
 
@@ -49,7 +46,7 @@ public class LoginController {
         UserTypeView userTypeView = new UserTypeView();
 
         // Create userType controller
-        UserTypeController userTypeController = new UserTypeController(userTypeView, jwtCode);
+        new UserTypeController(userTypeView);
     }
 
     private String getUsernameFromLogin() {
