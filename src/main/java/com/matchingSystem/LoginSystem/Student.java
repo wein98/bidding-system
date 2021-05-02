@@ -2,7 +2,6 @@ package com.matchingSystem.LoginSystem;
 
 import com.matchingSystem.API.APIFacade;
 import com.matchingSystem.BiddingSystem.Bid;
-import com.matchingSystem.LoginSystem.User;
 import org.json.JSONObject;
 
 public class Student extends User {
@@ -30,7 +29,10 @@ public class Student extends User {
      * Store student's initiated bid if there exists.
      */
     public void setInitiatedBid() {
-        this.initiatedBid = APIFacade.getUserInitiatedBidById(getId());
+        Bid b = APIFacade.getUserInitiatedBidById(getId());
+        if (b != null && !b.isExpired()) {
+            this.initiatedBid = b;
+        }
     }
 
     public Bid getInitiatedBid() {

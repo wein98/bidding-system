@@ -37,39 +37,43 @@ public class DashboardController implements Observer, ActionListener {
     }
 
     public void updateContracts() {
-
+        model.updateContractList();
     }
 
     public DashboardView getView() { return this.view; }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (model.getUserType().equals("Student")) {
-            Student studentObj = (Student) UserCookie.getUser();
+        if (e.getSource().equals(view.getContractRefreshBtn())) {
+            updateContracts();
+        } else {
+            if (model.getUserType().equals("Student")) {
+                Student studentObj = (Student) UserCookie.getUser();
 
-            if (model.getBidType() == Constant.OPENBID) {
-                // open openbid view
-                BiddingsModel biddingsModel = new BiddingsModel(studentObj.getInitiatedBid().getId());
-                OpenCloseBidView openBidView = new OpenCloseBidView(biddingsModel, Constant.OPEN_BIDDING_VIEW);
-                new OpenCloseBidController(openBidView, biddingsModel);
+                if (model.getBidType() == Constant.OPENBID) {
+                    // open openbid view
+                    BiddingsModel biddingsModel = new BiddingsModel(studentObj.getInitiatedBid().getId());
+                    OpenCloseBidView openBidView = new OpenCloseBidView(biddingsModel, Constant.OPEN_BIDDING_VIEW);
+                    new OpenCloseBidController(openBidView, biddingsModel);
 
-            } else if (model.getBidType() == Constant.CLOSEBID) {
-                // open closebid view
-                BiddingsModel biddingsModel = new BiddingsModel(studentObj.getInitiatedBid().getId());
-                OpenCloseBidView openBidView = new OpenCloseBidView(biddingsModel, Constant.CLOSE_BIDDING_VIEW);
-                new OpenCloseBidController(openBidView, biddingsModel);
+                } else if (model.getBidType() == Constant.CLOSEBID) {
+                    // open closebid view
+                    BiddingsModel biddingsModel = new BiddingsModel(studentObj.getInitiatedBid().getId());
+                    OpenCloseBidView openBidView = new OpenCloseBidView(biddingsModel, Constant.CLOSE_BIDDING_VIEW);
+                    new OpenCloseBidController(openBidView, biddingsModel);
 
-            } else {
-                // Open student create bid view
-                BiddingCreationModel bidCreateModel = new BiddingCreationModel();
-                BiddingCreationView bidCreateView = new BiddingCreationView(bidCreateModel);
-                new BiddingCreationController(bidCreateView,bidCreateModel, model);
+                } else {
+                    // Open student create bid view
+                    BiddingCreationModel bidCreateModel = new BiddingCreationModel();
+                    BiddingCreationView bidCreateView = new BiddingCreationView(bidCreateModel);
+                    new BiddingCreationController(bidCreateView,bidCreateModel, model);
+                }
+            } else if (model.getUserType().equals("Tutor")) {
+                // open view biddings window
+                BiddingsModel biddingsModel = new BiddingsModel();
+                TutorBidOffersView bidOffersView = new TutorBidOffersView(biddingsModel);
+                new TutorBidOffersController(bidOffersView, biddingsModel);
             }
-        } else if (model.getUserType().equals("Tutor")) {
-            // open view biddings window
-            BiddingsModel biddingsModel = new BiddingsModel();
-            TutorBidOffersView bidOffersView = new TutorBidOffersView(biddingsModel);
-            new TutorBidOffersController(bidOffersView, biddingsModel);
         }
     }
 

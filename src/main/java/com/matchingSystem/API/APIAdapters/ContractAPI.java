@@ -103,13 +103,13 @@ public class ContractAPI extends APIRouter implements ContractAPIInterface {
             jsonParam.append("}");
             String response = UpdateRequest(route, jsonParam, APIService.POST);
             System.out.println(response);
-            JSONObject resObj = new JSONObject(response);
-            System.out.println(resObj.toString());
-            if (resObj.getInt("statusCode") == 200){
-                return true;
-            }else{
-                return false;
-            }
+//            JSONObject resObj = new JSONObject(response);
+//            System.out.println(resObj.toString());
+//            if (resObj.getInt("statusCode") == 200){
+//                return true;
+//            }else{
+//                return false;
+//            }
         } catch (Exception e){
             e.printStackTrace();
         }

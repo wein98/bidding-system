@@ -45,13 +45,14 @@ public class BiddingsModel extends Observable {
         // filter by competencies of tutor
         for (Bid b: bidsArr) {
             // get subject in bid
-            Subject bidSubject = b.getSubject();
-            int bidCompetency = b.getCompetencyLevel();
-            // TODO: needs to filter out the competency subjects based on competency level
-            for (Competency competency: tutorCompetencies){
-                if (competency.getSubject().getId().equals(bidSubject.getId())){
-                    if (competency.getLevel() >= bidCompetency + 2){
-                        bids.add(b);
+            if (!b.isExpired()) {
+                Subject bidSubject = b.getSubject();
+                int bidCompetency = b.getCompetencyLevel();
+                for (Competency competency: tutorCompetencies){
+                    if (competency.getSubject().getId().equals(bidSubject.getId())){
+                        if (competency.getLevel() >= bidCompetency + 2){
+                            bids.add(b);
+                        }
                     }
                 }
             }
@@ -67,7 +68,11 @@ public class BiddingsModel extends Observable {
      * Set the bid offers view for OpenCloseBidView.
      */
     private void setBidOffersList() {
-        bidOffersList = bid.getBidOffers();
+        if (bid.isExpired()) {
+            bidOffersList.clear();
+        } else {
+            bidOffersList = bid.getBidOffers();
+        }
 
         setChanged();
         notifyObservers();
@@ -79,6 +84,9 @@ public class BiddingsModel extends Observable {
      */
     public void selectOffer(BidOfferModel b) {
         ((Student) UserCookie.getUser()).getInitiatedBid().selectBidder(b);
+
+        setChanged();
+        notifyObservers();
     }
 
     // Getters

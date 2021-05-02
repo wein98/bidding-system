@@ -35,7 +35,6 @@ public class BiddingCreationView extends javax.swing.JFrame implements Observer 
     private BiddingCreationModel model;
 
     public BiddingCreationView(BiddingCreationModel model) {
-//        btnLoginSubmit.addActionListener(this);
         this.model = model;
         model.addObserver(this);
         initComponents();
@@ -45,7 +44,6 @@ public class BiddingCreationView extends javax.swing.JFrame implements Observer 
     @SuppressWarnings("unchecked")
     private void initComponents() {
         setContentPane(bidCreationForm);
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         pack();
     }
 
@@ -125,9 +123,5 @@ public class BiddingCreationView extends javax.swing.JFrame implements Observer 
         }
 
         return subjectNames;
-    }
-
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
     }
 }

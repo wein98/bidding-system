@@ -31,15 +31,16 @@ public class OpenBid extends Bid {
     @Override
     public boolean isExpired(){
         Timestamp now = new Timestamp(System.currentTimeMillis());
+        System.out.println(now.toString());
         Timestamp creation = this.dateCreated;
         Long interval = now.getTime() - creation.getTime();
         long minutes = (interval / 1000) / 60;
         if (minutes >= 30) {
             // automatically selects the last bid offer
-            if (getBidOffers().size() > 0) {
+            if (this.dateClosedDown == null && getBidOffers().size() > 0) {
                 selectBidder(getBidOffers().get(getBidOffers().size()-1));
 
-            } else {
+            } else if (this.dateClosedDown == null) {
                 // no bidders, close the bid
                 additionalInfo.put("successfulBidder","undefined");
                 // call update bid API

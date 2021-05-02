@@ -36,7 +36,7 @@ public class DashboardModel extends Observable {
         // set username
         username = user.getUserName();
         fullName = user.getFullName();
-        contractArrayList = user.getContracts();
+        updateContractList();
 
         // notify observers
         setChanged();
@@ -45,6 +45,13 @@ public class DashboardModel extends Observable {
 
     public void checkPostedBid() {
         ((Student) user).setInitiatedBid();
+        setChanged();
+        notifyObservers();
+    }
+
+    public void updateContractList() {
+        user.setContracts();
+        contractArrayList = user.getContracts();
         setChanged();
         notifyObservers();
     }
