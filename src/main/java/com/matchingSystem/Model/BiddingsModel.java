@@ -10,15 +10,13 @@ public class BiddingsModel extends Observable {
 
     private ArrayList<BidOfferModel> bidOffersList = new ArrayList<>();
     private ArrayList<Bid> bids = new ArrayList<>();
-    private String bidId;
     private Bid bid;
 
     public BiddingsModel() {}
 
     public BiddingsModel(String bidId) {
-        this.bidId = bidId;
         // get Bid object with bidId
-        this.bid = APIFacade.getBidById(this.bidId);
+        this.bid = APIFacade.getBidById(bidId);
     }
 
     public void setBiddings(int biddingsViewType) {

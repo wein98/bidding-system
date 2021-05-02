@@ -1,22 +1,19 @@
 package com.matchingSystem.Controller;
 
-import com.matchingSystem.Model.LoginModel;
+import com.matchingSystem.API.APIFacade;
 import com.matchingSystem.View.LoginView;
 import com.matchingSystem.View.UserTypeView;
 import com.matchingSystem.UserCookie;
 import org.json.JSONObject;
 
-import javax.jws.soap.SOAPBinding;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LoginController {
     private LoginView view;
-    private LoginModel model;
 
-    public LoginController(LoginView view, LoginModel model) {
+    public LoginController(LoginView view) {
         this.view = view;
-        this.model = model;
         initController();
     }
 
@@ -30,7 +27,7 @@ public class LoginController {
     }
 
     private void getUserAction() {
-        JSONObject response = this.model.getUserLogin(getUsernameFromLogin(), getPasswordFromLogin());
+        JSONObject response = APIFacade.userLogin(getUsernameFromLogin(), getPasswordFromLogin());
 
         if (response.has("jwt")) {
             loginSuccess(response.getString("jwt"));
@@ -43,15 +40,13 @@ public class LoginController {
     private void loginSuccess(String jwtCode) {
         // Create user cookie
         UserCookie userCookie = UserCookie.getInstance();
-//        UserCookie.jwtToken = jwtCode;
         UserCookie.setJwtToken(jwtCode);
-//        userCookie.setJwtToken(jwtCode);
 
         // Create userType view
         UserTypeView userTypeView = new UserTypeView();
 
         // Create userType controller
-        UserTypeController userTypeController = new UserTypeController(userTypeView, jwtCode);
+        new UserTypeController(userTypeView);
     }
 
     private String getUsernameFromLogin() {

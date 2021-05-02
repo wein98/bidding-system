@@ -1,14 +1,9 @@
 package com.matchingSystem;
 
-import com.matchingSystem.API.APIAdapters.ContractAPI;
-import com.matchingSystem.API.ClientInterfaces.ContractAPIInterface;
 import com.matchingSystem.Model.*;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 public class UserCookie {
-    private static final ContractAPIInterface contractAPI = ContractAPI.getInstance();
     private static final UserFactory userFactory = new UserFactory();
 
     private static UserCookie ourInstance;
@@ -26,12 +21,8 @@ public class UserCookie {
 
     private UserCookie() {}
 
-    public static void init(int userType) {
-        setUser(userType);
-    }
-
     // Function called to set usercookie
-    private static void setUser(int _userType) {
+    public static void init(int _userType) {
         // decode jwt
         JSONObject userObj = Utility.decodeJWT(jwtToken);
 
@@ -43,8 +34,7 @@ public class UserCookie {
         user = userFactory.createUser(userInfo, _userType);
         if (_userType == Constant.IS_STUDENT) {
             userType = Constant.IS_STUDENT;
-            Student studentObj = (Student) user;
-            studentObj.setInitiatedBid();
+            ((Student) user).setInitiatedBid();
         } else if (_userType == Constant.IS_TUTOR) {
             userType = Constant.IS_TUTOR;
         }
@@ -53,14 +43,6 @@ public class UserCookie {
         user.setQualifications();
         user.setContracts();
     }
-
-//    private static void setContracts() {
-//        ArrayList<Contract> contractArr = (ArrayList<Contract>) contractAPI.getAll();
-//
-//        for (Contract c: contractArr) {
-//            user.addContract(c);
-//        }
-//    }
 
     // return user object
     public static User getUser() {

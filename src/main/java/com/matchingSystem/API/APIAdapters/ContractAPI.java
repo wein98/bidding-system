@@ -84,40 +84,11 @@ public class ContractAPI extends APIRouter implements ContractAPIInterface {
      * @param expiryDate expiry of the contract
      * @return StringBuilder of parsed json
      */
-    public StringBuilder parseToJsonForCreate(String firstPartyId, String secondPartyId,
+    @Override
+    public StringBuilder parseToJson(String firstPartyId, String secondPartyId,
                                               String subjectId, Timestamp expiryDate,
                                               JSONObject paymentInfo, JSONObject lessonInfo,
                                               JSONObject additionalInfo) {
-        Timestamp now = new Timestamp(System.currentTimeMillis());
-        StringBuilder jsonParam = new StringBuilder();
-        jsonParam.append("{");
-        jsonParam.append(String.format("\"firstPartyId\": \"%s\",", firstPartyId));
-        jsonParam.append(String.format("\"secondPartyId\": \"%s\",", secondPartyId));
-        jsonParam.append(String.format("\"subjectId\": \"%s\",", subjectId));
-        jsonParam.append(String.format("\"dateCreated\": \"%s\",", Utility.sdf2.format(now)));
-        jsonParam.append(String.format("\"expiryDate\": \"%s\",", Utility.sdf2.format(expiryDate)));
-        jsonParam.append("\"paymentInfo\": ");
-        jsonParam.append(paymentInfo);
-        jsonParam.append(",");
-        jsonParam.append("\"lessonInfo\": ");
-        jsonParam.append(lessonInfo);
-        jsonParam.append(",");
-        jsonParam.append("\"additionalInfo\": ");
-        jsonParam.append(additionalInfo);
-        jsonParam.append("}");
-
-        return jsonParam;
-    }
-
-    /**
-     * Function that parses variables to json needed for the request body for updatePartialById()
-     * @param firstPartyId Id of student in the contract
-     * @param secondPartyId Id of tutor in the contract
-     * @param subjectId Id of subject that is requested
-     * @param expiryDate expiry of the contract
-     * @return StringBuilder of parsed json
-     */
-    public StringBuilder parseToJsonForPartialUpdate(String firstPartyId, String secondPartyId, String subjectId, Timestamp expiryDate, JSONObject paymentInfo, JSONObject lessonInfo, JSONObject additionalInfo) {
         Timestamp now = new Timestamp(System.currentTimeMillis());
         StringBuilder jsonParam = new StringBuilder();
         jsonParam.append("{");

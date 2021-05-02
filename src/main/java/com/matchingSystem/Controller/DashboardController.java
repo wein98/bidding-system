@@ -43,24 +43,6 @@ public class DashboardController implements Observer, ActionListener {
     public DashboardView getView() { return this.view; }
 
     @Override
-    public void update(Observable o, Object arg) {
-        if (o instanceof DashboardModel) {
-            // Update bid action button to appropriate text according to initiated bid
-            if (model.getUserType().equals("Student")) {
-                if (model.getBidType() == Constant.OPENBID) {
-                    view.getBidActionBtn().setText("View open bid offers");
-                } else if (model.getBidType() == Constant.CLOSEBID) {
-                    view.getBidActionBtn().setText("View close bid offers");
-                } else {
-                    view.getBidActionBtn().setText("Post a Bid");
-                }
-            } else if (model.getUserType().equals("Tutor")) {
-                view.getBidActionBtn().setText("View current biddings");
-            }
-        }
-    }
-
-    @Override
     public void actionPerformed(ActionEvent e) {
         if (model.getUserType().equals("Student")) {
             Student studentObj = (Student) UserCookie.getUser();
@@ -90,4 +72,29 @@ public class DashboardController implements Observer, ActionListener {
             new TutorBidOffersController(bidOffersView, biddingsModel);
         }
     }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (o instanceof DashboardModel) {
+            // Profile section
+            view.getUserTypeLabel().setText(model.getUserType());
+            view.getUsernameLabel().setText(model.getUsername());
+            view.getFullNameLabel().setText(model.getFullName());
+            view.setContractsPanel(model.getContractArrayList());
+
+            // Update bid action button to appropriate text according to initiated bid
+            if (model.getUserType().equals("Student")) {
+                if (model.getBidType() == Constant.OPENBID) {
+                    view.getBidActionBtn().setText("View open bid offers");
+                } else if (model.getBidType() == Constant.CLOSEBID) {
+                    view.getBidActionBtn().setText("View close bid offers");
+                } else {
+                    view.getBidActionBtn().setText("Post a Bid");
+                }
+            } else if (model.getUserType().equals("Tutor")) {
+                view.getBidActionBtn().setText("View current biddings");
+            }
+        }
+    }
+
 }

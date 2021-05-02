@@ -44,6 +44,10 @@ public class APIFacade {
         return (User) userAPI.getById(id, Constant.NONE);
     }
 
+    public static JSONObject userLogin(String username, String password) {
+        return userAPI.userLogin(username, password);
+    }
+
     public static ArrayList<Competency> getUserCompetenciesById(String id) {
         JSONObject response = (JSONObject) userAPI.getById(id, Constant.COMPETENCIES_SUBJECT);
         JSONArray arr = response.getJSONArray("competencies");
@@ -88,12 +92,12 @@ public class APIFacade {
     public static Bid getUserInitiatedBidById(String id) {
         JSONObject response = (JSONObject) userAPI.getById(id, Constant.INITIATEDBIDS);
         JSONArray arr = response.getJSONArray("initiatedBids");
-
         // get the active bid
         if (arr.length() != 0) {
             for (int i = 0; i < arr.length(); i++) {
-                if(arr.getJSONObject(i).get("dateClosedDown") == null){
+                if(arr.getJSONObject(i).isNull("dateClosedDown")){
                     BidFactory bidFactory = new BidFactory();
+                    System.out.println(arr.getJSONObject(i));
                     return bidFactory.createBid(arr.getJSONObject(i));
                 }
             }
@@ -161,7 +165,7 @@ public class APIFacade {
     public static Contract createContract(String studentId, String tutorId, String subjectId, Timestamp expiry,
                                           JSONObject paymentInfo,
                                           JSONObject lessonInfo, JSONObject additionalInfo){
-        return (Contract) contractAPI.create(contractAPI.parseToJsonForCreate(studentId,tutorId,
+        return (Contract) contractAPI.create(contractAPI.parseToJson(studentId,tutorId,
                 subjectId, expiry, paymentInfo, lessonInfo, additionalInfo));
     }
 

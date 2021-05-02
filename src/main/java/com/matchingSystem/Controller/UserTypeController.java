@@ -11,11 +11,9 @@ import java.awt.event.ActionListener;
 
 public class UserTypeController {
     private UserTypeView view;
-    private String jwtCode;
 
-    public UserTypeController(UserTypeView view, String jwtCode) {
+    public UserTypeController(UserTypeView view) {
         this.view = view;
-        this.jwtCode = jwtCode;
         initController();
     }
 
@@ -43,9 +41,9 @@ public class UserTypeController {
         // Create dashboard model
         DashboardModel dashboardModel = new DashboardModel();
         // Create dashboard view
-        DashboardView dashboardView = new DashboardView(dashboardModel);
+        DashboardView dashboardView = new DashboardView();
         // Create dashboard controller
-        DashboardController dashboardController = new DashboardController(dashboardView, dashboardModel);
+        new DashboardController(dashboardView, dashboardModel);
     }
 
 }
