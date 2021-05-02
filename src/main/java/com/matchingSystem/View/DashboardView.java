@@ -1,9 +1,14 @@
 package com.matchingSystem.View;
 
+import com.matchingSystem.Constant;
+import com.matchingSystem.Controller.SignContractController;
 import com.matchingSystem.Model.Contract;
+import com.matchingSystem.UserCookie;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class DashboardView extends javax.swing.JFrame {
@@ -32,7 +37,7 @@ public class DashboardView extends javax.swing.JFrame {
 
     public void setContractsPanel(ArrayList<Contract> contracts) {
         panel1.removeAll();
-//        for (int i=0; i<=4; i++) {
+
         for (Contract c: contracts) {
             JPanel panel = new JPanel();
             panel.getInsets().set(20, 20, 20, 20);
@@ -51,7 +56,7 @@ public class DashboardView extends javax.swing.JFrame {
                     public void actionPerformed(ActionEvent e) {
                         // when the sign button is hit, trigger the sign contract view and controller
                         SignContractView signView = new SignContractView(c,"sign");
-                        SignContractController controller = new SignContractController(signView, c.getId());
+                        new SignContractController(signView, c.getId());
                     }
                 });
                 panel.add(signBut);
