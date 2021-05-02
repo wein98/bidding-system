@@ -28,6 +28,7 @@ public class DashboardController implements Observer, ActionListener {
 
     private void initController() {
         model.addObserver(this);    // subscribe to observable
+        view.getContractRefreshBtn().addActionListener(this);
         updateProfile();
         view.getBidActionBtn().addActionListener(this);
     }

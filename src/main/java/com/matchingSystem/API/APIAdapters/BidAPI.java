@@ -119,13 +119,6 @@ public class BidAPI extends APIRouter implements BidAPIInterface {
             jsonParam.append("}");
             String response = UpdateRequest(route, jsonParam, APIService.POST);
             System.out.println(response);
-//            JSONObject resObj = new JSONObject(response);
-//            // TODO: add conditions for different status code (400, 401, 409)
-//            if (resObj.getInt("statusCode") == 200){
-//                return true;
-//            }else{
-//                return false;
-//            }
         } catch (Exception e){
             e.printStackTrace();
         }
