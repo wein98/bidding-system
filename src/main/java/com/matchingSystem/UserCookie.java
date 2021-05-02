@@ -8,7 +8,7 @@ public class UserCookie {
 
     private static UserCookie ourInstance;
     private static int userType;
-    private static String jwtToken = null;
+    public static String jwtToken = null;
     private static User user = null;
 
     public static UserCookie getInstance() {

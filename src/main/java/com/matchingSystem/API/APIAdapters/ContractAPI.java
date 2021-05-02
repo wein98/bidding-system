@@ -9,8 +9,10 @@ import com.matchingSystem.Utility;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import javax.rmi.CORBA.Util;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static com.matchingSystem.API.APIService.*;
 
@@ -54,22 +56,21 @@ public class ContractAPI extends APIRouter implements ContractAPIInterface {
                 JSONObject jsonObj = arr.getJSONObject(i);
 //                System.out.println(jsonObj);
                 Object dateSigned = jsonObj.get("dateSigned");
+                String dateSignedString = dateSigned.toString();
                 jsonObj.remove("dateSigned");
 //                System.out.println(jsonObj);
                 String jsonStr = jsonObj.toString();
                 Contract contract = objMapper.readValue(jsonStr, Contract.class);
-                if (dateSigned instanceof String) {
-                    if (!"".equals((String) dateSigned)) {
-                        Timestamp t = Timestamp.valueOf((String) dateSigned);
-                        contract.setDateSigned((Timestamp) dateSigned);
-                    }
-
+                if (!dateSignedString.equals("null")) {
+                    Date d = Utility.sdf2.parse(dateSignedString);
+                    Timestamp t = new Timestamp(d.getTime());
+                    contract.setDateSigned(t);
                 }
                 contracts.add(contract);
             }
 
             return contracts;
-        }catch (JsonProcessingException e){
+        }catch (Exception e){
             e.printStackTrace();
         }
         return null;
@@ -123,7 +124,9 @@ public class ContractAPI extends APIRouter implements ContractAPIInterface {
             jsonParam.append(String.format("\"dateSigned\": \"%s\"", Utility.sdf2.format(now)));
             jsonParam.append("}");
             String response = UpdateRequest(route, jsonParam, APIService.POST);
+            System.out.println(response);
             JSONObject resObj = new JSONObject(response);
+            System.out.println(resObj.toString());
             if (resObj.getInt("statusCode") == 200){
                 return true;
             }else{

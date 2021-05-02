@@ -89,9 +89,9 @@ public class MessageAPI extends APIRouter implements MessageAPIInterface {
         StringBuilder jsonParam = new StringBuilder();
         jsonParam.append("{");
         jsonParam.append(String.format("\"content\": \"%s\",", content));
-        jsonParam.append(String.format("\"additionalInfo\": \"%s\"", additionalInfo.toString()));
+        jsonParam.append("\"additionalInfo\": ");
+        jsonParam.append(additionalInfo);
         jsonParam.append("}");
-
         return jsonParam;
     }
 

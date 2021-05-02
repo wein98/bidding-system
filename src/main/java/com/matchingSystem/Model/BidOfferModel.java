@@ -16,7 +16,9 @@ public class BidOfferModel extends Observable {
     private String offerTutorId;
     private int tutorCompLvl;
     private String numOfLesson;
-    private String dayTime;
+    private String day;
+    private String time;
+    private String dayNight;
     private String duration;
     private String offerRate;
     private String msgId;
@@ -41,9 +43,9 @@ public class BidOfferModel extends Observable {
         this.offerTutorId = o.getString("offerTutorId");
         this.tutorName = o.getString("tutorName");
         this.numOfLesson = o.getString("numOfLesson");
-        this.dayTime = o.getString("prefDay") + ","
-                + o.getString("time")
-                + o.getString("dayNight");
+        this.day = o.getString("prefDay");
+        this.time = o.getString("time");
+        this.dayNight = o.getString("dayNight");
         this.offerRate = o.getString("rate");
 
         if (this.bid.getType().equals("close")) {
@@ -122,7 +124,7 @@ public class BidOfferModel extends Observable {
     }
 
     public String getDayTime() {
-        return dayTime;
+        return this.day + "," + this.time + this.dayNight;
     }
 
     public String getDuration() {
@@ -133,6 +135,17 @@ public class BidOfferModel extends Observable {
         return offerRate;
     }
 
+    public String getDay() {
+        return day;
+    }
+
+    public String getTime() {
+        return this.time;
+    }
+
+    public String getDayNight() {
+        return this.dayNight;
+    }
     public String getMsgId() {
         return msgId;
     }
@@ -143,5 +156,9 @@ public class BidOfferModel extends Observable {
 
     public JSONObject getAddInfoJson() {
         return bidOfferObj;
+    }
+
+    public String getSubjectName(){
+        return this.bid.getSubject().getName();
     }
 }

@@ -32,7 +32,7 @@ public class BidOfferView extends javax.swing.JFrame implements Observer {
     public BidOfferView(BidOfferModel model, String type) {
         this.model = model;
         model.addObserver(this);
-        initComponents();
+
         this.type = type;
         if (type.equals("open")) {
             this.messageLabel.setVisible(false);
@@ -43,6 +43,7 @@ public class BidOfferView extends javax.swing.JFrame implements Observer {
             this.messageLabel.setVisible(true);
             this.messageText.setVisible(true);
         }
+        initComponents();
         this.setVisible(true);
     }
 
@@ -83,7 +84,7 @@ public class BidOfferView extends javax.swing.JFrame implements Observer {
         fields.put("rate", (String) this.rateText.getText());
         fields.put("duration", (String) this.durationDDL.getSelectedItem());
         if (this.type.equals("close")){
-            fields.put("message",this.messageText.getText());
+            fields.put("msgContent",this.messageText.getText());
         }
         return fields;
     }

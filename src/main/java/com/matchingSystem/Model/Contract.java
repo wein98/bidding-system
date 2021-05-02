@@ -62,12 +62,38 @@ public class Contract {
         this.dateSigned = dateTime;
     }
 
+    public Timestamp getDateSigned() {
+        return dateSigned;
+    }
+
     public Poster getFirstParty() {
         return firstParty;
     }
 
     public Poster getSecondParty() {
         return secondParty;
+    }
+
+    public JSONObject getLessonInfo() {
+        return this.lessonInfo;
+    }
+
+    public String getDayTime() {
+        if(lessonInfo!=null) {
+            String retVal = lessonInfo.getString("prefDay") + ",";
+            retVal += lessonInfo.getString("time");
+            retVal += lessonInfo.getString("dayNight");
+            return retVal;
+        }
+        return null;
+    }
+
+    public JSONObject getAdditionalInfo() {
+        return this.additionalInfo;
+    }
+
+    public Timestamp getExpiryDate() {
+        return expiryDate;
     }
 
     public String getDateCreated() {

@@ -14,7 +14,6 @@ import java.util.Observer;
 public class BiddingCreationView extends javax.swing.JFrame implements Observer {
     private JPanel bidCreationForm;
     private JLabel subjectLabel;
-    private JLabel qualificationLabel;
     private JComboBox subjects;
     private JLabel dayLabel;
     private JLabel timeLabel;
@@ -22,7 +21,7 @@ public class BiddingCreationView extends javax.swing.JFrame implements Observer 
     private JLabel numOfLessonLabel;
     private JLabel rateLabel;
     private JRadioButton openBiddingRadioButton;
-    private JComboBox qualifications;
+//    private JComboBox qualifications;
     private JRadioButton closeBiddingRadioButton;
     private JButton startBiddingButton;
     private JComboBox timeVal;
@@ -46,6 +45,7 @@ public class BiddingCreationView extends javax.swing.JFrame implements Observer 
     @SuppressWarnings("unchecked")
     private void initComponents() {
         setContentPane(bidCreationForm);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         pack();
     }
 
@@ -53,10 +53,10 @@ public class BiddingCreationView extends javax.swing.JFrame implements Observer 
     public void update(Observable o, Object arg) {
         if(o instanceof BiddingCreationModel) {
             System.out.println("---> Updating all fields in form");
-            ArrayList<String> qualificationTitles = extractQualificationNames(model.getQualifications());
-            for (String item: qualificationTitles) {
-                this.qualifications.addItem(item);
-            }
+//            ArrayList<String> qualificationTitles = extractQualificationNames(model.getQualifications());
+//            for (String item: qualificationTitles) {
+//                this.qualifications.addItem(item);
+//            }
             ArrayList<String> subjectNames = extractSubjectNames(model.getSubjects());
             for (String item: subjectNames) {
                 this.subjects.addItem(item);
@@ -87,7 +87,7 @@ public class BiddingCreationView extends javax.swing.JFrame implements Observer 
     public JSONObject getFields(){
         JSONObject jsonObj = new JSONObject();
         jsonObj.put("subjectIndex", this.subjects.getSelectedIndex());
-        jsonObj.put("qualification", (String)this.qualifications.getSelectedItem());
+//        jsonObj.put("qualification", (String)this.qualifications.getSelectedItem());
         if(openBiddingRadioButton.isSelected()){
             jsonObj.put("type","open");
         }else{

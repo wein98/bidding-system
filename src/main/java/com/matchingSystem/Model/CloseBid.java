@@ -7,8 +7,9 @@ import org.json.JSONObject;
 
 import java.sql.Timestamp;
 
-public class CloseBid extends Bid {
+public class CloseBid extends Bid{
 
+    protected boolean closed = false; // indicate if a Bid is closed
     private Message tutorMessage;
     private Message studentMessage;
 
@@ -17,7 +18,7 @@ public class CloseBid extends Bid {
     }
 
     @Override
-    public boolean isExpired() {
+    public boolean isExpired(){
         Timestamp now = new Timestamp(System.currentTimeMillis());
         Timestamp creation = this.dateCreated;
         Long interval = now.getTime() - creation.getTime();
@@ -28,10 +29,9 @@ public class CloseBid extends Bid {
             // call update bid API
             APIFacade.updateBidById(getId(), getAdditionalInfo());
 
-            close();
+            this.close();;
             return true;
-
-        } else {
+        }else {
             return false;
         }
     }
@@ -147,6 +147,7 @@ public class CloseBid extends Bid {
                 ", dateClosedDown=" + dateClosedDown +
                 ", subject=" + subject +
                 ", additionalInfo=" + additionalInfo +
+                ", closed=" + closed +
                 '}';
     }
 }

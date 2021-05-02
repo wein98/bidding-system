@@ -6,9 +6,12 @@ import com.matchingSystem.API.APIAdapters.*;
 import com.matchingSystem.API.ClientInterfaces.*;
 import com.matchingSystem.Constant;
 import com.matchingSystem.Model.*;
+import com.matchingSystem.UserCookie;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class APIFacade {
@@ -90,9 +93,15 @@ public class APIFacade {
         JSONObject response = (JSONObject) userAPI.getById(id, Constant.INITIATEDBIDS);
         JSONArray arr = response.getJSONArray("initiatedBids");
 
+        // get the active bid
         if (arr.length() != 0) {
-            BidFactory bidFactory = new BidFactory();
-            return bidFactory.createBid(arr.getJSONObject(0));
+            for (int i = 0; i < arr.length(); i++) {
+                if(arr.getJSONObject(i).get("dateClosedDown") == null){
+                    BidFactory bidFactory = new BidFactory();
+                    return bidFactory.createBid(arr.getJSONObject(i));
+                }
+            }
+
         }
 
         return null;
@@ -125,8 +134,8 @@ public class APIFacade {
         bidAPI.updatePartialById(id, bidAPI.parseToJsonForPartialUpdate(requestBody));
     }
 
-    public static void closeDownBidById(String id) {
-        bidAPI.closeDownBidById(id);
+    public static void closeDownBidById(String id, Timestamp closeDownTime) {
+        bidAPI.closeDownBidById(id, closeDownTime);
     }
 
     // Message APIs
@@ -146,9 +155,18 @@ public class APIFacade {
         messageAPI.updatePartialById(id, messageAPI.parseToJsonForPartialUpdate(content, requestBody));
     }
 
-    // Contract
-    public static void signContractById(String id) {
-        contractAPI.sign(id);
+    // Contract APIs
+    // only Tutor need to call this
+    public static boolean signContractById(String id) {
+        return contractAPI.sign(id);
+    }
+
+    // only a Student can initiate a contract
+    public static Contract createContract(String studentId, String tutorId, String subjectId, Timestamp expiry,
+                                          JSONObject paymentInfo,
+                                          JSONObject lessonInfo, JSONObject additionalInfo){
+        return (Contract) contractAPI.create(contractAPI.parseToJsonForCreate(studentId,tutorId,
+                subjectId, expiry, paymentInfo, lessonInfo, additionalInfo));
     }
 
     public static ArrayList<Contract> getContractsByUserId(String userId) {

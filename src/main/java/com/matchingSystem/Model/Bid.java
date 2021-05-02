@@ -3,11 +3,14 @@ package com.matchingSystem.Model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.matchingSystem.API.APIFacade;
 import com.matchingSystem.Poster;
+import com.matchingSystem.UserCookie;
 import com.matchingSystem.Utility;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +35,7 @@ public abstract class Bid implements BidInterface{
     @JsonProperty(value = "messages",required = false)
     protected List<Message> messages;
 
+    protected boolean closed = false;
     @SuppressWarnings("unchecked")
     @JsonProperty("additionalInfo")
     private void unpackNested(Map<String,Object> addInfo) {
@@ -40,31 +44,35 @@ public abstract class Bid implements BidInterface{
         }
     }
 
-    @Override
-    public void selectBidder(BidOfferModel offer){
-        if (this.dateClosedDown != null) {
-            this.dateClosedDown = new Timestamp(System.currentTimeMillis());
-            additionalInfo.put("successfulBidder",offer.getAddInfoJson());
+//    @Override
+//    public void selectBidder(BidOfferModel offer){
+//        if (this.dateClosedDown != null) {
+//            this.dateClosedDown = new Timestamp(System.currentTimeMillis());
+//            additionalInfo.put("successfulBidder",offer.getAddInfoJson());
+//
+//            APIFacade.updateBidById(getId(), getAdditionalInfo());
+//
+//            // TODO: create Contract API here
+//
+//            close();
+//
+//        } else {
+//            System.out.println("Bid already closed!");
+//        }
+//    }
+//
+//    @Override
+//    public void close() {
+//        this.dateClosedDown = new Timestamp(System.currentTimeMillis());
+//        APIFacade.closeDownBidById(getId());
+//
+//        System.out.println("Close bid successful.");
+//    }
 
-            APIFacade.updateBidById(getId(), getAdditionalInfo());
 
-            // TODO: create Contract API here
-
-            close();
-
-        } else {
-            System.out.println("Bid already closed!");
-        }
+    public Timestamp getDateClosedDown() {
+        return dateClosedDown;
     }
-
-    @Override
-    public void close() {
-        this.dateClosedDown = new Timestamp(System.currentTimeMillis());
-        APIFacade.closeDownBidById(getId());
-
-        System.out.println("Close bid successful.");
-    }
-
 
     @Override
     public String getId() {
@@ -140,6 +148,10 @@ public abstract class Bid implements BidInterface{
         return 0;
     }
 
+    /**
+     * Get offers attached to this bid
+     * @return the list of bid offers object
+     */
     @Override
     public ArrayList<BidOfferModel> getBidOffers() {
         ArrayList<BidOfferModel> retVal = new ArrayList<>();
@@ -157,5 +169,46 @@ public abstract class Bid implements BidInterface{
             return retVal;
         }
         return null;
+    }
+
+    /**
+     * Select the successful bidder and close down the bid
+     * @param offer the offer that the student choose to accept
+     */
+    @Override
+    public void selectBidder(BidOfferModel offer) {
+        if (this.dateClosedDown == null) {
+            this.additionalInfo.put("successfulBidder", offer.getOfferTutorId());
+            // update Bid additionalInfo with successfulBidder property
+            APIFacade.updateBidById(this.id, this.additionalInfo);
+            // create Contract , set expiry to be 6 months
+            Timestamp now = new Timestamp(System.currentTimeMillis());
+            LocalDateTime sixMonthsFuture = LocalDate.now().plusMonths(6).atTime(0, 0);
+            Timestamp expiry = Timestamp.valueOf(sixMonthsFuture);
+            JSONObject lessonInfo = new JSONObject();
+            lessonInfo.put("time",offer.getTime());
+            lessonInfo.put("dayNight",offer.getDayNight());
+            lessonInfo.put("prefDay",offer.getDay());
+            lessonInfo.put("numOfLesson",offer.getNumOfLesson());
+            lessonInfo.put("duration",offer.getDuration());
+            JSONObject additionalInfo = new JSONObject();
+            additionalInfo.put("rate",this.getRate());
+            APIFacade.createContract(UserCookie.getUser().getId(), offer.getOfferTutorId(), this.getSubject().getId()
+                    ,expiry,new JSONObject(),lessonInfo,additionalInfo);
+            close();
+        } else {
+            System.out.println("Bid already closed!");
+        }
+    }
+
+    /**
+     * Close down the bid
+     */
+    public void close() {
+        this.closed = true;
+        Timestamp closeDownTime = new Timestamp(System.currentTimeMillis());
+        this.dateClosedDown = closeDownTime;
+        // close down the bid
+        APIFacade.closeDownBidById(this.id, closeDownTime);
     }
 }

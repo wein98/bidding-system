@@ -66,7 +66,7 @@ public abstract class User {
     }
 
     public void setContracts() {
-        contracts = APIFacade.getContractsByUserId(getId());
+        contracts = APIFacade.getContractsByUserId(this.id);
     }
 
     public ArrayList<Contract> getContracts() {

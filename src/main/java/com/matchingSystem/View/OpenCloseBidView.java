@@ -1,6 +1,7 @@
 package com.matchingSystem.View;
 
 import com.matchingSystem.Constant;
+import com.matchingSystem.Controller.CloseBidMsgController;
 import com.matchingSystem.Model.*;
 
 import javax.swing.*;
@@ -88,7 +89,12 @@ public class OpenCloseBidView extends BiddingsView {
                             @Override
                             public void actionPerformed(ActionEvent e) {
                                 // TODO: reply message
-//                            model.selectOffer(b);
+                                // create Reply message gui and update studentmsg
+                                CloseBidMsgView msgView = new CloseBidMsgView();
+                                BidOfferModel msgModel = new BidOfferModel(model.getBid(), b.getAddInfoJson());
+                                CloseBidMsgController msgController = new CloseBidMsgController(msgView, msgModel);
+
+
                             }
                         });
                     }

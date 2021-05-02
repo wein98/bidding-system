@@ -36,14 +36,51 @@ public class DashboardView extends javax.swing.JFrame {
         for (Contract c: contracts) {
             JPanel panel = new JPanel();
             panel.getInsets().set(20, 20, 20, 20);
-            JTable table = getTable(contracts.get(0));
+            JTable table = getTable(c);
             // resize table columns
             table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             table.getColumnModel().getColumn(0).setPreferredWidth(150);
             table.getColumnModel().getColumn(1).setPreferredWidth(150);
 
             panel.add(table);
-            panel.add(new JButton("Sign"));
+            if(UserCookie.getUserType() == Constant.IS_TUTOR && c.getDateSigned() == null) {
+                JButton signBut = new JButton();
+                signBut.setText("Sign");
+                signBut.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // when the sign button is hit, trigger the sign contract view and controller
+                        SignContractView signView = new SignContractView(c,"sign");
+                        SignContractController controller = new SignContractController(signView, c.getId());
+                    }
+                });
+                panel.add(signBut);
+            }else if(UserCookie.getUserType() == Constant.IS_TUTOR && c.getDateSigned() != null){
+                JButton signBut = new JButton();
+                signBut.setText("View");
+                signBut.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // when the sign button is hit, trigger the sign contract view and controller
+                        SignContractView signView = new SignContractView(c,"view");
+                        SignContractController controller = new SignContractController(signView, c.getId());
+                    }
+                });
+                panel.add(signBut);
+            }
+            else{
+                JButton signBut = new JButton();
+                signBut.setText("View"); // view contract
+                signBut.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // when the sign button is hit, trigger the sign contract view and controller
+                        SignContractView signView = new SignContractView(c,"view");
+                        SignContractController controller = new SignContractController(signView, c.getId());
+                    }
+                });
+                panel.add(signBut);
+            }
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.gridwidth = GridBagConstraints.REMAINDER;
             gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -54,7 +91,7 @@ public class DashboardView extends javax.swing.JFrame {
 
     private JTable getTable(Contract c) {
         String[][] rec = {
-                {"Tutor name", c.getSecondParty().getGivenName()},
+                {"Tutor name", c.getSecondParty().getName()},
                 {"Subject name", c.getSubject().getName()},
                 // TODO: add c.getAdditionalInfo()
         };

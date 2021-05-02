@@ -128,13 +128,12 @@ public class BidAPI extends APIRouter implements BidAPIInterface {
      * @param id Id of the bid
      * @return true if bid request is successfully closed down
      */
-    public boolean closeDownBidById(String id){
+    public boolean closeDownBidById(String id, Timestamp closeDownTime){
         try {
             String route = this.route + "/" + id + "/close-down";
-            Timestamp now = new Timestamp(System.currentTimeMillis());
             StringBuilder jsonParam = new StringBuilder();
             jsonParam.append("{");
-            jsonParam.append(String.format("\"dateClosedDown\": \"%s\"", Utility.sdf2.format(now)));
+            jsonParam.append(String.format("\"dateClosedDown\": \"%s\"", Utility.sdf2.format(closeDownTime)));
             jsonParam.append("}");
             String response = UpdateRequest(route, jsonParam, APIService.POST);
             JSONObject resObj = new JSONObject(response);

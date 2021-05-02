@@ -22,7 +22,8 @@ public class SignContractController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        APIFacade.signContractById(contractId);
+        boolean signed =  APIFacade.signContractById(contractId);
+        System.out.println("Contract sign : " + signed);
         view.dispose();
     }
 }

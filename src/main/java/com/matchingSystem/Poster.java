@@ -16,8 +16,8 @@ public class Poster {
     @JsonProperty("isTutor")
     private String isTutor;
 
-    public String getGivenName() {
-        return givenName;
+    public String getName() {
+        return givenName + ", " + familyName;
     }
 
     public String getId() {
