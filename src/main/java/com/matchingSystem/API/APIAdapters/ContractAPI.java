@@ -1,15 +1,13 @@
 package com.matchingSystem.API.APIAdapters;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.API.APIService;
 import com.matchingSystem.API.ClientInterfaces.ContractAPIInterface;
-import com.matchingSystem.Model.Contract;
+import com.matchingSystem.ContractDev.Contract;
 import com.matchingSystem.Utility;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import javax.rmi.CORBA.Util;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,30 +15,10 @@ import java.util.Date;
 import static com.matchingSystem.API.APIService.*;
 
 public class ContractAPI extends APIRouter implements ContractAPIInterface {
-    /**
-     * Singleton design pattern
-     */
-    private static ContractAPI ourInstance;
-
-    /**
-     * ContractAPI constructor (private)
-     */
-    private ContractAPI() {
+    public ContractAPI() {
         this.objMapper = new ObjectMapper();
         route = "/contract";
         c = Contract.class;
-    }
-
-    /**
-     * Global access point
-     * @return the only instance of this class
-     */
-    public static ContractAPI getInstance() {
-
-        if (ourInstance == null) {
-            ourInstance = new ContractAPI();
-        }
-        return ourInstance;
     }
 
     /**
@@ -125,13 +103,13 @@ public class ContractAPI extends APIRouter implements ContractAPIInterface {
             jsonParam.append("}");
             String response = UpdateRequest(route, jsonParam, APIService.POST);
             System.out.println(response);
-            JSONObject resObj = new JSONObject(response);
-            System.out.println(resObj.toString());
-            if (resObj.getInt("statusCode") == 200){
-                return true;
-            }else{
-                return false;
-            }
+//            JSONObject resObj = new JSONObject(response);
+//            System.out.println(resObj.toString());
+//            if (resObj.getInt("statusCode") == 200){
+//                return true;
+//            }else{
+//                return false;
+//            }
         } catch (Exception e){
             e.printStackTrace();
         }

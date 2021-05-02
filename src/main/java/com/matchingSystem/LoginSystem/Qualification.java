@@ -1,21 +1,27 @@
-package com.matchingSystem.Model;
+package com.matchingSystem.LoginSystem;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.matchingSystem.LoginSystem.Student;
+import com.matchingSystem.LoginSystem.Tutor;
+import com.matchingSystem.LoginSystem.User;
 
 import java.util.Map;
 
-public class Competency {
+public class Qualification {
     @JsonProperty("id")
     private String id;
 
+    @JsonProperty("title")
+    private String title;
+
+    @JsonProperty("description")
+    private String description;
+
+    @JsonProperty("verified")
+    private boolean verified;
+
     @JsonProperty("owner")
     private User owner;
-
-    @JsonProperty("subject")
-    private Subject subject;
-
-    @JsonProperty("level")
-    private int level;
 
     // mapping nested User object
     @SuppressWarnings("unchecked")
@@ -40,29 +46,46 @@ public class Competency {
         return id;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
     public User getOwner() {
         return owner;
     }
 
-    public Subject getSubject() {
-        return subject;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public int getLevel() {
-        return level;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public void setLevel(int level) {
-        this.level = level;
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
 
     @Override
     public String toString() {
-        return "Competency{" +
+        return "Qualification{" +
                 "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", verified=" + verified +
                 ", owner=" + owner +
-                ", subject=" + subject +
-                ", level=" + level +
                 '}';
     }
 }

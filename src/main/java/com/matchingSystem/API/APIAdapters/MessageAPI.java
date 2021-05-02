@@ -2,9 +2,8 @@ package com.matchingSystem.API.APIAdapters;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.matchingSystem.API.APIAdapters.APIRouter;
 import com.matchingSystem.API.ClientInterfaces.MessageAPIInterface;
-import com.matchingSystem.Model.Message;
+import com.matchingSystem.BiddingSystem.Message;
 import com.matchingSystem.Utility;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -15,30 +14,12 @@ import java.util.ArrayList;
 import static com.matchingSystem.API.APIService.*;
 
 public class MessageAPI extends APIRouter implements MessageAPIInterface {
-
-    /**
-     * Singleton design pattern
-     */
-    private static MessageAPI ourInstance;
-    /**
-     * Message API constructor (private)
-     */
-    private MessageAPI() {
+    public MessageAPI() {
         this.objMapper = new ObjectMapper();
         route = "/message";
         c = Message.class;
     }
-    /**
-     * Global access point
-     * @return the only instance of this class
-     */
-    public static MessageAPI getInstance() {
 
-        if (ourInstance == null) {
-            ourInstance = new MessageAPI();
-        }
-        return ourInstance;
-    }
     /**
      * Get all messages
      * @return list of messages

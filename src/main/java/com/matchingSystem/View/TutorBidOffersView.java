@@ -1,10 +1,13 @@
 package com.matchingSystem.View;
 
+import com.matchingSystem.BiddingSystem.Bid;
+import com.matchingSystem.BiddingSystem.CloseBid;
+import com.matchingSystem.BiddingSystem.OpenBid;
 import com.matchingSystem.Constant;
 import com.matchingSystem.Controller.BidOfferController;
 import com.matchingSystem.Controller.OpenCloseBidController;
 import com.matchingSystem.Model.*;
-import com.matchingSystem.UserCookie;
+import com.matchingSystem.LoginSystem.UserCookie;
 
 import javax.swing.*;
 import java.awt.*;
@@ -129,18 +132,32 @@ public class TutorBidOffersView extends BiddingsView {
                     {"Day & Time", b.getDayTime()},
                     {"Rate (per hour)", b.getRate()},};
         } else {
-            ArrayList<BidOfferModel> offers = b.getBidOffers();
-            for (BidOfferModel offer : offers) {
+            BidOfferModel bidoffer = null;
+            for (BidOfferModel offer : b.getBidOffers()) {
                 if (offer.getOfferTutorId().equals(UserCookie.getUser().getId())) {
-                    rec = new String[][]{{"Bid Type", b.getType()},
-                            {"Student name", b.getInitiator().getName()},
-                            {"Subject", b.getSubject().getName()},
-                            {"No. of sessions", b.getNoLessons()},
-                            {"Day & Time", b.getDayTime()},
-                            {"Rate (per hour)", b.getRate()},
-                            {"Student's reply:", offer.getMsg().getStudentReply()}};
+                    bidoffer = offer;
                 }
             }
+            if (bidoffer == null) {
+                rec = new String[][]{{"Bid Type", b.getType()},
+                        {"Student name", b.getInitiator().getName()},
+                        {"Subject", b.getSubject().getName()},
+                        {"No. of sessions", b.getNoLessons()},
+                        {"Day & Time", b.getDayTime()},
+                        {"Rate (per hour)", b.getRate()},
+                        {"Tutor message", ""},
+                        {"Student's reply:", ""}};
+            } else {
+                rec = new String[][]{{"Bid Type", b.getType()},
+                        {"Student name", b.getInitiator().getName()},
+                        {"Subject", b.getSubject().getName()},
+                        {"No. of sessions", bidoffer.getNumOfLesson()},
+                        {"Day & Time", bidoffer.getDayTime()},
+                        {"Rate (per hour)", bidoffer.getOfferRate()},
+                        {"Tutor message", bidoffer.getMsg().getContent()},
+                        {"Student's reply:", bidoffer.getMsg().getStudentReply()}};
+            }
+
         }
         String[] col = {"", ""};
         return new JTable(rec, col);

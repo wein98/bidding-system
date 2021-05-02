@@ -4,7 +4,7 @@ import com.matchingSystem.Constant;
 import com.matchingSystem.Model.DashboardModel;
 import com.matchingSystem.View.DashboardView;
 import com.matchingSystem.View.UserTypeView;
-import com.matchingSystem.UserCookie;
+import com.matchingSystem.LoginSystem.UserCookie;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

@@ -71,7 +71,6 @@ public class OpenCloseBidView extends BiddingsView {
                     btn1.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            // TODO: select this bid offer
                             model.selectOffer(b);
                         }
                     });
@@ -88,7 +87,6 @@ public class OpenCloseBidView extends BiddingsView {
                         btn2.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
-                                // TODO: reply message
                                 // create Reply message gui and update studentmsg
                                 CloseBidMsgView msgView = new CloseBidMsgView();
                                 BidOfferModel msgModel = new BidOfferModel(model.getBid(), b.getAddInfoJson());

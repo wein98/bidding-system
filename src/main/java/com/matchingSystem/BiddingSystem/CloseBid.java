@@ -1,13 +1,13 @@
-package com.matchingSystem.Model;
+package com.matchingSystem.BiddingSystem;
 
 import com.matchingSystem.API.APIFacade;
-import com.matchingSystem.Constant;
+import com.matchingSystem.Model.BidOfferModel;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.sql.Timestamp;
 
-public class CloseBid extends Bid{
+public class CloseBid extends Bid {
 
     protected boolean closed = false; // indicate if a Bid is closed
     private Message tutorMessage;

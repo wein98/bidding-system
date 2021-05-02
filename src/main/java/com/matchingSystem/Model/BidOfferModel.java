@@ -1,8 +1,12 @@
 package com.matchingSystem.Model;
 
 import com.matchingSystem.API.APIFacade;
-import com.matchingSystem.Constant;
-import com.matchingSystem.UserCookie;
+import com.matchingSystem.BiddingSystem.Bid;
+import com.matchingSystem.BiddingSystem.CloseBid;
+import com.matchingSystem.BiddingSystem.Message;
+import com.matchingSystem.BiddingSystem.OpenBid;
+import com.matchingSystem.LoginSystem.Tutor;
+import com.matchingSystem.LoginSystem.UserCookie;
 import org.json.JSONObject;
 
 import java.util.Observable;

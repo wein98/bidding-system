@@ -2,8 +2,8 @@ package com.matchingSystem.View;
 
 import com.matchingSystem.Constant;
 import com.matchingSystem.Controller.SignContractController;
-import com.matchingSystem.Model.Contract;
-import com.matchingSystem.UserCookie;
+import com.matchingSystem.ContractDev.Contract;
+import com.matchingSystem.LoginSystem.UserCookie;
 
 import javax.swing.*;
 import java.awt.*;

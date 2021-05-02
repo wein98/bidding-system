@@ -1,6 +1,7 @@
-package com.matchingSystem;
+package com.matchingSystem.LoginSystem;
 
-import com.matchingSystem.Model.*;
+import com.matchingSystem.Constant;
+import com.matchingSystem.Utility;
 import org.json.JSONObject;
 
 public class UserCookie {

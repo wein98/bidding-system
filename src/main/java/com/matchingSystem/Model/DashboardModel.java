@@ -1,7 +1,10 @@
 package com.matchingSystem.Model;
 
 import com.matchingSystem.Constant;
-import com.matchingSystem.UserCookie;
+import com.matchingSystem.ContractDev.Contract;
+import com.matchingSystem.LoginSystem.Student;
+import com.matchingSystem.LoginSystem.User;
+import com.matchingSystem.LoginSystem.UserCookie;
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -33,7 +36,7 @@ public class DashboardModel extends Observable {
         // set username
         username = user.getUserName();
         fullName = user.getFullName();
-        contractArrayList = user.getContracts();
+        updateContractList();
 
         // notify observers
         setChanged();
@@ -42,6 +45,13 @@ public class DashboardModel extends Observable {
 
     public void checkPostedBid() {
         ((Student) user).setInitiatedBid();
+        setChanged();
+        notifyObservers();
+    }
+
+    public void updateContractList() {
+        user.setContracts();
+        contractArrayList = user.getContracts();
         setChanged();
         notifyObservers();
     }

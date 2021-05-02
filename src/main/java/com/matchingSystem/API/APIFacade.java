@@ -4,25 +4,29 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.API.APIAdapters.*;
 import com.matchingSystem.API.ClientInterfaces.*;
+import com.matchingSystem.BiddingSystem.Bid;
+import com.matchingSystem.BiddingSystem.BidFactory;
+import com.matchingSystem.BiddingSystem.Competency;
+import com.matchingSystem.BiddingSystem.Message;
 import com.matchingSystem.Constant;
-import com.matchingSystem.Model.*;
-import com.matchingSystem.UserCookie;
+import com.matchingSystem.ContractDev.Contract;
+import com.matchingSystem.LoginSystem.Qualification;
+import com.matchingSystem.LoginSystem.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class APIFacade {
     private static APIFacade ourInstance;
-    private static final ContractAPIInterface contractAPI = ContractAPI.getInstance();
-    private static final BidAPIInterface bidAPI = BidAPI.getInstance();
-    private static final MessageAPIInterface messageAPI = MessageAPI.getInstance();
-    private static final UserAPIInterface userAPI = UserAPI.getInstance();
-    private static final SubjectAPIInterface subjectAPI = SubjectAPI.getInstance();
-    private static final CompetencyAPIInterface competencyAPI = CompetencyAPI.getInstance();
-    private static final QualificationAPIInterface qualificationAPI = QualificationAPI.getInstance();
+    private static final ContractAPIInterface contractAPI = new ContractAPI();
+    private static final BidAPIInterface bidAPI = new BidAPI();
+    private static final MessageAPIInterface messageAPI = new MessageAPI();
+    private static final UserAPIInterface userAPI = new UserAPI();
+    private static final SubjectAPIInterface subjectAPI = new SubjectAPI();
+    private static final CompetencyAPIInterface competencyAPI = new CompetencyAPI();
+    private static final QualificationAPIInterface qualificationAPI = new QualificationAPI();
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -101,9 +105,7 @@ public class APIFacade {
                     return bidFactory.createBid(arr.getJSONObject(i));
                 }
             }
-
         }
-
         return null;
     }
 

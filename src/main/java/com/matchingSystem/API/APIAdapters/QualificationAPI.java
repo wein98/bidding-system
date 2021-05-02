@@ -3,7 +3,7 @@ package com.matchingSystem.API.APIAdapters;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.API.ClientInterfaces.QualificationAPIInterface;
-import com.matchingSystem.Model.Qualification;
+import com.matchingSystem.LoginSystem.Qualification;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -12,29 +12,10 @@ import java.util.ArrayList;
 import static com.matchingSystem.API.APIService.GETRequest;
 
 public class QualificationAPI extends APIRouter implements QualificationAPIInterface {
-    /**
-     * Singleton design pattern
-     */
-    private static QualificationAPI ourInstance;
-    /**
-     * QualificationAPI constructor (private)
-     */
-    private QualificationAPI() {
+    public QualificationAPI() {
         this.objMapper = new ObjectMapper();
         route = "/qualification";
         c = Qualification.class;
-    }
-
-    /**
-     * Global access point
-     * @return the only instance of this class
-     */
-    public static QualificationAPI getInstance() {
-
-        if (ourInstance == null) {
-            ourInstance = new QualificationAPI();
-        }
-        return ourInstance;
     }
 
     /**
