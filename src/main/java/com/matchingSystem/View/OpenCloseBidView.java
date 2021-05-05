@@ -13,7 +13,17 @@ import java.util.ArrayList;
 public class OpenCloseBidView extends BiddingsView {
     private final int bidViewType;
 
-    public OpenCloseBidView(BiddingsModel model, int bidViewType) {
+    private DashboardModel parentModel;
+
+    public OpenCloseBidView(BiddingsModel model, int bidViewType){
+        this.bidViewType = bidViewType;
+        this.model = model;
+        initComponents();
+        this.setVisible(true);
+    }
+
+    public OpenCloseBidView(BiddingsModel model, int bidViewType, DashboardModel parentModel) {
+        this.parentModel = parentModel;
         this.bidViewType = bidViewType;
         this.model = model;
         initComponents();
@@ -72,6 +82,8 @@ public class OpenCloseBidView extends BiddingsView {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             model.selectOffer(b);
+                            parentModel.checkPostedBid();
+                            dispose();
                         }
                     });
 

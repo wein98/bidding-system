@@ -104,14 +104,15 @@ public class OpenBid extends Bid {
      * @param bidOffer
      */
     public void tutorOfferBid(JSONObject bidOffer) {
+        bidders = getBidOffers();
         String tutorId = bidOffer.getString("offerTutorId");
         int toRemoveIndex = -1;
 
         // check if there's any other bid offers to find previously offered by this tutor
-        if (getBidOffers() != null) {
+        if (bidders != null) {
             // look for the bidoffers offered by the tutorId previously
-            for (int i=0; i<getBidOffers().size(); i++) {
-                if (tutorId.equals(getBidOffers().get(i).getOfferTutorId())) {
+            for (int i=0; i<bidders.size(); i++) {
+                if (tutorId.equals(bidders.get(i).getOfferTutorId())) {
                     toRemoveIndex = i;
                     break;
                 }
@@ -120,12 +121,10 @@ public class OpenBid extends Bid {
 
         // remove old bidoffer and add new updated one
         if (toRemoveIndex >= 0) {    // if there's a previous bid offers offered
-            getBidOffers().remove(toRemoveIndex);
+            bidders.remove(toRemoveIndex);
         }
-
-        JSONArray bidOffers = new JSONArray(getBidOffers());
+        JSONArray bidOffers = new JSONArray(bidders);
         bidOffers.put(bidOffer);
-
         // remove the whole list and insert again
         getAdditionalInfo().remove("bidOffers");
         getAdditionalInfo().put("bidOffers", bidOffers);
