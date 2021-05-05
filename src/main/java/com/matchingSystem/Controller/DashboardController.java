@@ -62,7 +62,8 @@ public class DashboardController implements Observer, ActionListener {
                 } else if (model.getBidType() == Constant.CLOSEBID) {
                     // open closebid view
                     BiddingsModel biddingsModel = new BiddingsModel(studentObj.getInitiatedBid().getId());
-                    OpenCloseBidView openBidView = new OpenCloseBidView(biddingsModel, Constant.CLOSE_BIDDING_VIEW);
+                    OpenCloseBidView openBidView = new OpenCloseBidView(biddingsModel, Constant.CLOSE_BIDDING_VIEW,
+                            this.model);
                     new OpenCloseBidController(openBidView, biddingsModel);
 
                 } else {

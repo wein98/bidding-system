@@ -77,7 +77,12 @@ public class TutorBidOffersView extends BiddingsView {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             // TODO: buy out this bid
+                            System.out.println("Pressed");
                             ((OpenBid) b).buyOut(UserCookie.getUser().getId());
+                            // remove the bid after trigger buy out
+//                            panel1.remove(btn1);
+//                            panel1.remove(btn2);
+//                            panel1.remove(table);
                             System.out.println("BUY OUT: " + b.getInitiator().toString());
                         }
                     });

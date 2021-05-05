@@ -119,6 +119,7 @@ public class BidAPI extends APIRouter implements BidAPIInterface {
             jsonParam.append("}");
             String response = UpdateRequest(route, jsonParam, APIService.POST);
             System.out.println(response);
+            return true;
         } catch (Exception e){
             e.printStackTrace();
         }
