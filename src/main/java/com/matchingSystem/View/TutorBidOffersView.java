@@ -58,8 +58,11 @@ public class TutorBidOffersView extends BiddingsView {
 
                 // Set different buttons for different bidType
                 if (b instanceof OpenBid && b.getDateClosedDown() == null) {
+                    // Open Bid type
                     JButton btn1 = new JButton("Buy out");
                     JButton btn2 = new JButton("View all bidders");
+                    JButton btn3 = new JButton("Subscribe");
+
                     c.gridheight = 1;
                     c.gridx = 1;
                     c.gridy = 0;
@@ -93,7 +96,16 @@ public class TutorBidOffersView extends BiddingsView {
                         }
                     });
 
+                    btn3.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            System.out.println("Subsribed to: " + b.getInitiator().toString());
+                            // TODO: observe this bid
+                        }
+                    });
+
                 } else if (b instanceof CloseBid && b.getDateClosedDown() == null) {
+                    // Close bid type
                     JButton btn1 = new JButton("Message bid");
                     c.gridheight = 1;
                     c.gridx = 1;

@@ -4,11 +4,14 @@ import com.matchingSystem.API.APIFacade;
 import com.matchingSystem.BiddingSystem.Competency;
 import com.matchingSystem.BiddingSystem.OpenBid;
 import com.matchingSystem.BiddingSystem.Subject;
-import com.matchingSystem.LoginSystem.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class Tutor extends User {
+    protected ArrayList<OpenBid> subscribedBids = new ArrayList<>();
+
     public Tutor(String id, String givenName, String familyName, String userName) {
         super(id, givenName, familyName, userName);
     }
@@ -50,27 +53,13 @@ public class Tutor extends User {
         APIFacade.updateBidById(bidId, additionalInfo);
     }
 
-//    public void buyOutOpenBid(OpenBid bid, BidOfferModel offer){
-//        int requiredCompetency = bid.getCompetencyLevel();
-//        Subject requiredSubject = bid.getSubject();
-//        for(Competency competency: this.competencies){
-//            if(competency.getSubject().getId().equals(requiredSubject.getId())){
-//                if(competency.getLevel() >= requiredCompetency + 2){
-//                    // able to trigger buy out of bid
-//                    bid.selectBidder(offer);
-//                }
-//            }
-//        }
-//    }
-//
-//    /**
-//     * Function to send a message for Close Bidding
-//     * @param bidId
-//     * @param messageContent
-//     */
-//    public void sendMessage(String bidId, JSONObject messageContent) {
-//
-//    }
+    public void setSubscribedBids(ArrayList<OpenBid> subscribedBids) {
+        this.subscribedBids = APIFacade.getSubscribedBids(getId());
+    }
+
+    public ArrayList<OpenBid> getSubscribedBids() {
+        return subscribedBids;
+    }
 
     public int getCompetencyLvlFromSubject(Subject s) {
         for (Competency c: competencies) {

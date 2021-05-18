@@ -1,5 +1,6 @@
 package com.matchingSystem.ContractDev;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.matchingSystem.BiddingSystem.Subject;
 import com.matchingSystem.BiddingSystem.Poster;
@@ -9,6 +10,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Map;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Contract {
     @JsonProperty("id")
     private String id;

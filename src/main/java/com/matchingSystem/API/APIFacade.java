@@ -4,14 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.API.APIAdapters.*;
 import com.matchingSystem.API.ClientInterfaces.*;
-import com.matchingSystem.BiddingSystem.Bid;
-import com.matchingSystem.BiddingSystem.BidFactory;
-import com.matchingSystem.BiddingSystem.Competency;
-import com.matchingSystem.BiddingSystem.Message;
+import com.matchingSystem.BiddingSystem.*;
 import com.matchingSystem.Constant;
 import com.matchingSystem.ContractDev.Contract;
 import com.matchingSystem.LoginSystem.Qualification;
-import com.matchingSystem.LoginSystem.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -44,8 +40,61 @@ public class APIFacade {
     }
 
     // User APIs
-    public static User getUserById(String id) {
-        return (User) userAPI.getById(id, Constant.NONE);
+    public static JSONObject getUserById(String id) {
+        return (JSONObject) userAPI.getById(id, Constant.NONE);
+    }
+
+    /**
+     * Tutor subscribes to an active bid.
+     * @param id tutor's user id
+     * @param bidId to subscribe bid id
+     */
+    public static void subscribeBid(String id, String bidId) {
+        JSONObject addInfo = getUserById(id).getJSONObject("additionalInfo");
+
+        if (addInfo.isEmpty()) {
+            JSONArray subscribedBidsArr = new JSONArray();
+            subscribedBidsArr.put(bidId);
+
+            addInfo.put("subscribedBids", subscribedBidsArr);
+            userAPI.updatePartialById(id, userAPI.parseToJsonForPartialUpdate(addInfo));
+
+        } else {
+            boolean subcribed = false;
+            for (int i=0; i<addInfo.getJSONArray("subscribedBids").length(); i++) {
+                if (addInfo.getJSONArray("subscribedBids").get(i).equals(bidId)) {
+                    subcribed = true;
+                }
+            }
+
+            if (!subcribed) {
+                addInfo.getJSONArray("subscribedBids").put(bidId);
+                userAPI.updatePartialById(id, userAPI.parseToJsonForPartialUpdate(addInfo));
+            } else {
+                System.out.println("Already subscribed to this bid");
+            }
+        }
+        System.out.println(addInfo);
+    }
+
+    /**
+     * Get tutor's subscribed open bids.
+     * @param id tutor's user id
+     * @return
+     */
+    public static ArrayList<OpenBid> getSubscribedBids(String id) {
+        JSONObject addInfo = getUserById(id).getJSONObject("additionalInfo");
+        ArrayList<OpenBid> retVal = new ArrayList<>();
+
+        if (addInfo.isEmpty()) {
+            return retVal;
+        }
+
+        for ( int i=0; i < addInfo.getJSONArray("subscribedBids").length(); i++ ) {
+            retVal.add((OpenBid) getBidById(addInfo.getJSONArray("subscribedBids").getString(i)));
+        }
+
+        return retVal;
     }
 
     public static JSONObject userLogin(String username, String password) {
@@ -108,6 +157,7 @@ public class APIFacade {
         }
         return null;
     }
+
 
     // Qualification APIs
     public static ArrayList<Qualification> getAllQualifications() {

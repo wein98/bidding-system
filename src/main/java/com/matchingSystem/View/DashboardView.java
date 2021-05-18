@@ -21,6 +21,7 @@ public class DashboardView extends javax.swing.JFrame {
     private JButton BidActionBtn;
     private JScrollPane scrollPane;
     private JPanel panel1;
+    private JButton subscribeBidsBtn;
 
     public DashboardView() {
         initComponents();
@@ -37,6 +38,7 @@ public class DashboardView extends javax.swing.JFrame {
 
     public void setContractsPanel(ArrayList<Contract> contracts) {
         panel1.removeAll();
+        scrollPane.getViewport().setView(panel1);
 
         for (Contract c: contracts) {
             JPanel panel = new JPanel();
@@ -124,4 +126,7 @@ public class DashboardView extends javax.swing.JFrame {
         return BidActionBtn;
     }
 
+    public JButton getSubscribeBidsBtn() {
+        return subscribeBidsBtn;
+    }
 }

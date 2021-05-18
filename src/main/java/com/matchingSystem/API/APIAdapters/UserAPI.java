@@ -71,4 +71,15 @@ public class UserAPI extends APIRouter implements UserAPIInterface {
         String response = APIService.UpdateRequest(urlRoute, jsonParam, APIService.POST);
         return new JSONObject(response);
     }
+
+    @Override
+    public StringBuilder parseToJsonForPartialUpdate(JSONObject additionalInfo) {
+        StringBuilder jsonParam = new StringBuilder();
+        jsonParam.append("{");
+        jsonParam.append("\"additionalInfo\": ");
+        jsonParam.append(additionalInfo);
+        jsonParam.append("}");
+
+        return jsonParam;
+    }
 }
