@@ -1,5 +1,6 @@
 package com.matchingSystem.View;
 
+import com.matchingSystem.Model.ContractCreationModel;
 import com.matchingSystem.Utility;
 
 import javax.swing.*;
@@ -11,7 +12,9 @@ public class ContractCreationView extends javax.swing.JFrame {
     private JLabel durationLabel;
     private JButton submitButton;
 
-    public ContractCreationView(){
+    private ContractCreationModel model;
+    public ContractCreationView(ContractCreationModel model){
+        this.model = model;
         initComponents();
         this.setVisible(true);
     }
@@ -20,6 +23,8 @@ public class ContractCreationView extends javax.swing.JFrame {
         for (String item : Utility.contractDuration) {
             this.durationDDL.addItem(item);
         }
+        // default is 6 months
+        this.durationDDL.setSelectedIndex(1);
         setContentPane(panel);
         pack();
     }
