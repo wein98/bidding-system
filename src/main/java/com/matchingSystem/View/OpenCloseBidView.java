@@ -1,8 +1,12 @@
 package com.matchingSystem.View;
 
 import com.matchingSystem.Constant;
+import com.matchingSystem.ContractDev.Contract;
 import com.matchingSystem.Controller.CloseBidMsgController;
+import com.matchingSystem.Controller.ContractCreationController;
+import com.matchingSystem.LoginSystem.UserCookie;
 import com.matchingSystem.Model.*;
+import org.json.JSONObject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +17,17 @@ import java.util.ArrayList;
 public class OpenCloseBidView extends BiddingsView {
     private final int bidViewType;
 
-    public OpenCloseBidView(BiddingsModel model, int bidViewType) {
+    private DashboardModel parentModel;
+
+    public OpenCloseBidView(BiddingsModel model, int bidViewType){
+        this.bidViewType = bidViewType;
+        this.model = model;
+        initComponents();
+        this.setVisible(true);
+    }
+
+    public OpenCloseBidView(BiddingsModel model, int bidViewType, DashboardModel parentModel) {
+        this.parentModel = parentModel;
         this.bidViewType = bidViewType;
         this.model = model;
         initComponents();
@@ -72,6 +86,31 @@ public class OpenCloseBidView extends BiddingsView {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             model.selectOffer(b);
+                            parentModel.checkPostedBid();
+                            // prompt the user to select contract duration
+                            JSONObject details = new JSONObject();
+                            details.put("studentId",UserCookie.getUser().getId());
+                            details.put("tutorId", b.getOfferTutorId());
+                            details.put("subjectId", model.getBid().getSubject().getId());
+
+                            JSONObject lessonInfo = new JSONObject();
+                            lessonInfo.put("time",b.getTime());
+                            lessonInfo.put("dayNight",b.getDayNight());
+                            lessonInfo.put("prefDay",b.getDay());
+                            lessonInfo.put("numOfLesson",b.getNumOfLesson());
+                            lessonInfo.put("duration",b.getDuration());
+                            details.put("lessInfo",lessonInfo);
+
+                            JSONObject addInfo = new JSONObject();
+                            addInfo.put("rate",b.getOfferRate());
+                            details.put("addInfo",addInfo);
+
+                            JSONObject payInfo = new JSONObject();
+                            details.put("payInfo",payInfo);
+                            ContractCreationModel contractModel = new ContractCreationModel();
+                            ContractCreationView contractView = new ContractCreationView(contractModel);
+                            new ContractCreationController(contractView,contractModel,details);
+                            dispose();
                         }
                     });
 

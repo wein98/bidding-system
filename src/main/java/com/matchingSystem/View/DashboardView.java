@@ -4,14 +4,17 @@ import com.matchingSystem.Constant;
 import com.matchingSystem.Controller.SignContractController;
 import com.matchingSystem.ContractDev.Contract;
 import com.matchingSystem.LoginSystem.UserCookie;
+import com.matchingSystem.Model.DashboardModel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
-public class DashboardView extends javax.swing.JFrame {
+public class DashboardView extends javax.swing.JFrame implements Observer {
     // Profile section UI components
     private JLabel userTypeLabel;
     private JLabel usernameLabel;
@@ -22,7 +25,9 @@ public class DashboardView extends javax.swing.JFrame {
     private JScrollPane scrollPane;
     private JPanel panel1;
 
-    public DashboardView() {
+    private DashboardModel model;
+    public DashboardView(DashboardModel model) {
+        this.model = model;
         initComponents();
         this.setVisible(true);
     }
@@ -122,6 +127,13 @@ public class DashboardView extends javax.swing.JFrame {
 
     public JButton getBidActionBtn() {
         return BidActionBtn;
+    }
+
+    @Override
+    public void update(Observable o,Object arg){
+        if (o instanceof DashboardModel) {
+            setContractsPanel(this.model.getContractArrayList());
+        }
     }
 
 }

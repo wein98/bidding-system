@@ -6,12 +6,14 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 public class CloseBid extends Bid {
 
     protected boolean closed = false; // indicate if a Bid is closed
     private Message tutorMessage;
     private Message studentMessage;
+    protected ArrayList<BidOfferModel> bidders;
 
     public CloseBid(){
         super();
@@ -56,14 +58,15 @@ public class CloseBid extends Bid {
      * @param bidOffer
      */
     public void tutorOfferBid(JSONObject bidOffer) {
+        bidders = getBidOffers();
         String tutorId = bidOffer.getString("offerTutorId");
         int toRemoveIndex = -1;
 
         // check if there's any other bid offers to find previously offered by this tutor
-        if (getBidOffers() != null) {
+        if (bidders != null) {
             // look for the bidoffers offered by the tutorId previously
-            for (int i=0; i<getBidOffers().size(); i++) {
-                if (tutorId.equals(getBidOffers().get(i).getOfferTutorId())) {
+            for (int i=0; i<bidders.size(); i++) {
+                if (tutorId.equals(bidders.get(i).getOfferTutorId())) {
                     toRemoveIndex = i;
                     break;
                 }
@@ -73,12 +76,12 @@ public class CloseBid extends Bid {
         // remove old bidoffer and add new updated one
         if (toRemoveIndex >= 0) {    // if there's a previous bid offers offered
             // get bid offer msgId
-            String msgId = getBidOffers().get(toRemoveIndex).getMsgId();
+            String msgId = bidders.get(toRemoveIndex).getMsgId();
             Message msg = APIFacade.getMessageById(msgId);
             msg.tutorUpdateMessageContent(bidOffer.getString("msgContent"));
 
             // remove this old bid offer
-            getBidOffers().remove(toRemoveIndex);
+            bidders.remove(toRemoveIndex);
 
             // attach old bidOffer's msdId to this bidoffer
             bidOffer.put("msgId", msgId);
@@ -94,7 +97,7 @@ public class CloseBid extends Bid {
             bidOffer.put("msgId", msgObj.getId());
         }
 
-        JSONArray bidOffers = new JSONArray(getBidOffers());
+        JSONArray bidOffers = new JSONArray(bidders);
         bidOffers.put(bidOffer);
 
         // remove the whole list and insert again

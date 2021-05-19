@@ -4,10 +4,13 @@ import com.matchingSystem.BiddingSystem.Bid;
 import com.matchingSystem.BiddingSystem.CloseBid;
 import com.matchingSystem.BiddingSystem.OpenBid;
 import com.matchingSystem.Constant;
+import com.matchingSystem.ContractDev.Contract;
 import com.matchingSystem.Controller.BidOfferController;
+import com.matchingSystem.Controller.ContractCreationController;
 import com.matchingSystem.Controller.OpenCloseBidController;
 import com.matchingSystem.Model.*;
 import com.matchingSystem.LoginSystem.UserCookie;
+import org.json.JSONObject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -76,8 +79,37 @@ public class TutorBidOffersView extends BiddingsView {
                     btn1.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            // TODO: buy out this bid
+                            System.out.println("Pressed");
+
                             ((OpenBid) b).buyOut(UserCookie.getUser().getId());
+                            // TODO: let the tutor select contract duration
+                            JSONObject details = new JSONObject();
+                            details.put("studentId",b.getInitiator());
+                            details.put("tutorId",UserCookie.getUser().getId());
+                            details.put("subjectId",b.getSubject().getId());
+
+                            JSONObject lessonInfo = new JSONObject();
+                            lessonInfo.put("time",b.getAdditionalInfo().getString("time"));
+                            lessonInfo.put("dayNight",b.getAdditionalInfo().getString("dayNight"));
+                            lessonInfo.put("prefDay",b.getAdditionalInfo().getString("prefDay"));
+                            lessonInfo.put("numOfLesson",b.getNoLessons());
+                            lessonInfo.put("duration",b.getDuration());
+                            details.put("lessInfo",lessonInfo);
+
+                            JSONObject addInfo = new JSONObject();
+                            addInfo.put("rate",b.getRate());
+                            details.put("addInfo",addInfo);
+
+                            JSONObject payInfo = new JSONObject();
+                            details.put("payInfo",payInfo);
+
+                            ContractCreationModel contractModel = new ContractCreationModel();
+                            ContractCreationView contractView = new ContractCreationView(contractModel);
+                            new ContractCreationController(contractView,contractModel,details);
+                            // remove the bid after trigger buy out
+//                            panel1.remove(btn1);
+//                            panel1.remove(btn2);
+//                            panel1.remove(table);
                             System.out.println("BUY OUT: " + b.getInitiator().toString());
                         }
                     });

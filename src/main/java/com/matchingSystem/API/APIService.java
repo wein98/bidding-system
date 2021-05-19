@@ -15,7 +15,7 @@ import static com.matchingSystem.API.APIKey.API_KEY;
 
 public class APIService {
 
-    private static final String HOST = "https://fit3077.com/api/v1";
+    private static final String HOST = "https://fit3077.com/api/v2";
     public static final int PATCH = 1;
     public static final int PUT = 2;
     public static final int POST = 3;

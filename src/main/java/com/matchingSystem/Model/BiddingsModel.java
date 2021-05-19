@@ -84,7 +84,7 @@ public class BiddingsModel extends Observable {
      */
     public void selectOffer(BidOfferModel b) {
         ((Student) UserCookie.getUser()).getInitiatedBid().selectBidder(b);
-
+        // when an offer is selected, close the current panel
         setChanged();
         notifyObservers();
     }

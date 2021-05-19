@@ -30,10 +30,18 @@ public class Contract {
     private JSONObject additionalInfo;
     private Timestamp dateSigned;
 
+    /**
+     * Get the id of this Contract
+     * @return the id
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Unpack the additional info json
+     * @param addInfo additionalInfo json object
+     */
     @SuppressWarnings("unchecked")
     @JsonProperty("additionalInfo")
     private void unpackAdditionalInfo(Map<String,Object> addInfo) {
@@ -44,6 +52,10 @@ public class Contract {
         }
     }
 
+    /**
+     * Unpack the lesson info json
+     * @param lessonInfo lessonInfo json object
+     */
     @SuppressWarnings("unchecked")
     @JsonProperty("lessonInfo")
     private void unpackLessonInfo(Map<String, Object> lessonInfo) {
@@ -59,8 +71,21 @@ public class Contract {
         return super.toString();
     }
 
+    /**
+     * Set the dateSigned of this Contract
+     * @param dateTime the timestamp
+     */
     public void setDateSigned(Timestamp dateTime){
         this.dateSigned = dateTime;
+    }
+
+    /**
+     * Set the contract duration selected
+     * @param months month signed
+     */
+    // the duration in additional info is the Contract Duration, the duration in lesson info is the session duration
+    public void setContractDuration(String months){
+        this.additionalInfo.put("duration",months);
     }
 
     public Timestamp getDateSigned() {

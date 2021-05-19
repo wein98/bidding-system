@@ -41,7 +41,7 @@ public class UserTypeController {
         // Create dashboard model
         DashboardModel dashboardModel = new DashboardModel();
         // Create dashboard view
-        DashboardView dashboardView = new DashboardView();
+        DashboardView dashboardView = new DashboardView(dashboardModel);
         // Create dashboard controller
         new DashboardController(dashboardView, dashboardModel);
     }
