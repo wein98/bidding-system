@@ -46,6 +46,7 @@ public class DashboardController implements Observer, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(view.getContractRefreshBtn())) {
+            System.out.println("Refreshing dashboard ... ");
             updateContracts();
         } else if (e.getSource().equals(view.getSubscribeBidsBtn())) {
             // TODO: open OpenCloseBidView(Constant.TUTOR_OPEN_BIDDING_VIEW)
@@ -56,13 +57,15 @@ public class DashboardController implements Observer, ActionListener {
                 if (model.getBidType() == Constant.OPENBID) {
                     // open openbid view
                     BiddingsModel biddingsModel = new BiddingsModel(studentObj.getInitiatedBid().getId());
-                    OpenCloseBidView openBidView = new OpenCloseBidView(biddingsModel, Constant.OPEN_BIDDING_VIEW);
+                    OpenCloseBidView openBidView = new OpenCloseBidView(biddingsModel, Constant.OPEN_BIDDING_VIEW,
+                            this.model);
                     new OpenCloseBidController(openBidView, biddingsModel);
 
                 } else if (model.getBidType() == Constant.CLOSEBID) {
                     // open closebid view
                     BiddingsModel biddingsModel = new BiddingsModel(studentObj.getInitiatedBid().getId());
-                    OpenCloseBidView openBidView = new OpenCloseBidView(biddingsModel, Constant.CLOSE_BIDDING_VIEW);
+                    OpenCloseBidView openBidView = new OpenCloseBidView(biddingsModel, Constant.CLOSE_BIDDING_VIEW,
+                            this.model);
                     new OpenCloseBidController(openBidView, biddingsModel);
 
                 } else {

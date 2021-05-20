@@ -2,11 +2,14 @@ package com.matchingSystem.BiddingSystem;
 
 import com.matchingSystem.API.APIFacade;
 import com.matchingSystem.BiddingSystem.Bid;
+import com.matchingSystem.LoginSystem.UserCookie;
 import com.matchingSystem.Model.BidOfferModel;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class OpenBid extends Bid {
@@ -17,16 +20,6 @@ public class OpenBid extends Bid {
     public OpenBid(){
         super();
     }
-
-//    @Override
-//    public void selectBidder(BidOfferModel offer){
-//        if(this.dateClosedDown != null ) {
-//            this.dateClosedDown = new Timestamp(System.currentTimeMillis());
-//            additionalInfo.put("successfulBidder",offer.getOfferTutorId());
-//        }else{
-//            System.out.println("Bid already closed!");
-//        }
-//    }
 
     @Override
     public boolean isExpired(){
@@ -65,35 +58,53 @@ public class OpenBid extends Bid {
         // TODO: do something if duration is negative
     }
 
-//    @Override
-//    public void close() {
-//        this.closed = true;
-//        this.dateClosedDown = new Timestamp(System.currentTimeMillis());
-//        additionalInfo.put("successfulBidder","undefined");
-//    }
-
     /**
      * Tutor can perform the buy out of a Bid request
      * @param tutorId the ID of the tutor who buy out the request
      */
     public void buyOut(String tutorId){
-//        this.dateClosedDown = new Timestamp(System.currentTimeMillis()); // this is handled in close()
-
+        System.out.println("buy out is triggered!");
+        int compLvl = 0;
+        for (Competency competency: UserCookie.getUser().getCompetencies()){
+            String subjectId = competency.getSubject().getId();
+            if(this.subject.getId().equals(subjectId)){
+                compLvl = competency.getLevel();
+                break;
+            }
+        }
         JSONObject bidInfo = new JSONObject();
         bidInfo.put("offerTutorId", tutorId);
+        bidInfo.put("tutorName", UserCookie.getUser().getFullName());
+        bidInfo.put("tutorCompLvl",compLvl);
         bidInfo.put("duration", getDuration());
         bidInfo.put("numOfLesson", getNoLessons());
         bidInfo.put("prefDay", additionalInfo.getString("prefDay"));
         bidInfo.put("time", additionalInfo.getString("time"));
         bidInfo.put("dayNight", additionalInfo.getString("dayNight"));
-        bidInfo.put("offerRate", getRate());
-        // TODO: add LessonInfo?
-
-        additionalInfo.put("successfulBidder", bidInfo);
-
+        bidInfo.put("rate", getRate());
+        // update the bid obj
+        additionalInfo.put("successfulBidder", tutorId);
+        this.bidders = getBidOffers();
+        JSONArray offersArr = new JSONArray(this.bidders);
+        offersArr.put(bidInfo);
+        additionalInfo.remove("bidOffers");
+        additionalInfo.put("bidOffers",offersArr);
+        // call api to update details
         APIFacade.updateBidById(getId(), getAdditionalInfo());
-
-        // TODO: create Contract API here
+        // create the contract
+//        int months = Integer.parseInt(contractDuration);
+//        LocalDateTime expiryDuration = LocalDate.now().plusMonths(months).atTime(0, 0);
+//        Timestamp expiry = Timestamp.valueOf(expiryDuration);
+//        JSONObject lessonInfo = new JSONObject();
+//        lessonInfo.put("time",additionalInfo.getString("time"));
+//        lessonInfo.put("dayNight",additionalInfo.getString("dayNight"));
+//        lessonInfo.put("prefDay",additionalInfo.getString("prefDay"));
+//        lessonInfo.put("numOfLesson",getNoLessons());
+//        lessonInfo.put("duration",getDuration());
+//        JSONObject additionalInfo = new JSONObject();
+//        additionalInfo.put("rate",getRate());
+//        APIFacade.createContract(this.initiator.getId(), tutorId, this.getSubject().getId()
+//                ,expiry,new JSONObject(),lessonInfo,additionalInfo);
 
         close();
         System.out.println("Buy out successful.");
@@ -104,14 +115,15 @@ public class OpenBid extends Bid {
      * @param bidOffer
      */
     public void tutorOfferBid(JSONObject bidOffer) {
+        bidders = getBidOffers();
         String tutorId = bidOffer.getString("offerTutorId");
         int toRemoveIndex = -1;
 
         // check if there's any other bid offers to find previously offered by this tutor
-        if (getBidOffers() != null) {
+        if (bidders != null) {
             // look for the bidoffers offered by the tutorId previously
-            for (int i=0; i<getBidOffers().size(); i++) {
-                if (tutorId.equals(getBidOffers().get(i).getOfferTutorId())) {
+            for (int i=0; i<bidders.size(); i++) {
+                if (tutorId.equals(bidders.get(i).getOfferTutorId())) {
                     toRemoveIndex = i;
                     break;
                 }
@@ -120,12 +132,10 @@ public class OpenBid extends Bid {
 
         // remove old bidoffer and add new updated one
         if (toRemoveIndex >= 0) {    // if there's a previous bid offers offered
-            getBidOffers().remove(toRemoveIndex);
+            bidders.remove(toRemoveIndex);
         }
-
-        JSONArray bidOffers = new JSONArray(getBidOffers());
+        JSONArray bidOffers = new JSONArray(bidders);
         bidOffers.put(bidOffer);
-
         // remove the whole list and insert again
         getAdditionalInfo().remove("bidOffers");
         getAdditionalInfo().put("bidOffers", bidOffers);

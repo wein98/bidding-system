@@ -5,7 +5,7 @@ import com.matchingSystem.BiddingSystem.Bid;
 import org.json.JSONObject;
 
 public class Student extends User {
-    protected Bid initiatedBid = null;
+    protected Bid initiatedBid = null; // the currently active bid
 
     public Student(String id, String givenName, String familyName, String userName) {
         super(id, givenName, familyName, userName);
@@ -29,9 +29,12 @@ public class Student extends User {
      * Store student's initiated bid if there exists.
      */
     public void setInitiatedBid() {
+        System.out.println("Retrieving active bid...");
         Bid b = APIFacade.getUserInitiatedBidById(getId());
-        if (b != null && !b.isExpired()) {
+        if (b != null && !b.isExpired() &&b.getDateClosedDown() == null) {
             this.initiatedBid = b;
+        }else{
+            this.initiatedBid = null;
         }
     }
 
