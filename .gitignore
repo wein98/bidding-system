@@ -3,6 +3,8 @@
 .idea/usage.statistics.xml
 .idea/shelf/
 
+src/main/java/com/matchingSystem/API/APIKey.java
+
 # Maven
 log/
 target/
