@@ -48,6 +48,8 @@ public class DashboardController implements Observer, ActionListener {
         if (e.getSource().equals(view.getContractRefreshBtn())) {
             System.out.println("Refreshing dashboard ... ");
             updateContracts();
+        } else if (e.getSource().equals(view.getSubscribeBidsBtn())) {
+            // TODO: open OpenCloseBidView(Constant.TUTOR_OPEN_BIDDING_VIEW)
         } else {
             if (model.getUserType().equals("Student")) {
                 Student studentObj = (Student) UserCookie.getUser();
@@ -100,6 +102,7 @@ public class DashboardController implements Observer, ActionListener {
                     view.getBidActionBtn().setText("Post a Bid");
                 }
             } else if (model.getUserType().equals("Tutor")) {
+                view.getSubscribeBidsBtn().setVisible(true);    // show view subscribed bids button
                 view.getBidActionBtn().setText("View current biddings");
             }
         }

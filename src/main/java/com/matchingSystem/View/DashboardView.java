@@ -24,6 +24,7 @@ public class DashboardView extends javax.swing.JFrame implements Observer {
     private JButton BidActionBtn;
     private JScrollPane scrollPane;
     private JPanel panel1;
+    private JButton subscribeBidsBtn;
 
     private DashboardModel model;
     public DashboardView(DashboardModel model) {
@@ -42,6 +43,7 @@ public class DashboardView extends javax.swing.JFrame implements Observer {
 
     public void setContractsPanel(ArrayList<Contract> contracts) {
         panel1.removeAll();
+        scrollPane.getViewport().setView(panel1);
 
         for (Contract c: contracts) {
             JPanel panel = new JPanel();
@@ -53,7 +55,7 @@ public class DashboardView extends javax.swing.JFrame implements Observer {
             table.getColumnModel().getColumn(1).setPreferredWidth(150);
 
             panel.add(table);
-            if(UserCookie.getUserType() == Constant.IS_TUTOR && c.getDateSigned() == null) {
+            if (UserCookie.getUserType() == Constant.IS_TUTOR && c.getDateSigned() == null) {
                 JButton signBut = new JButton();
                 signBut.setText("Sign");
                 signBut.addActionListener(new ActionListener() {
@@ -65,7 +67,7 @@ public class DashboardView extends javax.swing.JFrame implements Observer {
                     }
                 });
                 panel.add(signBut);
-            }else if(UserCookie.getUserType() == Constant.IS_TUTOR && c.getDateSigned() != null){
+            } else if (UserCookie.getUserType() == Constant.IS_TUTOR && c.getDateSigned() != null){
                 JButton signBut = new JButton();
                 signBut.setText("View");
                 signBut.addActionListener(new ActionListener() {
@@ -129,6 +131,9 @@ public class DashboardView extends javax.swing.JFrame implements Observer {
         return BidActionBtn;
     }
 
+    public JButton getSubscribeBidsBtn() {
+        return subscribeBidsBtn;
+    }
     @Override
     public void update(Observable o,Object arg){
         if (o instanceof DashboardModel) {

@@ -88,7 +88,11 @@ public abstract class APIRouter {
         try {
             String jsonResponse = APIService.UpdateRequest(route + "/" + id, params, APIService.PATCH);
 
-            return objMapper.readValue(jsonResponse, c);
+            if (c != null) {
+                return objMapper.readValue(jsonResponse, c);
+            } else {
+                return true;
+            }
         } catch (JsonMappingException e) {
             e.printStackTrace();
         } catch (JsonProcessingException e) {

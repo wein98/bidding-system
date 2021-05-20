@@ -34,18 +34,10 @@ public class APIService {
             CloseableHttpResponse response = httpClient.execute(request);
 
             try {
-
-                // Get HttpResponse Status
-//                System.out.println(res0ponse.getProtocolVersion());              // HTTP/1.1
-//                System.out.println(response.getStatusLine().getStatusCode());   // 200
-//                System.out.println(response.getStatusLine().getReasonPhrase()); // OK
-//                System.out.println(response.getStatusLine().toString());        // HTTP/1.1 200 OK
-
                 HttpEntity entity = response.getEntity();
                 if (entity != null) {
                     // return it as a String
                     String result = EntityUtils.toString(entity);
-//                    System.out.println(result);
                     return result;
                 }
 
@@ -105,7 +97,6 @@ public class APIService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        System.out.println(result);
         return result;
     }
 
