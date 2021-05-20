@@ -8,8 +8,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
-public class Tutor extends User {
+public class Tutor extends User implements Observer {
     protected ArrayList<OpenBid> subscribedBids = new ArrayList<>();
 
     public Tutor(String id, String givenName, String familyName, String userName) {
@@ -53,7 +55,7 @@ public class Tutor extends User {
         APIFacade.updateBidById(bidId, additionalInfo);
     }
 
-    public void setSubscribedBids(ArrayList<OpenBid> subscribedBids) {
+    public void setSubscribedBids() {
         this.subscribedBids = APIFacade.getSubscribedBids(getId());
     }
 
@@ -84,4 +86,11 @@ public class Tutor extends User {
                 '}';
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+        // set tutor's subscribed bids when tutor pressed subscribe to open bid button
+        if (o instanceof OpenBid) {
+            this.setSubscribedBids();
+        }
+    }
 }

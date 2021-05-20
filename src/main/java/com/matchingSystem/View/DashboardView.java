@@ -55,7 +55,7 @@ public class DashboardView extends javax.swing.JFrame implements Observer {
             table.getColumnModel().getColumn(1).setPreferredWidth(150);
 
             panel.add(table);
-            if(UserCookie.getUserType() == Constant.IS_TUTOR && c.getDateSigned() == null) {
+            if (UserCookie.getUserType() == Constant.IS_TUTOR && c.getDateSigned() == null) {
                 JButton signBut = new JButton();
                 signBut.setText("Sign");
                 signBut.addActionListener(new ActionListener() {
@@ -67,7 +67,7 @@ public class DashboardView extends javax.swing.JFrame implements Observer {
                     }
                 });
                 panel.add(signBut);
-            }else if(UserCookie.getUserType() == Constant.IS_TUTOR && c.getDateSigned() != null){
+            } else if (UserCookie.getUserType() == Constant.IS_TUTOR && c.getDateSigned() != null){
                 JButton signBut = new JButton();
                 signBut.setText("View");
                 signBut.addActionListener(new ActionListener() {

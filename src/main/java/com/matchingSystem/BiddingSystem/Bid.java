@@ -3,20 +3,18 @@ package com.matchingSystem.BiddingSystem;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.matchingSystem.API.APIFacade;
 import com.matchingSystem.Model.BidOfferModel;
-import com.matchingSystem.LoginSystem.UserCookie;
 import com.matchingSystem.Utility;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
 
 // holds the common fields of OpenBid and CloseBid
-public abstract class Bid implements BidInterface {
+public abstract class Bid extends Observable implements BidInterface {
     @JsonProperty("id")
     protected String id;
     @JsonProperty("type")

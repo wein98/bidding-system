@@ -1,15 +1,12 @@
 package com.matchingSystem.BiddingSystem;
 
 import com.matchingSystem.API.APIFacade;
-import com.matchingSystem.BiddingSystem.Bid;
 import com.matchingSystem.LoginSystem.UserCookie;
 import com.matchingSystem.Model.BidOfferModel;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class OpenBid extends Bid {
@@ -141,6 +138,23 @@ public class OpenBid extends Bid {
         getAdditionalInfo().put("bidOffers", bidOffers);
 
         APIFacade.updateBidById(getId(), getAdditionalInfo());
+    }
+
+    /**
+     * Tutor subscribes to an active open bid.
+     * @param tutorId tutor's id who wants to subscribe to this bid.
+     */
+    public void tutorSubscribeBid(String tutorId) {
+        // check expiry of this active bid
+        if (!isExpired()) {
+            APIFacade.subscribeBid(tutorId, getId());
+
+            // notify observers
+            setChanged();
+            notifyObservers();
+        } else {
+            System.out.println("Can't subscribe to an expired bid.");
+        }
     }
 
     @Override

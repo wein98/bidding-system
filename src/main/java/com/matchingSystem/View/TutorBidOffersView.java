@@ -8,6 +8,7 @@ import com.matchingSystem.ContractDev.Contract;
 import com.matchingSystem.Controller.BidOfferController;
 import com.matchingSystem.Controller.ContractCreationController;
 import com.matchingSystem.Controller.OpenCloseBidController;
+import com.matchingSystem.LoginSystem.Tutor;
 import com.matchingSystem.Model.*;
 import com.matchingSystem.LoginSystem.UserCookie;
 import org.json.JSONObject;
@@ -53,7 +54,7 @@ public class TutorBidOffersView extends BiddingsView {
                 table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
                 table.getColumnModel().getColumn(0).setPreferredWidth(150);
                 table.getColumnModel().getColumn(1).setPreferredWidth(150);
-                c.gridheight = 2;
+                c.gridheight = 3;
                 c.gridx = 0;
                 c.gridy = 0;
                 c.weighty = 1.0;
@@ -69,14 +70,17 @@ public class TutorBidOffersView extends BiddingsView {
                     c.gridheight = 1;
                     c.gridx = 1;
                     c.gridy = 0;
-                    c.weighty = 0.5;
                     panel1.add(btn1, c);
 
                     c.gridheight = 1;
                     c.gridx = 1;
                     c.gridy = 1;
-                    c.weighty = 0.5;
                     panel1.add(btn2, c);
+
+                    c.gridheight = 1;
+                    c.gridx = 1;
+                    c.gridy = 2;
+                    panel1.add(btn3, c);
 
                     // buttons action listener
                     btn1.addActionListener(new ActionListener() {
@@ -128,11 +132,16 @@ public class TutorBidOffersView extends BiddingsView {
                         }
                     });
 
+                    // Action listener for subscribe button
                     btn3.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             System.out.println("Subsribed to: " + b.getInitiator().toString());
                             // TODO: observe this bid
+                            b.addObserver((Tutor)UserCookie.getUser());
+                            ((OpenBid) b).tutorSubscribeBid(UserCookie.getUser().getId());
+
+                            btn3.setVisible(false);
                         }
                     });
 
