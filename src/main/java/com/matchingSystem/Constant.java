@@ -21,8 +21,7 @@ public class Constant {
     // biddings view type string
     public static final int OPEN_BIDDING_VIEW = 10;
     public static final int CLOSE_BIDDING_VIEW = 11;
-    public static final int OFFER_BIDS_VIEW = 12;
+    public static final int TUTOR_OFFER_BIDS_VIEW = 12;
     public static final int TUTOR_OPEN_BIDDING_VIEW = 13;
-    public static final int TUTOR_SUBS_OPEN_BIDDING_VIEW = 14;
-
+    public static final int TUTOR_SUBS_OPENBIDDINGS_VIEW = 14;
 }

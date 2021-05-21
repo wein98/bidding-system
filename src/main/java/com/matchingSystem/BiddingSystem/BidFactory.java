@@ -7,11 +7,15 @@ public class BidFactory {
     public Bid createBid(JSONObject params) {
         try {
             ObjectMapper objMapper = new ObjectMapper();
-            if (params.getString("type").equals("open")) {
-                return objMapper.readValue(params.toString(), OpenBid.class);
-            }else if (params.getString("type").equals("close")){
-                return objMapper.readValue(params.toString(), CloseBid.class);
-            }else{
+            if (params.has("type")) {
+                if (params.getString("type").equals("open")) {
+                    return objMapper.readValue(params.toString(), OpenBid.class);
+                }else if (params.getString("type").equals("close")){
+                    return objMapper.readValue(params.toString(), CloseBid.class);
+                }else{
+                    return null;
+                }
+            } else {
                 return null;
             }
         } catch (Exception e){

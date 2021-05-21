@@ -1,6 +1,7 @@
 package com.matchingSystem.LoginSystem;
 
 import com.matchingSystem.API.APIFacade;
+import com.matchingSystem.BiddingSystem.Bid;
 import com.matchingSystem.BiddingSystem.Competency;
 import com.matchingSystem.BiddingSystem.OpenBid;
 import com.matchingSystem.BiddingSystem.Subject;
@@ -12,7 +13,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class Tutor extends User implements Observer {
-    protected ArrayList<OpenBid> subscribedBids = new ArrayList<>();
+    protected ArrayList<Bid> subscribedBids = new ArrayList<>();
 
     public Tutor(String id, String givenName, String familyName, String userName) {
         super(id, givenName, familyName, userName);
@@ -59,7 +60,7 @@ public class Tutor extends User implements Observer {
         this.subscribedBids = APIFacade.getSubscribedBids(getId());
     }
 
-    public ArrayList<OpenBid> getSubscribedBids() {
+    public ArrayList<Bid> getSubscribedBids() {
         return subscribedBids;
     }
 

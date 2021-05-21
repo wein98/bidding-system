@@ -31,6 +31,7 @@ public class DashboardController implements Observer, ActionListener {
         view.getContractRefreshBtn().addActionListener(this);
         updateProfile();
         view.getBidActionBtn().addActionListener(this);
+        view.getSubscribeBidsBtn().addActionListener(this);
     }
 
     public void updateProfile() {
@@ -48,8 +49,14 @@ public class DashboardController implements Observer, ActionListener {
         if (e.getSource().equals(view.getContractRefreshBtn())) {
             System.out.println("Refreshing dashboard ... ");
             updateContracts();
+
         } else if (e.getSource().equals(view.getSubscribeBidsBtn())) {
-            // TODO: open OpenCloseBidView(Constant.TUTOR_OPEN_BIDDING_VIEW)
+            // open view subscribed open biddings monitor window
+            System.out.println("Subsribce bid monitor");
+            BiddingsModel biddingsModel = new BiddingsModel();
+            TutorBidOffersView bidOffersView = new TutorBidOffersView(biddingsModel, Constant.TUTOR_SUBS_OPENBIDDINGS_VIEW);
+            new TutorBidOffersController(bidOffersView, biddingsModel);
+
         } else {
             if (model.getUserType().equals("Student")) {
                 Student studentObj = (Student) UserCookie.getUser();
@@ -77,7 +84,7 @@ public class DashboardController implements Observer, ActionListener {
             } else if (model.getUserType().equals("Tutor")) {
                 // open view biddings window
                 BiddingsModel biddingsModel = new BiddingsModel();
-                TutorBidOffersView bidOffersView = new TutorBidOffersView(biddingsModel);
+                TutorBidOffersView bidOffersView = new TutorBidOffersView(biddingsModel, Constant.TUTOR_OFFER_BIDS_VIEW);
                 new TutorBidOffersController(bidOffersView, biddingsModel);
             }
         }
