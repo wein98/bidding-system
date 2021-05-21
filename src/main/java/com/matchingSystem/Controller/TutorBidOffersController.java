@@ -27,7 +27,7 @@ public class TutorBidOffersController implements Observer, ActionListener {
     }
 
     private void updateBids() {
-        model.setBiddings(Constant.OFFER_BIDS_VIEW);
+        model.setBiddings(Constant.TUTOR_OFFER_BIDS_VIEW);
     }
 
     @Override

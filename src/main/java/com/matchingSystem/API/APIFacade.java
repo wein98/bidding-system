@@ -80,18 +80,23 @@ public class APIFacade {
     /**
      * Get tutor's subscribed open bids.
      * @param id tutor's user id
-     * @return
+     * @return a list of OpenBid objects that this tutor has subscribed to
      */
-    public static ArrayList<OpenBid> getSubscribedBids(String id) {
+    public static ArrayList<Bid> getSubscribedBids(String id) {
         JSONObject addInfo = getUserById(id).getJSONObject("additionalInfo");
-        ArrayList<OpenBid> retVal = new ArrayList<>();
+        ArrayList<Bid> retVal = new ArrayList<>();
 
         if (addInfo.isEmpty()) {
             return retVal;
         }
 
         for ( int i=0; i < addInfo.getJSONArray("subscribedBids").length(); i++ ) {
-            retVal.add((OpenBid) getBidById(addInfo.getJSONArray("subscribedBids").getString(i)));
+            Bid b = getBidById(addInfo.getJSONArray("subscribedBids").getString(i));
+
+            // Add this bid to the return array if is not expired or deleted
+            if (b != null && !b.isExpired()) {
+                retVal.add(b);
+            }
         }
 
         return retVal;

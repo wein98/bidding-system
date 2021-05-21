@@ -6,6 +6,7 @@ import com.matchingSystem.BiddingSystem.Competency;
 import com.matchingSystem.BiddingSystem.Subject;
 import com.matchingSystem.Constant;
 import com.matchingSystem.LoginSystem.Student;
+import com.matchingSystem.LoginSystem.Tutor;
 import com.matchingSystem.LoginSystem.UserCookie;
 import java.util.ArrayList;
 import java.util.Observable;
@@ -24,13 +25,18 @@ public class BiddingsModel extends Observable {
     }
 
     public void setBiddings(int biddingsViewType) {
-        // biddingsViewType = Constant.OFFER_BIDS_VIEW
-        if (biddingsViewType == Constant.OFFER_BIDS_VIEW) {
+        // tutor view all active bids
+        if (biddingsViewType == Constant.TUTOR_OFFER_BIDS_VIEW) {
             setBids();
-        } else {
+        } else if (biddingsViewType == Constant.TUTOR_SUBS_OPENBIDDINGS_VIEW) { // tutor view subscribed open bids
+            setSubBids();
+        } else {    // tutor views an open bid of other bidders
             setBidOffersList();
         }
+    }
 
+    private void setSubBids() {
+        bids = ((Tutor) UserCookie.getUser()).getSubscribedBids();
     }
 
     /**
@@ -57,8 +63,6 @@ public class BiddingsModel extends Observable {
                 }
             }
         }
-
-//        bids = bidsArr;
 
         setChanged();
         notifyObservers();
