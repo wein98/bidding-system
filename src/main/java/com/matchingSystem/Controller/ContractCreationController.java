@@ -16,6 +16,7 @@ public class ContractCreationController implements ActionListener {
     public ContractCreationController(ContractCreationView view, ContractCreationModel model, JSONObject details) {
         this.view = view;
         this.model = model;
+        this.details = details;
         initController();
     }
 
