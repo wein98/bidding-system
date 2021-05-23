@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class ActiveBidsIterator extends javax.swing.JFrame implements Iterator {
+public class ActiveBidsIterator implements Iterator {
     private int currentPosition = 0;
     private List<Bid> bids = new ArrayList<>();
     private int bidViewType;
@@ -101,11 +101,6 @@ public class ActiveBidsIterator extends javax.swing.JFrame implements Iterator {
         }
 
         return null;
-    }
-
-    @Override
-    public void remove() {
-
     }
 
     public boolean isEmpty() {
