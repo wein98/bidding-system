@@ -1,22 +1,12 @@
 package com.matchingSystem.View;
 
-import com.matchingSystem.BiddingSystem.Bid;
-import com.matchingSystem.BiddingSystem.CloseBid;
-import com.matchingSystem.BiddingSystem.OpenBid;
 import com.matchingSystem.Constant;
-import com.matchingSystem.Controller.BidOfferController;
-import com.matchingSystem.Controller.ContractCreationController;
-import com.matchingSystem.Controller.OpenCloseBidController;
-import com.matchingSystem.LoginSystem.Tutor;
+import com.matchingSystem.BiddingSystem.ActiveBidsIterator;
 import com.matchingSystem.Model.*;
-import com.matchingSystem.LoginSystem.UserCookie;
-import org.json.JSONObject;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
+
 
 public class TutorBidOffersView extends BiddingsView {
     private final int bidViewType;
@@ -42,149 +32,11 @@ public class TutorBidOffersView extends BiddingsView {
         pack();
     }
 
-    public void setPanel(ArrayList<Bid> bids) {
+    public void setPanel(ActiveBidsIterator iterator) {
         panel.removeAll();
         scrollPane.getViewport().setView(panel);
 
-        if (bids.size() != 0) {
-            for (Bid b : bids) {
-                if(b.getDateClosedDown() == null) {
-                    JPanel panel1 = new JPanel();
-                    panel1.getInsets().set(20, 20, 20, 20);
-                    panel1.setLayout(new GridBagLayout());
-                    GridBagConstraints c = new GridBagConstraints();
-
-
-                    JTable table = getTable(b);
-
-                    // resize table columns
-                    table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-                    table.getColumnModel().getColumn(0).setPreferredWidth(150);
-                    table.getColumnModel().getColumn(1).setPreferredWidth(150);
-                    c.gridheight = 3;
-                    c.gridx = 0;
-                    c.gridy = 0;
-                    c.weighty = 1.0;
-                    panel1.add(table, c);
-
-                    // Set different buttons for different bidType
-                    if (b instanceof OpenBid && b.getDateClosedDown() == null) {
-                        // Open Bid type
-                        JButton btn1 = new JButton("Buy out");
-                        JButton btn2 = new JButton("View all bidders");
-
-                        c.gridheight = 1;
-                        c.gridx = 1;
-                        c.gridy = 0;
-                        panel1.add(btn1, c);
-
-                        c.gridheight = 1;
-                        c.gridx = 1;
-                        c.gridy = 1;
-                        panel1.add(btn2, c);
-
-                        // buttons action listener
-                        btn1.addActionListener(new ActionListener() {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                System.out.println("Pressed");
-
-                                ((OpenBid) b).buyOut(UserCookie.getUser().getId());
-                                // TODO: let the tutor select contract duration
-                                JSONObject details = new JSONObject();
-                                details.put("studentId",b.getInitiator());
-                                details.put("tutorId",UserCookie.getUser().getId());
-                                details.put("subjectId",b.getSubject().getId());
-
-                                JSONObject lessonInfo = new JSONObject();
-                                lessonInfo.put("time",b.getAdditionalInfo().getString("time"));
-                                lessonInfo.put("dayNight",b.getAdditionalInfo().getString("dayNight"));
-                                lessonInfo.put("prefDay",b.getAdditionalInfo().getString("prefDay"));
-                                lessonInfo.put("numOfLesson",b.getNoLessons());
-                                lessonInfo.put("duration",b.getDuration());
-                                details.put("lessInfo",lessonInfo);
-
-                                JSONObject addInfo = new JSONObject();
-                                addInfo.put("rate",b.getRate());
-                                details.put("addInfo",addInfo);
-
-                                JSONObject payInfo = new JSONObject();
-                                details.put("payInfo",payInfo);
-
-                                ContractCreationModel contractModel = new ContractCreationModel();
-                                ContractCreationView contractView = new ContractCreationView(contractModel);
-                                new ContractCreationController(contractView,contractModel,details);
-                                // remove the bid after trigger buy out
-    //                            panel1.remove(btn1);
-    //                            panel1.remove(btn2);
-    //                            panel1.remove(table);
-                                System.out.println("BUY OUT: " + b.getInitiator().toString());
-                            }
-                        });
-
-                        btn2.addActionListener(new ActionListener() {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                System.out.println("OFFER: " + b.getInitiator().toString());
-                                // opens open bidding offers
-                                BiddingsModel biddingsModel = new BiddingsModel(b.getId());
-                                OpenCloseBidView biddingsView = new OpenCloseBidView(biddingsModel, Constant.TUTOR_OPEN_BIDDING_VIEW);
-                                new OpenCloseBidController(biddingsView, biddingsModel);
-                            }
-                        });
-
-                        // Show subscribe button besides this open bid if tutor is viewing in all bids interface
-                        if (bidViewType == Constant.TUTOR_OFFER_BIDS_VIEW) {
-                            JButton btn3 = new JButton("Subscribe");
-
-                            c.gridheight = 1;
-                            c.gridx = 1;
-                            c.gridy = 2;
-                            panel1.add(btn3, c);
-
-                            // Action listener for subscribe button
-                            btn3.addActionListener(new ActionListener() {
-                                @Override
-                                public void actionPerformed(ActionEvent e) {
-                                    System.out.println("Subsribed to: " + b.getInitiator().toString());
-                                    // TODO: observe this bid
-                                    b.addObserver((Tutor)UserCookie.getUser());
-                                    ((OpenBid) b).tutorSubscribeBid(UserCookie.getUser().getId());
-
-                                    btn3.setVisible(false);
-                                }
-                            });
-                        }
-
-                    } else if (b instanceof CloseBid && b.getDateClosedDown() == null) {
-                        // Close bid type
-                        JButton btn1 = new JButton("Message bid");
-                        c.gridheight = 1;
-                        c.gridx = 1;
-                        c.gridy = 0;
-                        c.weighty = 0.5;
-                        panel1.add(btn1, c);
-
-                        btn1.addActionListener(new ActionListener() {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                // TODO: opens Reply Bid window
-                                BidOfferModel bidOfferModel = new BidOfferModel(b);
-                                BidOfferView bidOfferView = new BidOfferView(bidOfferModel, "close");
-                                BidOfferController bidOfferController = new BidOfferController(bidOfferView, bidOfferModel);
-
-                            }
-                        });
-                    }
-
-                    GridBagConstraints gbc = new GridBagConstraints();
-                    gbc.gridwidth = GridBagConstraints.REMAINDER;
-                    gbc.fill = GridBagConstraints.HORIZONTAL;
-                    gbc.insets = new Insets(10, 0, 10, 0);
-                    panel.add(panel1, gbc, 0);
-                }
-            }
-        } else {
+        if (iterator.isEmpty()) {
             if (bidViewType == Constant.TUTOR_OFFER_BIDS_VIEW) {
                 JLabel textLabel = new JLabel("There's no active bids at the moment. Press refresh button to update.");
                 panel.add(textLabel);
@@ -192,48 +44,20 @@ public class TutorBidOffersView extends BiddingsView {
                 JLabel textLabel = new JLabel("You haven't subscribed to any active bids or your subscribed bids were expired.");
                 panel.add(textLabel);
             }
+        } else {
+            while(iterator.hasNext()) {
+                JPanel panel1 = (JPanel) iterator.next();
 
+                GridBagConstraints gbc = new GridBagConstraints();
+                gbc.gridwidth = GridBagConstraints.REMAINDER;
+                gbc.fill = GridBagConstraints.HORIZONTAL;
+                gbc.insets = new Insets(10, 0, 10, 0);
+                panel.add(panel1, gbc, 0);
+            }
         }
     }
 
-    private JTable getTable(Bid b) {
-        String[][] rec = null;
-        if (b instanceof OpenBid) {
-            rec = new String[][]{{"Bid Type", b.getType()},
-                    {"Student name", b.getInitiator().getName()},
-                    {"Subject", b.getSubject().getName()},
-                    {"No. of sessions", b.getNoLessons()},
-                    {"Day & Time", b.getDayTime()},
-                    {"Rate (per hour)", b.getRate()},};
-        } else {
-            BidOfferModel bidoffer = null;
-            for (BidOfferModel offer : b.getBidOffers()) {
-                if (offer.getOfferTutorId().equals(UserCookie.getUser().getId())) {
-                    bidoffer = offer;
-                }
-            }
-            if (bidoffer == null) {
-                rec = new String[][]{{"Bid Type", b.getType()},
-                        {"Student name", b.getInitiator().getName()},
-                        {"Subject", b.getSubject().getName()},
-                        {"No. of sessions", b.getNoLessons()},
-                        {"Day & Time", b.getDayTime()},
-                        {"Rate (per hour)", b.getRate()},
-                        {"Tutor message", ""},
-                        {"Student's reply:", ""}};
-            } else {
-                rec = new String[][]{{"Bid Type", b.getType()},
-                        {"Student name", b.getInitiator().getName()},
-                        {"Subject", b.getSubject().getName()},
-                        {"No. of sessions", bidoffer.getNumOfLesson()},
-                        {"Day & Time", bidoffer.getDayTime()},
-                        {"Rate (per hour)", bidoffer.getOfferRate()},
-                        {"Tutor message", bidoffer.getMsg().getContent()},
-                        {"Student's reply:", bidoffer.getMsg().getStudentReply()}};
-            }
-
-        }
-        String[] col = {"", ""};
-        return new JTable(rec, col);
+    public int getBidViewType() {
+        return bidViewType;
     }
 }

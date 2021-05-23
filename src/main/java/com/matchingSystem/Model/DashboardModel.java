@@ -1,24 +1,19 @@
 package com.matchingSystem.Model;
 
 import com.matchingSystem.Constant;
-import com.matchingSystem.ContractDev.Contract;
+import com.matchingSystem.ContractDev.ContractLayoutIterator;
 import com.matchingSystem.LoginSystem.Student;
 import com.matchingSystem.LoginSystem.User;
 import com.matchingSystem.LoginSystem.UserCookie;
-import java.util.ArrayList;
 import java.util.Observable;
 
 public class DashboardModel extends Observable {
 
-    private ArrayList<Contract> contractArrayList = new ArrayList<>();
     private User user;
     private String username;
     private String userType;
     private String fullName;
-
-    public ArrayList<Contract> getContractArrayList() {
-        return contractArrayList;
-    }
+    private ContractLayoutIterator iterator;
 
     public void setProfile() {
 
@@ -50,8 +45,7 @@ public class DashboardModel extends Observable {
     }
 
     public void updateContractList() {
-        user.setContracts();
-        contractArrayList = user.getContracts();
+        iterator = new ContractLayoutIterator();
         setChanged();
         notifyObservers();
     }
@@ -78,5 +72,9 @@ public class DashboardModel extends Observable {
             }
         }
         return 2;
+    }
+
+    public ContractLayoutIterator getIterator() {
+        return iterator;
     }
 }

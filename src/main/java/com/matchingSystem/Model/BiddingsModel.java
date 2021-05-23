@@ -2,11 +2,9 @@ package com.matchingSystem.Model;
 
 import com.matchingSystem.API.APIFacade;
 import com.matchingSystem.BiddingSystem.Bid;
-import com.matchingSystem.BiddingSystem.Competency;
-import com.matchingSystem.BiddingSystem.Subject;
 import com.matchingSystem.Constant;
+import com.matchingSystem.BiddingSystem.ActiveBidsIterator;
 import com.matchingSystem.LoginSystem.Student;
-import com.matchingSystem.LoginSystem.Tutor;
 import com.matchingSystem.LoginSystem.UserCookie;
 import java.util.ArrayList;
 import java.util.Observable;
@@ -16,6 +14,7 @@ public class BiddingsModel extends Observable {
     private ArrayList<BidOfferModel> bidOffersList = new ArrayList<>();
     private ArrayList<Bid> bids = new ArrayList<>();
     private Bid bid;
+    private ActiveBidsIterator bidsIterator;
 
     public BiddingsModel() {}
 
@@ -25,45 +24,17 @@ public class BiddingsModel extends Observable {
     }
 
     public void setBiddings(int biddingsViewType) {
+        bidsIterator = null;
         // tutor view all active bids
         if (biddingsViewType == Constant.TUTOR_OFFER_BIDS_VIEW) {
-            setBids();
+            bidsIterator = new ActiveBidsIterator(biddingsViewType);
+
         } else if (biddingsViewType == Constant.TUTOR_SUBS_OPENBIDDINGS_VIEW) { // tutor view subscribed open bids
-            setSubBids();
+            bidsIterator = new ActiveBidsIterator(biddingsViewType);
+
         } else {    // tutor views an open bid of other bidders
             setBidOffersList();
         }
-    }
-
-    private void setSubBids() {
-        bids = ((Tutor) UserCookie.getUser()).getSubscribedBids();
-    }
-
-    /**
-     * Set the biddings view for TutorBidOffersView.
-     */
-    private void setBids() {
-        bids = new ArrayList<>();
-        ArrayList<Bid> bidsArr = APIFacade.getAllBids();
-
-        ArrayList<Competency> tutorCompetencies = UserCookie.getUser().getCompetencies();
-
-        // filter by competencies of tutor
-        for (Bid b: bidsArr) {
-            // get subject in bid
-            if (!b.isExpired()) {
-                Subject bidSubject = b.getSubject();
-                int bidCompetency = b.getCompetencyLevel();
-                for (Competency competency: tutorCompetencies){
-                    if (competency.getSubject().getId().equals(bidSubject.getId())){
-                        if (competency.getLevel() >= bidCompetency + 2){
-                            bids.add(b);
-                        }
-                    }
-                }
-            }
-        }
-
         setChanged();
         notifyObservers();
     }
@@ -94,6 +65,9 @@ public class BiddingsModel extends Observable {
     }
 
     // Getters
+    public ActiveBidsIterator getBidsIterator() {
+        return bidsIterator;
+    }
 
     public Bid getBid() {
         return bid;

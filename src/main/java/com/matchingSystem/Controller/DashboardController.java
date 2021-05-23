@@ -30,6 +30,7 @@ public class DashboardController implements Observer, ActionListener {
         model.addObserver(this);    // subscribe to observable
         view.getContractRefreshBtn().addActionListener(this);
         updateProfile();
+        updateContracts();
         view.getBidActionBtn().addActionListener(this);
         view.getSubscribeBidsBtn().addActionListener(this);
     }
@@ -97,7 +98,7 @@ public class DashboardController implements Observer, ActionListener {
             view.getUserTypeLabel().setText(model.getUserType());
             view.getUsernameLabel().setText(model.getUsername());
             view.getFullNameLabel().setText(model.getFullName());
-            view.setContractsPanel(model.getContractArrayList());
+            view.setContractsPanel(model.getIterator());
 
             // Update bid action button to appropriate text according to initiated bid
             if (model.getUserType().equals("Student")) {
