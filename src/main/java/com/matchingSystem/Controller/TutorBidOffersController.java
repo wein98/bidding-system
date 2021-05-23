@@ -1,6 +1,5 @@
 package com.matchingSystem.Controller;
 
-import com.matchingSystem.Constant;
 import com.matchingSystem.Model.BiddingsModel;
 import com.matchingSystem.View.TutorBidOffersView;
 
@@ -27,7 +26,7 @@ public class TutorBidOffersController implements Observer, ActionListener {
     }
 
     private void updateBids() {
-        model.setBiddings(Constant.TUTOR_OFFER_BIDS_VIEW);
+        model.setBiddings(view.getBidViewType());
     }
 
     @Override
@@ -41,7 +40,7 @@ public class TutorBidOffersController implements Observer, ActionListener {
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof BiddingsModel) {
-            view.setPanel(model.getBids());
+            view.setPanel(model.getBidsIterator());
         }
     }
 }
