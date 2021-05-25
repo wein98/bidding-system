@@ -16,7 +16,7 @@ public abstract class APIRouter {
     protected ObjectMapper objMapper;
     protected Class c;
 
-    public Object getAll() {
+    public Object getAll(String queryParam) {
         return null;
     }
 

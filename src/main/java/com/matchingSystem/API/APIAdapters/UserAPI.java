@@ -17,8 +17,10 @@ public class UserAPI extends APIRouter implements UserAPIInterface {
      * @return JSONArray of all the users
      */
     @Override
-    public JSONArray getAll() {
-        return new JSONArray(APIService.GETRequest(route));
+    public JSONArray getAll(String queryParam) {
+        String urlRoute = route + queryParam;
+
+        return new JSONArray(APIService.GETRequest(urlRoute));
     }
 
     /**

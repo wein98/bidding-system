@@ -13,13 +13,8 @@ import java.util.Observer;
 
 public class BiddingCreationView extends javax.swing.JFrame implements Observer {
     private JPanel bidCreationForm;
-    private JLabel subjectLabel;
     private JComboBox subjects;
-    private JLabel dayLabel;
-    private JLabel timeLabel;
     private JTextField inputRate;
-    private JLabel numOfLessonLabel;
-    private JLabel rateLabel;
     private JRadioButton openBiddingRadioButton;
 //    private JComboBox qualifications;
     private JRadioButton closeBiddingRadioButton;
@@ -28,11 +23,9 @@ public class BiddingCreationView extends javax.swing.JFrame implements Observer 
     private JComboBox days;
     private JComboBox numOfLesson;
     private JComboBox dayNight;
-    private JLabel typeLabel;
-    private JLabel durationLabel;
     private JComboBox duration;
 
-    private BiddingCreationModel model;
+    private final BiddingCreationModel model;
 
     public BiddingCreationView(BiddingCreationModel model) {
         this.model = model;

@@ -21,7 +21,7 @@ public class CompetencyAPI extends APIRouter implements CompetencyAPIInterface {
      * @return JSONArray of all the competencies
      */
     @Override
-    public Object getAll() {
+    public Object getAll(String queryParam) {
         return new JSONArray(APIService.GETRequest(route));
     }
 

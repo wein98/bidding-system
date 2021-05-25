@@ -26,7 +26,7 @@ public class SubjectAPI extends APIRouter implements SubjectAPIInterface {
      * @return JSONArray of all the subjects
      */
     @Override
-    public ArrayList<Subject> getAll() {
+    public ArrayList<Subject> getAll(String queryParam) {
         ArrayList<Subject> subjects = new ArrayList<>();
         try {
             String response = GETRequest(this.route);

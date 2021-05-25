@@ -23,7 +23,7 @@ public class QualificationAPI extends APIRouter implements QualificationAPIInter
      * @return null
      */
     @Override
-    public ArrayList<Qualification> getAll() {
+    public ArrayList<Qualification> getAll(String queryParam) {
         ArrayList<Qualification> qualifications = new ArrayList<>();
         try {
             String response = GETRequest(this.route);

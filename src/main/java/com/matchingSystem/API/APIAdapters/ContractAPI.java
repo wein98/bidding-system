@@ -25,7 +25,7 @@ public class ContractAPI extends APIRouter implements ContractAPIInterface {
      * Get all contracts
      * @return an array of Contracts
      */
-    public ArrayList<Contract> getAll(){
+    public ArrayList<Contract> getAll(String queryParam){
         ArrayList<Contract> contracts = new ArrayList<>();
         try {
             String response = GETRequest(this.route);

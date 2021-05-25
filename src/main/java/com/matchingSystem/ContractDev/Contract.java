@@ -2,12 +2,17 @@ package com.matchingSystem.ContractDev;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.matchingSystem.API.APIFacade;
 import com.matchingSystem.BiddingSystem.Subject;
 import com.matchingSystem.BiddingSystem.Poster;
+import com.matchingSystem.LoginSystem.Tutor;
+import com.matchingSystem.LoginSystem.UserCookie;
 import org.json.JSONObject;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -31,6 +36,45 @@ public class Contract {
     @JsonProperty("additionalInfo")
     private JSONObject additionalInfo;
     private Timestamp dateSigned;
+
+    public Contract () {}
+
+    public Contract (Contract target) {
+        if (target != null) {
+            this.firstParty = target.firstParty;
+            this.subject = target.subject;
+            this.paymentInfo = target.paymentInfo;
+            this.lessonInfo = target.lessonInfo;
+            this.additionalInfo = target.additionalInfo;
+        }
+    }
+
+    /**
+     * Function that checks if this contract has expired
+     * @return true if expired false otherwise.
+     */
+    public boolean isExpired() {
+        Timestamp now = new Timestamp(System.currentTimeMillis());
+
+        int comparision = now.compareTo(expiryDate);
+
+        if (comparision >= 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Get a list of tutors that matches this subject and student's competency level
+     * @return List of tutors
+     */
+    public ArrayList<Tutor> getTutors() {
+        ArrayList<Tutor> tutors = new ArrayList<>();
+        tutors = APIFacade.getAllTutorsByCompetencySubject(UserCookie.getUser().getCompetencyBySubject(getSubject()));
+
+        return tutors;
+    }
 
     /**
      * Get the id of this Contract
@@ -68,11 +112,6 @@ public class Contract {
         }
     }
 
-    @Override
-    public String toString() {
-        return super.toString();
-    }
-
     /**
      * Set the dateSigned of this Contract
      * @param dateTime the timestamp
@@ -90,8 +129,14 @@ public class Contract {
         this.additionalInfo.put("duration",months);
     }
 
-    public Timestamp getDateSigned() {
-        return dateSigned;
+    public String getDateSigned() {
+        if (dateSigned != null) {
+            Date date = new Date();
+            date.setTime(dateSigned.getTime());
+            return new SimpleDateFormat("dd/MM/yyyy").format(date);
+        } else {
+            return "Contract not signed";
+        }
     }
 
     public Poster getFirstParty() {
@@ -120,8 +165,56 @@ public class Contract {
         return this.additionalInfo;
     }
 
-    public Timestamp getExpiryDate() {
-        return expiryDate;
+    public String getTutorName() {
+        return getSecondParty().getName();
+    }
+
+    public String getStudentName() {
+        return getFirstParty().getName();
+    }
+
+    public String getTime() {
+        return getLessonInfo().getString("time");
+    }
+
+    public String getDayNight() {
+        return getLessonInfo().getString("dayNight");
+    }
+
+    public String getPrefDay() {
+        return getLessonInfo().getString("prefDay");
+    }
+
+    public String getNumOfLesson() {
+        return getLessonInfo().getString("numOfLesson");
+    }
+
+    public String getLessonDuration() {
+        return getLessonInfo().getString("duration");
+    }
+
+    public String getRate() {
+        return getAdditionalInfo().getString("rate");
+    }
+
+    public String getContractDuration() {
+        return getAdditionalInfo().getString("duration");
+    }
+
+    public String getExpiryDate() {
+        Date date = new Date();
+        date.setTime(expiryDate.getTime());
+        return new SimpleDateFormat("dd/MM/yyyy").format(date);
+    }
+
+    public String getStatus() {
+        if (isExpired()) {
+            return "Expired";
+        } else if (dateSigned == null) {
+            return "Pending to sign";
+        } else {
+            return "Active";
+        }
     }
 
     public String getDateCreated() {
@@ -130,5 +223,29 @@ public class Contract {
 
     public Subject getSubject() {
         return subject;
+    }
+
+    /**
+     * Prototype design pattern to clone a Contract object
+     * @return a cloned Contract
+     */
+    public Contract clone() {
+        return new Contract(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Contract{" +
+                "id='" + id + '\'' +
+                ", firstParty=" + firstParty +
+                ", secondParty=" + secondParty +
+                ", subject=" + subject +
+                ", dateCreated=" + dateCreated +
+                ", expiryDate=" + expiryDate +
+                ", paymentInfo=" + paymentInfo +
+                ", lessonInfo=" + lessonInfo +
+                ", additionalInfo=" + additionalInfo +
+                ", dateSigned=" + dateSigned +
+                '}';
     }
 }
