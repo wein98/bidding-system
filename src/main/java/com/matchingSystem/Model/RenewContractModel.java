@@ -1,7 +1,5 @@
 package com.matchingSystem.Model;
 
-import com.matchingSystem.API.APIFacade;
-import com.matchingSystem.BiddingSystem.Competency;
 import com.matchingSystem.BiddingSystem.Subject;
 import com.matchingSystem.ContractDev.Contract;
 import com.matchingSystem.LoginSystem.Tutor;
@@ -35,8 +33,7 @@ public class RenewContractModel extends Observable {
     }
 
     public void loadMatchingTutors() {
-        Competency c = UserCookie.getUser().getCompetencyBySubject(contract.getSubject());
-        tutors = APIFacade.getAllTutorsByCompetencySubject(c);
+        tutors = contract.getTutors();
 
         setChanged();
         notifyObservers();

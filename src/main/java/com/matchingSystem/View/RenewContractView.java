@@ -4,7 +4,6 @@ import com.matchingSystem.ContractDev.Contract;
 import com.matchingSystem.LoginSystem.Tutor;
 import com.matchingSystem.Model.RenewContractModel;
 import com.matchingSystem.Utility;
-import org.json.JSONObject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -93,7 +92,6 @@ public class RenewContractView extends JFrame  {
     }
 
     public void setMatchingTutors(ArrayList<Tutor> tutors) {
-        System.out.println(tutors);
         for (Tutor t: tutors) {
             newTutorOptions.addItem(t.getFullName() + ", Competency level: " + t.getCompetencyLvlFromSubject(model.getSubject()));
         }
@@ -121,31 +119,22 @@ public class RenewContractView extends JFrame  {
     }
 
     private void loadInputs (Contract c) {
-        JSONObject lessonInfo = c.getLessonInfo();
-        JSONObject addInfo = c.getAdditionalInfo();
-
-        timeValOptions.setSelectedItem(lessonInfo.getString("time"));
-        dayNightOptions.setSelectedItem(lessonInfo.getString("dayNight"));
-        prefDayOptions.setSelectedItem(lessonInfo.getString("prefDay"));
-        numOfLessonOptions.setSelectedItem(lessonInfo.getString("numOfLesson"));
-        durationOptions.setSelectedItem(lessonInfo.getString("duration"));
-        rateInput.setText(addInfo.getString("rate"));
+        timeValOptions.setSelectedItem(c.getTime());
+        dayNightOptions.setSelectedItem(c.getDayNight());
+        prefDayOptions.setSelectedItem(c.getPrefDay());
+        numOfLessonOptions.setSelectedItem(c.getNumOfLesson());
+        durationOptions.setSelectedItem(c.getLessonDuration());
+        rateInput.setText(c.getRate());
     }
 
     private JTable getTable(Contract c) {
-        String [][] rec = null;
-
-        JSONObject lessonInfo = c.getLessonInfo();
-        JSONObject addInfo = c.getAdditionalInfo();
-
-        rec = new String[][] {
-                {"Tutor name", c.getSecondParty().getName()},
-//                {"Tutor competency level", String.valueOf(b.getTutorCompLvl())},
-                {"No. of sessions", lessonInfo.getString("numOfLesson")},
+        String [][] rec = {
+                {"Tutor name", c.getTutorName()},
+                {"No. of sessions", c.getNumOfLesson()},
                 {"Day & Time", c.getDayTime()},
-                {"Duration (hours per session)", lessonInfo.getString("duration")},
-                {"Rate (per hour)", addInfo.getString("rate")},
-                {"Contract duration (months)", addInfo.getString("duration")}
+                {"Duration (hours per session)", c.getLessonDuration()},
+                {"Rate (per hour)", c.getRate()},
+                {"Contract duration (months)", c.getContractDuration()}
         };
 
         String[] col = {"", ""};

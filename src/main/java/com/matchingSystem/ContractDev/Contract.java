@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -128,8 +129,14 @@ public class Contract {
         this.additionalInfo.put("duration",months);
     }
 
-    public Timestamp getDateSigned() {
-        return dateSigned;
+    public String getDateSigned() {
+        if (dateSigned != null) {
+            Date date = new Date();
+            date.setTime(dateSigned.getTime());
+            return new SimpleDateFormat("dd/MM/yyyy").format(date);
+        } else {
+            return "Contract not signed";
+        }
     }
 
     public Poster getFirstParty() {
@@ -158,8 +165,56 @@ public class Contract {
         return this.additionalInfo;
     }
 
-    public Timestamp getExpiryDate() {
-        return expiryDate;
+    public String getTutorName() {
+        return getSecondParty().getName();
+    }
+
+    public String getStudentName() {
+        return getFirstParty().getName();
+    }
+
+    public String getTime() {
+        return getLessonInfo().getString("time");
+    }
+
+    public String getDayNight() {
+        return getLessonInfo().getString("dayNight");
+    }
+
+    public String getPrefDay() {
+        return getLessonInfo().getString("prefDay");
+    }
+
+    public String getNumOfLesson() {
+        return getLessonInfo().getString("numOfLesson");
+    }
+
+    public String getLessonDuration() {
+        return getLessonInfo().getString("duration");
+    }
+
+    public String getRate() {
+        return getAdditionalInfo().getString("rate");
+    }
+
+    public String getContractDuration() {
+        return getAdditionalInfo().getString("duration");
+    }
+
+    public String getExpiryDate() {
+        Date date = new Date();
+        date.setTime(expiryDate.getTime());
+        return new SimpleDateFormat("dd/MM/yyyy").format(date);
+    }
+
+    public String getStatus() {
+        if (isExpired()) {
+            return "Expired";
+        } else if (dateSigned == null) {
+            return "Pending to sign";
+        } else {
+            return "Active";
+        }
     }
 
     public String getDateCreated() {
