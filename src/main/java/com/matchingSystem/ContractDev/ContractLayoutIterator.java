@@ -158,7 +158,7 @@ public class ContractLayoutIterator implements Iterator {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // opens edit new contract view
-                RenewContractModel model = new RenewContractModel(false);
+                RenewContractModel model = new RenewContractModel(false, c);
                 RenewContractView view = new RenewContractView(model);
                 new RenewContractController(view, model);
             }
@@ -179,7 +179,7 @@ public class ContractLayoutIterator implements Iterator {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // opens edit new contract view
-                RenewContractModel model = new RenewContractModel(true);
+                RenewContractModel model = new RenewContractModel(true, c);
                 RenewContractView view = new RenewContractView(model);
                 new RenewContractController(view, model);
             }

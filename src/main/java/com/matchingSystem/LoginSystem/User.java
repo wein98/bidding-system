@@ -83,8 +83,9 @@ public abstract class User {
      * @return competency object of this subject
      */
     public Competency getCompetencyBySubject(Subject s) {
+        System.out.println(competencies);
         for (int i=0; i<competencies.size(); i++) {
-            if (competencies.get(i).getId().equals(s.getId())) {
+            if (competencies.get(i).getSubject().getId().equals(s.getId())) {
                 return competencies.get(i);
             }
         }

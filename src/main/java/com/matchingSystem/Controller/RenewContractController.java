@@ -22,7 +22,9 @@ public class RenewContractController implements Observer, ActionListener {
     private void initController() {
         model.addObserver(this);
         view.getRenewBtn().addActionListener(this);
-        if(!model.isNewTutor()) {
+        if(model.isNewTutor()) {
+            populateMatchingTutors();
+        } else {
             populatePreviousContracts();
         }
     }
@@ -31,10 +33,24 @@ public class RenewContractController implements Observer, ActionListener {
         model.loadPreviousContracts();
     }
 
+    private void populateMatchingTutors() {
+        model.loadMatchingTutors();
+    }
+
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof RenewContractModel) {
-            view.setReuseContractPanel(model.getContracts());
+            view.getSubjectNameLabel().setText("Subject name: " + model.getSubject().getName());
+            view.getSubjectDescLabel().setText("Subject description: " + model.getSubject().getDescription());
+
+            if (model.isNewTutor()) {
+                System.out.println(model.getTutors());
+
+                view.setMatchingTutors(model.getTutors());
+            } else {
+                view.setReuseContractPanel(model.getContracts());
+
+            }
         }
     }
 

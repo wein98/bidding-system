@@ -1,6 +1,7 @@
 package com.matchingSystem.View;
 
 import com.matchingSystem.ContractDev.Contract;
+import com.matchingSystem.LoginSystem.Tutor;
 import com.matchingSystem.Model.RenewContractModel;
 import com.matchingSystem.Utility;
 import org.json.JSONObject;
@@ -26,6 +27,8 @@ public class RenewContractView extends JFrame  {
     private JPanel window;
     private JPanel panel;
     private JComboBox contractDurationOptions;
+    private JLabel subjectNameLabel;
+    private JLabel subjectDescLabel;
 
     private final RenewContractModel model;
 
@@ -89,6 +92,13 @@ public class RenewContractView extends JFrame  {
         }
     }
 
+    public void setMatchingTutors(ArrayList<Tutor> tutors) {
+        System.out.println(tutors);
+        for (Tutor t: tutors) {
+            newTutorOptions.addItem(t.getFullName() + ", Competency level: " + t.getCompetencyLvlFromSubject(model.getSubject()));
+        }
+    }
+
     private void updateFieldsOptions() {
         for (String item: Utility.timeVals) {
             this.timeValOptions.addItem(item);
@@ -144,5 +154,13 @@ public class RenewContractView extends JFrame  {
 
     public JButton getRenewBtn() {
         return renewBtn;
+    }
+
+    public JLabel getSubjectNameLabel() {
+        return subjectNameLabel;
+    }
+
+    public JLabel getSubjectDescLabel() {
+        return subjectDescLabel;
     }
 }
