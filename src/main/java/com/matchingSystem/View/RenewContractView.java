@@ -1,9 +1,12 @@
 package com.matchingSystem.View;
 
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonObjectFormatVisitor;
 import com.matchingSystem.ContractDev.Contract;
 import com.matchingSystem.LoginSystem.Tutor;
+import com.matchingSystem.LoginSystem.UserCookie;
 import com.matchingSystem.Model.RenewContractModel;
 import com.matchingSystem.Utility;
+import org.json.JSONObject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -151,5 +154,31 @@ public class RenewContractView extends JFrame  {
 
     public JLabel getSubjectDescLabel() {
         return subjectDescLabel;
+    }
+
+    public JSONObject getField(){
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("studentId", UserCookie.getUser().getId());
+        if (this.model.isNewTutor()){
+            jsonObj.put("tutorId", this.model.getNewTutorId(newTutorOptions.getSelectedIndex()));
+        }else {
+            jsonObj.put("tutorId", this.model.getPreviousContract().getSecondParty().getId());
+        }
+        jsonObj.put("subjectId", this.model.getSubject().getId());
+        JSONObject payInfo = new JSONObject();
+        jsonObj.put("payInfo", payInfo);
+        JSONObject lessInfo = new JSONObject();
+        lessInfo.put("time", Utility.timeVals[this.timeValOptions.getSelectedIndex()]);
+        lessInfo.put("dayNight", Utility.dayNight[this.dayNightOptions.getSelectedIndex()]);
+        lessInfo.put("prefDay", Utility.days[this.prefDayOptions.getSelectedIndex()]);
+        lessInfo.put("numOfLesson", Utility.numsForLesson[this.numOfLessonOptions.getSelectedIndex()]);
+        lessInfo.put("duration", Utility.duration[this.durationOptions.getSelectedIndex()]);
+        jsonObj.put("lessInfo", lessInfo);
+        JSONObject addInfo = new JSONObject();
+        addInfo.put("rate",this.rateInput.getText());
+        addInfo.put("duration", Utility.contractDuration[this.contractDurationOptions.getSelectedIndex()]);
+        jsonObj.put("addInfo", addInfo);
+        jsonObj.put("contractDuration", Utility.contractDuration[this.contractDurationOptions.getSelectedIndex()]);
+        return jsonObj;
     }
 }
