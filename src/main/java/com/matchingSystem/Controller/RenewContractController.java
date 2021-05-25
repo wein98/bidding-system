@@ -2,6 +2,7 @@ package com.matchingSystem.Controller;
 
 import com.matchingSystem.Model.RenewContractModel;
 import com.matchingSystem.View.RenewContractView;
+import org.json.JSONObject;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -57,7 +58,9 @@ public class RenewContractController implements Observer, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(view.getRenewBtn())) {
-            // TODO: renew button pressed call create contract API
+            JSONObject jsonObj = this.view.getField();
+            model.renewContract(jsonObj);
+            view.dispose();
         }
     }
 }
