@@ -53,7 +53,7 @@ public class DashboardController implements Observer, ActionListener {
 
         } else if (e.getSource().equals(view.getSubscribeBidsBtn())) {
             // open view subscribed open biddings monitor window
-            System.out.println("Subsribce bid monitor");
+            System.out.println("Subscribe bid monitor");
             BiddingsModel biddingsModel = new BiddingsModel();
             TutorBidOffersView bidOffersView = new TutorBidOffersView(biddingsModel, Constant.TUTOR_SUBS_OPENBIDDINGS_VIEW);
             new TutorBidOffersController(bidOffersView, biddingsModel);
