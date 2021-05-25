@@ -25,7 +25,7 @@ public class MessageAPI extends APIRouter implements MessageAPIInterface {
      * @return list of messages
      */
     @Override
-    public ArrayList<Message> getAll(){
+    public ArrayList<Message> getAll(String queryParam){
         ArrayList<Message> messages = new ArrayList<>();
         try {
             String response = GETRequest(route);

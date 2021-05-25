@@ -2,12 +2,16 @@ package com.matchingSystem.ContractDev;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.matchingSystem.API.APIFacade;
 import com.matchingSystem.BiddingSystem.Subject;
 import com.matchingSystem.BiddingSystem.Poster;
+import com.matchingSystem.LoginSystem.Tutor;
+import com.matchingSystem.LoginSystem.UserCookie;
 import org.json.JSONObject;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -31,6 +35,33 @@ public class Contract {
     @JsonProperty("additionalInfo")
     private JSONObject additionalInfo;
     private Timestamp dateSigned;
+
+    /**
+     * Function that checks if this contract has expired
+     * @return true if expired false otherwise.
+     */
+    public boolean isExpired() {
+        Timestamp now = new Timestamp(System.currentTimeMillis());
+
+        int comparision = now.compareTo(expiryDate);
+
+        if (comparision >= 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Get a list of tutors that matches this subject and student's competency level
+     * @return List of tutors
+     */
+    public ArrayList<Tutor> getTutors() {
+        ArrayList<Tutor> tutors = new ArrayList<>();
+        tutors = APIFacade.getAllTutorsByCompetencySubject(UserCookie.getUser().getCompetencyBySubject(getSubject()));
+
+        return tutors;
+    }
 
     /**
      * Get the id of this Contract

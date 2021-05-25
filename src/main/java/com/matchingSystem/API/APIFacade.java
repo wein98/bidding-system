@@ -8,6 +8,8 @@ import com.matchingSystem.BiddingSystem.*;
 import com.matchingSystem.Constant;
 import com.matchingSystem.ContractDev.Contract;
 import com.matchingSystem.LoginSystem.Qualification;
+import com.matchingSystem.LoginSystem.Tutor;
+import com.matchingSystem.LoginSystem.UserFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -25,6 +27,7 @@ public class APIFacade {
     private static final QualificationAPIInterface qualificationAPI = new QualificationAPI();
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final UserFactory userFactory = new UserFactory();
 
     private APIFacade() {}
 
@@ -39,9 +42,44 @@ public class APIFacade {
         return contractAPI;
     }
 
+    public static Competency getCompetencyByID(String id) {
+        return (Competency) competencyAPI.getById(id, "");
+    }
+
+
     // User APIs
     public static JSONObject getUserById(String id) {
         return (JSONObject) userAPI.getById(id, Constant.NONE);
+    }
+
+    /**
+     * Get a list of tutors that matches this competency
+     * @param c competency object to be matched
+     * @return a list of tutors
+     */
+    public static ArrayList<Tutor> getAllTutorsByCompetencySubject(Competency c) {
+        JSONArray users = (JSONArray) userAPI.getAll(Constant.COMPETENCIES_SUBJECT);    // get all users
+        ArrayList<Tutor> tutors = new ArrayList<>();
+
+        for (int i=0; i < users.length(); i++) {
+            JSONObject user = users.getJSONObject(i);
+
+            // get competencies list
+            JSONArray competencies = user.getJSONArray("competencies");
+
+            // find tutors that matches this competency
+            if (competencies.length() != 0) {
+                for (int j=0; j<competencies.length(); j++) {
+                    JSONObject subject = competencies.getJSONObject(j).getJSONObject("subject");
+                    if(subject.getString("id").equals(c.getSubject().getId())
+                        && competencies.getJSONObject(j).getInt("level") >= c.getLevel()+2) {
+                        tutors.add((Tutor)userFactory.createUser(user.toString(), Constant.IS_TUTOR));
+                    }
+                }
+            }
+        }
+
+        return tutors;
     }
 
     /**
@@ -166,12 +204,12 @@ public class APIFacade {
 
     // Qualification APIs
     public static ArrayList<Qualification> getAllQualifications() {
-        return (ArrayList<Qualification>) qualificationAPI.getAll();
+        return (ArrayList<Qualification>) qualificationAPI.getAll(Constant.NONE);
     }
 
     // Bid APIs
     public static ArrayList<Bid> getAllBids() {
-        return (ArrayList<Bid>) bidAPI.getAll();
+        return (ArrayList<Bid>) bidAPI.getAll(Constant.NONE);
     }
 
     public static Bid getBidById(String id) {
@@ -227,7 +265,7 @@ public class APIFacade {
     }
 
     public static ArrayList<Contract> getContractsByUserId(String userId) {
-        ArrayList<Contract> contracts = (ArrayList<Contract>) contractAPI.getAll();
+        ArrayList<Contract> contracts = (ArrayList<Contract>) contractAPI.getAll(Constant.NONE);
         ArrayList<Contract> retVal = new ArrayList<>();
 
         if (contracts != null) {

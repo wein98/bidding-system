@@ -25,7 +25,7 @@ public class BidAPI extends APIRouter implements BidAPIInterface {
      * @return an array of Bids
      */
     @Override
-    public ArrayList<Bid> getAll(){
+    public ArrayList<Bid> getAll(String queryParam){
         ArrayList<Bid> bids = new ArrayList<>();
             String response = GETRequest(this.route);
             JSONArray arr = new JSONArray(response);

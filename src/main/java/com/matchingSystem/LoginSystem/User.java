@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.API.APIFacade;
 import com.matchingSystem.BiddingSystem.Competency;
+import com.matchingSystem.BiddingSystem.Subject;
 import com.matchingSystem.ContractDev.Contract;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -73,6 +75,20 @@ public abstract class User {
 
     public ArrayList<Contract> getContracts() {
         return contracts;
+    }
+
+    /**
+     * Get competency by subject
+     * @param s subject
+     * @return competency object of this subject
+     */
+    public Competency getCompetencyBySubject(Subject s) {
+        for (int i=0; i<competencies.size(); i++) {
+            if (competencies.get(i).getId().equals(s.getId())) {
+                return competencies.get(i);
+            }
+        }
+        return null;
     }
 
 }

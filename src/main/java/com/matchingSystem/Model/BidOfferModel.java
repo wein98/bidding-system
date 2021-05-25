@@ -28,15 +28,6 @@ public class BidOfferModel extends Observable {
     private String msgId;
     private JSONObject bidOfferObj;
 
-//    public BidOfferModel(String linkedBidId, String offerTutorId, String offerRate, String numOfLesson,
-//                        boolean freeLesson) {
-//        this.bidId = linkedBidId;
-//        this.offerTutorId = offerTutorId;
-//        this.offerRate = offerRate;
-//        this.numberOfLesson = numOfLesson;
-//        this.freeLesson = freeLesson;
-//    }
-
     public BidOfferModel(Bid b, JSONObject o){
         this.bid = b;
         this.bidId = b.getId();
