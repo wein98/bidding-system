@@ -34,7 +34,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="60437" class="javax.swing.JLabel" binding="subjectLabel">
+          <component id="60437" class="javax.swing.JLabel">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -48,7 +48,7 @@
             </constraints>
             <properties/>
           </component>
-          <component id="d021c" class="javax.swing.JLabel" binding="timeLabel">
+          <component id="d021c" class="javax.swing.JLabel">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -56,7 +56,7 @@
               <text value="Preferred Time"/>
             </properties>
           </component>
-          <component id="533af" class="javax.swing.JLabel" binding="dayLabel">
+          <component id="533af" class="javax.swing.JLabel">
             <constraints>
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -64,7 +64,7 @@
               <text value="Preferred Day"/>
             </properties>
           </component>
-          <component id="64268" class="javax.swing.JLabel" binding="numOfLessonLabel">
+          <component id="64268" class="javax.swing.JLabel">
             <constraints>
               <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -80,7 +80,7 @@
             </constraints>
             <properties/>
           </component>
-          <component id="5e71d" class="javax.swing.JLabel" binding="rateLabel">
+          <component id="5e71d" class="javax.swing.JLabel">
             <constraints>
               <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -108,7 +108,7 @@
               <text value="Close Bidding"/>
             </properties>
           </component>
-          <component id="7017" class="javax.swing.JLabel" binding="typeLabel">
+          <component id="7017" class="javax.swing.JLabel">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -156,7 +156,7 @@
             </constraints>
             <properties/>
           </component>
-          <component id="afa3f" class="javax.swing.JLabel" binding="durationLabel">
+          <component id="afa3f" class="javax.swing.JLabel">
             <constraints>
               <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>

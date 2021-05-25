@@ -36,6 +36,18 @@ public class Contract {
     private JSONObject additionalInfo;
     private Timestamp dateSigned;
 
+    public Contract () {}
+
+    public Contract (Contract target) {
+        if (target != null) {
+            this.firstParty = target.firstParty;
+            this.subject = target.subject;
+            this.paymentInfo = target.paymentInfo;
+            this.lessonInfo = target.lessonInfo;
+            this.additionalInfo = target.additionalInfo;
+        }
+    }
+
     /**
      * Function that checks if this contract has expired
      * @return true if expired false otherwise.
@@ -99,11 +111,6 @@ public class Contract {
         }
     }
 
-    @Override
-    public String toString() {
-        return super.toString();
-    }
-
     /**
      * Set the dateSigned of this Contract
      * @param dateTime the timestamp
@@ -161,5 +168,29 @@ public class Contract {
 
     public Subject getSubject() {
         return subject;
+    }
+
+    /**
+     * Prototype design pattern to clone a Contract object
+     * @return a cloned Contract
+     */
+    public Contract clone() {
+        return new Contract(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Contract{" +
+                "id='" + id + '\'' +
+                ", firstParty=" + firstParty +
+                ", secondParty=" + secondParty +
+                ", subject=" + subject +
+                ", dateCreated=" + dateCreated +
+                ", expiryDate=" + expiryDate +
+                ", paymentInfo=" + paymentInfo +
+                ", lessonInfo=" + lessonInfo +
+                ", additionalInfo=" + additionalInfo +
+                ", dateSigned=" + dateSigned +
+                '}';
     }
 }

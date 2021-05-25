@@ -1,9 +1,12 @@
 package com.matchingSystem.ContractDev;
 
 import com.matchingSystem.Constant;
+import com.matchingSystem.Controller.RenewContractController;
 import com.matchingSystem.Controller.SignContractController;
 import com.matchingSystem.LoginSystem.User;
 import com.matchingSystem.LoginSystem.UserCookie;
+import com.matchingSystem.Model.RenewContractModel;
+import com.matchingSystem.View.RenewContractView;
 import com.matchingSystem.View.SignContractView;
 
 import javax.swing.*;
@@ -154,7 +157,10 @@ public class ContractLayoutIterator implements Iterator {
         btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO: opens edit new contract view
+                // opens edit new contract view
+                RenewContractModel model = new RenewContractModel(false);
+                RenewContractView view = new RenewContractView(model);
+                new RenewContractController(view, model);
             }
         });
 
@@ -172,7 +178,10 @@ public class ContractLayoutIterator implements Iterator {
         btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO: opens edit new contract view
+                // opens edit new contract view
+                RenewContractModel model = new RenewContractModel(true);
+                RenewContractView view = new RenewContractView(model);
+                new RenewContractController(view, model);
             }
         });
 
