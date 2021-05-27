@@ -25,7 +25,7 @@ public class ContractLayoutIterator implements Iterator {
 
     public ContractLayoutIterator() {}
 
-    private void lazyload() {
+    private void lazyLoad() {
         if (contracts.size() == 0) {
             UserCookie.getUser().setContracts();
             contracts = UserCookie.getUser().getContracts();
@@ -34,7 +34,7 @@ public class ContractLayoutIterator implements Iterator {
 
     @Override
     public boolean hasNext() {
-        lazyload();
+        lazyLoad();
         return currentPosition < contracts.size();
     }
 
@@ -91,7 +91,7 @@ public class ContractLayoutIterator implements Iterator {
     }
 
     public boolean isEmpty() {
-        lazyload();
+        lazyLoad();
         return contracts.isEmpty();
     }
 
@@ -100,7 +100,7 @@ public class ContractLayoutIterator implements Iterator {
      * @return
      */
     public boolean isFull() {
-        lazyload();
+        lazyLoad();
 
         int count = 0;
 

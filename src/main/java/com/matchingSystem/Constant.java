@@ -24,4 +24,7 @@ public class Constant {
     public static final int TUTOR_OFFER_BIDS_VIEW = 12;
     public static final int TUTOR_OPEN_BIDDING_VIEW = 13;
     public static final int TUTOR_SUBS_OPENBIDDINGS_VIEW = 14;
+
+    // constant number
+    public static final long MILLIS_PER_DAY = 1000*60*60*24;
 }

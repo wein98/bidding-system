@@ -1,15 +1,13 @@
 package com.matchingSystem.Controller;
 
 import com.matchingSystem.Constant;
+import com.matchingSystem.ContractDev.ContractExpiryIterator;
 import com.matchingSystem.Model.BiddingCreationModel;
 import com.matchingSystem.Model.BiddingsModel;
 import com.matchingSystem.Model.DashboardModel;
 import com.matchingSystem.LoginSystem.Student;
 import com.matchingSystem.LoginSystem.UserCookie;
-import com.matchingSystem.View.BiddingCreationView;
-import com.matchingSystem.View.DashboardView;
-import com.matchingSystem.View.OpenCloseBidView;
-import com.matchingSystem.View.TutorBidOffersView;
+import com.matchingSystem.View.*;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -33,6 +31,10 @@ public class DashboardController implements Observer, ActionListener {
         updateContracts();
         view.getBidActionBtn().addActionListener(this);
         view.getSubscribeBidsBtn().addActionListener(this);
+
+        // show the contract expiry notification
+        ContractExpiryIterator iterator = new ContractExpiryIterator();
+        ContractExpiryNotificationView view =  new ContractExpiryNotificationView(iterator);
     }
 
     public void updateProfile() {

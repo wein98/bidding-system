@@ -9,6 +9,7 @@ import com.matchingSystem.LoginSystem.Tutor;
 import com.matchingSystem.LoginSystem.UserCookie;
 import org.json.JSONObject;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -201,6 +202,7 @@ public class Contract {
         return getAdditionalInfo().getString("duration");
     }
 
+    public Timestamp getExpiryTimestamp() { return this.expiryDate; }
     public String getExpiryDate() {
         Date date = new Date();
         date.setTime(expiryDate.getTime());
