@@ -16,11 +16,6 @@ public class BidOfferView extends javax.swing.JFrame implements Observer {
     private JComboBox durationDDL;
     private JTextField rateText;
     private JButton makeOfferButton;
-    private JLabel numOfLessonLabel;
-    private JLabel dayLabel;
-    private JLabel timeLabel;
-    private JLabel durationLabel;
-    private JLabel rateLabel;
     private JComboBox dayNightDDL;
     private JTextField messageText;
     private JLabel messageLabel;

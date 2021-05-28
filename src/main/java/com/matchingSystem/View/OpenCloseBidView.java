@@ -18,9 +18,8 @@ public class OpenCloseBidView extends BiddingsView {
 
     private DashboardModel parentModel;
 
-    public OpenCloseBidView(BiddingsModel model, int bidViewType){
+    public OpenCloseBidView(int bidViewType){
         this.bidViewType = bidViewType;
-        this.model = model;
         initComponents();
         this.setVisible(true);
     }

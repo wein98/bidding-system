@@ -23,39 +23,6 @@ public class Tutor extends User implements Observer {
         super();
     }
 
-    /**
-     * Function to send an offer for Open Bidding
-     * @param bidId
-     * @param additionalObject
-     */
-    public void makeOfferToOpenBidding(String bidId, JSONObject additionalObject) {
-        OpenBid bid = (OpenBid) APIFacade.getBidById(bidId);
-        JSONObject additionalInfo = bid.getAdditionalInfo();
-        JSONArray bidOffersArr = additionalInfo.getJSONArray("bidOffers");
-        int toRemoveIndex = -1;
-
-        // look for the bidoffers offered by the tutorId previously
-        for (int i=0; i<bidOffersArr.length(); i++) {
-            JSONObject o = bidOffersArr.getJSONObject(i);
-            if (this.id.equals(o.getString("tutorId"))) {
-                toRemoveIndex = i;
-                break;
-            }
-        }
-
-        // remove old bidoffer and add new updated one
-        if (toRemoveIndex >= 0) {    // if there's a previous bid offers offered
-            bidOffersArr.remove(toRemoveIndex);
-        }
-        bidOffersArr.put(additionalObject);
-
-        // remove the whole list and insert again
-        additionalInfo.remove("bidOffers");
-        additionalInfo.put("bidOffers", bidOffersArr);
-
-        APIFacade.updateBidById(bidId, additionalInfo);
-    }
-
     public void setSubscribedBids() {
         this.subscribedBids = APIFacade.getSubscribedBids(getId());
     }

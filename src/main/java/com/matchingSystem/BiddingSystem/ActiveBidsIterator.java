@@ -266,7 +266,7 @@ public class ActiveBidsIterator implements Iterator {
                 System.out.println("OFFER: " + b.getInitiator().toString());
                 // opens open bidding offers
                 BiddingsModel biddingsModel = new BiddingsModel(b.getId());
-                OpenCloseBidView biddingsView = new OpenCloseBidView(biddingsModel, Constant.TUTOR_OPEN_BIDDING_VIEW);
+                OpenCloseBidView biddingsView = new OpenCloseBidView(Constant.TUTOR_OPEN_BIDDING_VIEW);
                 new OpenCloseBidController(biddingsView, biddingsModel);
             }
         });

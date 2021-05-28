@@ -63,7 +63,7 @@ public class DashboardController implements Observer, ActionListener {
             // open view subscribed open biddings monitor window
             System.out.println("Subscribe bid monitor");
             BiddingsModel biddingsModel = new BiddingsModel();
-            TutorBidOffersView bidOffersView = new TutorBidOffersView(biddingsModel, Constant.TUTOR_SUBS_OPENBIDDINGS_VIEW);
+            TutorBidOffersView bidOffersView = new TutorBidOffersView(Constant.TUTOR_SUBS_OPENBIDDINGS_VIEW);
             new TutorBidOffersController(bidOffersView, biddingsModel);
 
         } else {
@@ -93,7 +93,7 @@ public class DashboardController implements Observer, ActionListener {
             } else if (model.getUserType().equals("Tutor")) {
                 // open view biddings window
                 BiddingsModel biddingsModel = new BiddingsModel();
-                TutorBidOffersView bidOffersView = new TutorBidOffersView(biddingsModel, Constant.TUTOR_OFFER_BIDS_VIEW);
+                TutorBidOffersView bidOffersView = new TutorBidOffersView(Constant.TUTOR_OFFER_BIDS_VIEW);
                 new TutorBidOffersController(bidOffersView, biddingsModel);
             }
         }

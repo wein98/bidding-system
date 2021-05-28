@@ -19,9 +19,7 @@ public class DashboardView extends javax.swing.JFrame {
     private JPanel panel1;
     private JButton subscribeBidsBtn;
 
-    private DashboardModel model;
-    public DashboardView(DashboardModel model) {
-        this.model = model;
+    public DashboardView() {
         initComponents();
         this.setVisible(true);
     }

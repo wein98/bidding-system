@@ -6,7 +6,6 @@ import com.matchingSystem.BiddingSystem.Subject;
 import com.matchingSystem.LoginSystem.Qualification;
 import com.matchingSystem.LoginSystem.Student;
 import com.matchingSystem.LoginSystem.UserCookie;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ public class BiddingCreationModel extends Observable {
 
     private ArrayList<Subject> subjects;
     private ArrayList<Qualification> qualifications;
-    private JSONObject initiator;
 
     public void updateDDL() {
 
@@ -26,7 +24,6 @@ public class BiddingCreationModel extends Observable {
             userSubjects.add(competency.getSubject());
         }
         this.subjects = userSubjects;
-        // TODO: change this dummy data
         this.qualifications = APIFacade.getAllQualifications();
         // notify observers
         setChanged();

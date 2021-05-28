@@ -2,7 +2,6 @@ package com.matchingSystem.View;
 
 import com.matchingSystem.Constant;
 import com.matchingSystem.BiddingSystem.ActiveBidsIterator;
-import com.matchingSystem.Model.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,8 +10,7 @@ import java.awt.*;
 public class TutorBidOffersView extends BiddingsView {
     private final int bidViewType;
 
-    public TutorBidOffersView(BiddingsModel model, int bidViewType) {
-        this.model = model;
+    public TutorBidOffersView(int bidViewType) {
         this.bidViewType = bidViewType;
 
         initComponents();

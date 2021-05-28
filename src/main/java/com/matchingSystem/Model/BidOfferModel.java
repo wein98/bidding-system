@@ -9,8 +9,6 @@ import org.json.JSONObject;
 import java.util.Observable;
 
 public class BidOfferModel extends Observable {
-    private String bidId;
-
     private Bid bid;
     private String tutorName;
     private String offerTutorId;
@@ -21,8 +19,6 @@ public class BidOfferModel extends Observable {
 
     public BidOfferModel(Bid b, JSONObject o){
         this.bid = b;
-        this.bidId = b.getId();
-
         lessonInfo = new LessonInfo(
                 o.getString("duration"),
                 o.getString("numOfLesson"),
@@ -31,6 +27,7 @@ public class BidOfferModel extends Observable {
                 o.getString("prefDay"),
                 o.getString("time")
         );
+
         // unpack JSONObject o
         this.tutorCompLvl = o.getInt("tutorCompLvl");
         this.offerTutorId = o.getString("offerTutorId");
@@ -45,7 +42,6 @@ public class BidOfferModel extends Observable {
 
     public BidOfferModel(Bid b) {
         this.bid = b;
-        this.bidId = b.getId();
     }
 
     public String getOfferTutorId() {
@@ -58,6 +54,10 @@ public class BidOfferModel extends Observable {
         notifyObservers();
     }
 
+    /**
+     * Function that handles tutor sends a bidoffer.
+     * @param jsonObj json object that carries the bid offer details
+     */
     public void sendOffer(JSONObject jsonObj) {
         Tutor tutorObj = (Tutor) UserCookie.getUser();
 

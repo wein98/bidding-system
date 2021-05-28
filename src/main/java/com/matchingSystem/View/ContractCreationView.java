@@ -7,9 +7,7 @@ import javax.swing.*;
 
 public class ContractCreationView extends javax.swing.JFrame {
     private JPanel panel;
-    private JLabel titleLabel;
     private JComboBox durationDDL;
-    private JLabel durationLabel;
     private JButton submitButton;
 
     private ContractCreationModel model;

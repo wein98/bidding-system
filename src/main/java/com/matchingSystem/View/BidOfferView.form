@@ -17,7 +17,7 @@
           <text value="Bid Offer"/>
         </properties>
       </component>
-      <component id="16d93" class="javax.swing.JLabel" binding="numOfLessonLabel">
+      <component id="16d93" class="javax.swing.JLabel">
         <constraints>
           <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -25,7 +25,7 @@
           <text value="Number of lesson"/>
         </properties>
       </component>
-      <component id="c5cbd" class="javax.swing.JLabel" binding="dayLabel">
+      <component id="c5cbd" class="javax.swing.JLabel">
         <constraints>
           <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -33,7 +33,7 @@
           <text value="Day"/>
         </properties>
       </component>
-      <component id="a9110" class="javax.swing.JLabel" binding="timeLabel">
+      <component id="a9110" class="javax.swing.JLabel">
         <constraints>
           <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -41,7 +41,7 @@
           <text value="Time "/>
         </properties>
       </component>
-      <component id="bf705" class="javax.swing.JLabel" binding="durationLabel">
+      <component id="bf705" class="javax.swing.JLabel">
         <constraints>
           <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -49,7 +49,7 @@
           <text value="Duration (hours per lesson)"/>
         </properties>
       </component>
-      <component id="5b04e" class="javax.swing.JLabel" binding="rateLabel">
+      <component id="5b04e" class="javax.swing.JLabel">
         <constraints>
           <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>

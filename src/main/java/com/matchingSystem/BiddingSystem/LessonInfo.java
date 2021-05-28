@@ -26,8 +26,6 @@ public class LessonInfo {
     @JsonProperty("time")
     private String time;
 
-    private JSONObject parseToJSONObj;
-
     public LessonInfo() {};
 
     public LessonInfo(String lessonDuration, String numOfLesson, String dayNight, String prefDay, String time) {
@@ -79,6 +77,12 @@ public class LessonInfo {
 
     }
 
+    /**
+     * Returns a JSON object of the class variables that is needed for creating bid.
+     * @param subjectIndex index of the subject in the user's subject list
+     * @param type type of this bid to create
+     * @return JSON object of the parsed data
+     */
     public JSONObject getBiddingCreationJSONObj(int subjectIndex, String type) {
         JSONObject retVal = new JSONObject();
 
@@ -97,6 +101,12 @@ public class LessonInfo {
         return retVal;
     }
 
+    /**
+     * Returns a JSON object of the class variables that is needed for buying out a bid.
+     * @param tutorId tutor's id who bought out this bid
+     * @param compLvl tutor's competency lvl of the subject of this bid
+     * @return JSON object of the parsed data
+     */
     public JSONObject getBuyOutBidJSONObj(String tutorId, int compLvl) {
         JSONObject bidInfo = new JSONObject();
         bidInfo.put("offerTutorId", tutorId);
@@ -106,6 +116,11 @@ public class LessonInfo {
         return putLessonInfo(bidInfo);
     }
 
+    /**
+     * Put all the class variables into o.
+     * @param o the JSONObject to carry the class variables
+     * @return JSON object of the parsed data
+     */
     public JSONObject putLessonInfo(JSONObject o) {
         o.put("duration", getLessonDuration());
         o.put("numOfLesson", getNumOfLesson());
@@ -117,6 +132,10 @@ public class LessonInfo {
         return o;
     }
 
+    /**
+     * Returns a JSON object of the class variables that is needed for contract.
+     * @return JSON object of the parsed data
+     */
     public JSONObject getContractLessonInfo() {
         JSONObject lessonInfo = new JSONObject();
         lessonInfo = putLessonInfo(lessonInfo);
