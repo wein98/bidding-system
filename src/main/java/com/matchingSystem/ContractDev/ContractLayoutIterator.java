@@ -24,7 +24,9 @@ public class ContractLayoutIterator implements Iterator {
     private List<Contract> contracts = new ArrayList<>();
 
     public ContractLayoutIterator() {}
-
+    /**
+     * Load the active bids
+     */
     private void lazyLoad() {
         if (contracts.size() == 0) {
             UserCookie.getUser().setContracts();
@@ -32,12 +34,20 @@ public class ContractLayoutIterator implements Iterator {
         }
     }
 
+    /**
+     * Function required for Iterator pattern
+     * @return True if there is still element in the collection, otherwise False
+     */
     @Override
     public boolean hasNext() {
         lazyLoad();
         return currentPosition < contracts.size();
     }
 
+    /**
+     * Function required for Iterator pattern (for iterating in the collection)
+     * @return object for displaying in panel
+     */
     @Override
     public Object next() {
         if (!hasNext()) {
@@ -90,6 +100,13 @@ public class ContractLayoutIterator implements Iterator {
         return panel;
     }
 
+    /**
+     * Refresh the position indicator in the collection
+     */
+    public void refreshCurrentPosition() {
+        currentPosition = 0;
+    }
+
     public boolean isEmpty() {
         lazyLoad();
         return contracts.isEmpty();
@@ -97,7 +114,7 @@ public class ContractLayoutIterator implements Iterator {
 
     /**
      * Checks if the student is having 5 active bids.
-     * @return
+     * @return true if student has 5 active bids, otherwise false
      */
     public boolean isFull() {
         lazyLoad();
@@ -132,6 +149,11 @@ public class ContractLayoutIterator implements Iterator {
         return new JTable(rec, col);
     }
 
+    /**
+     * Function to create Sign button for contract
+     * @param c contract
+     * @return the created button
+     */
     private JButton getSignBtn(Contract c) {
         JButton btn = new JButton();
         btn.setText("Sign");
@@ -147,6 +169,11 @@ public class ContractLayoutIterator implements Iterator {
         return btn;
     }
 
+    /**
+     * Function to created View button for contract
+     * @param c contract
+     * @return the created button
+     */
     private JButton getViewBtn(Contract c) {
         JButton btn = new JButton();
         btn.setText("View");

@@ -49,6 +49,10 @@ public class OpenCloseBidView extends BiddingsView {
         pack();
     }
 
+    /**
+     * add in components
+     * @param bidOffers
+     */
     public void setPanel(ArrayList<BidOfferModel> bidOffers) {
         panel.removeAll();
         scrollPane.getViewport().setView(panel);

@@ -1,9 +1,6 @@
 package com.matchingSystem.LoginSystem;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.matchingSystem.LoginSystem.Student;
-import com.matchingSystem.LoginSystem.Tutor;
-import com.matchingSystem.LoginSystem.User;
 
 import java.util.Map;
 

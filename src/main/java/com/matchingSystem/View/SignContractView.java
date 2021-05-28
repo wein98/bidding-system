@@ -3,7 +3,6 @@ package com.matchingSystem.View;
 import com.matchingSystem.ContractDev.Contract;
 
 import javax.swing.*;
-import java.text.SimpleDateFormat;
 
 public class SignContractView extends JFrame {
     private JButton signBtn;

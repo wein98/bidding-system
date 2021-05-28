@@ -2,7 +2,6 @@ package com.matchingSystem.ContractDev;
 
 import com.matchingSystem.Constant;
 import com.matchingSystem.LoginSystem.UserCookie;
-import com.matchingSystem.Utility;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,10 +9,8 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Iterator;
-import java.util.concurrent.TimeUnit;
 
 public class ContractExpiryIterator implements Iterator {
     private int currentPosition = 0;
@@ -21,12 +18,19 @@ public class ContractExpiryIterator implements Iterator {
 
     public ContractExpiryIterator() {}
 
+    /**
+     * Load the active bids
+     */
     private void lazyLoad() {
         if (contracts.size() == 0){
             contracts = UserCookie.getUser().getContracts();
         }
     }
 
+    /**
+     * Function required for Iterator pattern
+     * @return True if there is still element in the collection, otherwise False
+     */
     @Override
     public boolean hasNext() {
         lazyLoad();
@@ -38,6 +42,10 @@ public class ContractExpiryIterator implements Iterator {
         return currentPosition == contracts.size()-1;
     }
 
+    /**
+     * Function required for Iterator pattern (for iterating in the collection)
+     * @return object for displaying in panel
+     */
     public Object next() {
         try {
             if (!hasNext()) {
@@ -54,11 +62,8 @@ public class ContractExpiryIterator implements Iterator {
             LocalDateTime oneMonth = LocalDate.now().plusMonths(1).atTime(0, 0);
             Timestamp oneMonthAhead = Timestamp.valueOf(oneMonth);
             Timestamp expiry = c.getExpiryTimestamp();
-            // Set both times to 0:00:00
-            long time1 = oneMonthAhead.getTime() % Constant.MILLIS_PER_DAY;
-            long time2 = expiry.getTime() % Constant.MILLIS_PER_DAY;
-            long days = TimeUnit.DAYS.convert(time1 - time2, TimeUnit.MILLISECONDS);
-            System.out.println(days);
+
+            int isExpiringInOneMonth = oneMonthAhead.compareTo(expiry);
 
             JPanel panel = new JPanel();
             panel.getInsets().set(20, 20, 20, 20);
@@ -66,7 +71,7 @@ public class ContractExpiryIterator implements Iterator {
             GridBagConstraints gbc = new GridBagConstraints();
 
             // contract is not expired and is expiring in one month or less
-            if (days < 1) {
+            if (isExpiringInOneMonth >= 0) {
 
                 JTable table = getTable(c);
                 // resize table columns

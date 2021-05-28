@@ -51,8 +51,6 @@ public class OpenBid extends Bid {
         Long interval = now.getTime() - creation.getTime();
         long minutes = 30 - ((interval / 1000) / 60);
         return minutes + " minutes";
-
-        // TODO: do something if duration is negative
     }
 
     /**

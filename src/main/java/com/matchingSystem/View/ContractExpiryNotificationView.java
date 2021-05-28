@@ -1,7 +1,5 @@
 package com.matchingSystem.View;
 
-import com.matchingSystem.Constant;
-import com.matchingSystem.ContractDev.Contract;
 import com.matchingSystem.ContractDev.ContractExpiryIterator;
 
 import javax.swing.*;
@@ -36,11 +34,10 @@ public class ContractExpiryNotificationView extends javax.swing.JFrame{
             int count = 0;
             while (iterator.hasNext()){
 
-                if (iterator.isLast() && count == 0){
+                JPanel itemPanel = (JPanel) iterator.next();
+                if (iterator.isLast() && count == 0 && itemPanel== null){
                     this.message.setText("No contract is expiring in a month.");
                 }
-
-                JPanel itemPanel = (JPanel) iterator.next();
 
                 if(itemPanel!= null){
                     GridBagConstraints gbc = new GridBagConstraints();

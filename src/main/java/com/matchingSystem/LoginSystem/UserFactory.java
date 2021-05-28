@@ -7,7 +7,6 @@ import com.matchingSystem.Constant;
 public class UserFactory {
     public User createUser(String userInfo, int userType) {
         ObjectMapper objMapper = new ObjectMapper();
-//        JSONObject jsonObject = new JSONObject(userInfo);
 
         if (userType == Constant.IS_STUDENT) {
             try {

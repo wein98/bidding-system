@@ -17,7 +17,6 @@ public class BiddingCreationView extends javax.swing.JFrame implements Observer 
     private JComboBox subjects;
     private JTextField inputRate;
     private JRadioButton openBiddingRadioButton;
-//    private JComboBox qualifications;
     private JRadioButton closeBiddingRadioButton;
     private JButton startBiddingButton;
     private JComboBox timeVal;
@@ -45,10 +44,6 @@ public class BiddingCreationView extends javax.swing.JFrame implements Observer 
     public void update(Observable o, Object arg) {
         if(o instanceof BiddingCreationModel) {
             System.out.println("---> Updating all fields in form");
-//            ArrayList<String> qualificationTitles = extractQualificationNames(model.getQualifications());
-//            for (String item: qualificationTitles) {
-//                this.qualifications.addItem(item);
-//            }
             ArrayList<String> subjectNames = extractSubjectNames(model.getSubjects());
             for (String item: subjectNames) {
                 this.subjects.addItem(item);
@@ -97,14 +92,11 @@ public class BiddingCreationView extends javax.swing.JFrame implements Observer 
         return startBiddingButton;
     }
 
-    private ArrayList<String> extractQualificationNames(ArrayList<Qualification> qualifications){
-        ArrayList<String> qualificationNames = new ArrayList<>();
-        for(Qualification qualification: qualifications){
-            qualificationNames.add(qualification.getTitle());
-        }
-        return qualificationNames;
-    }
-
+    /**
+     * extract the subject names from an arraylist of subjects
+     * @param subjects arraylist of Subject
+     * @return arraylist of name representation of the Subjects
+     */
     private ArrayList<String> extractSubjectNames(ArrayList<Subject> subjects){
         ArrayList<String> subjectNames = new ArrayList<>();
         for(Subject subject: subjects){

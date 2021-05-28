@@ -30,6 +30,10 @@ public class OpenCloseBidController implements Observer, ActionListener {
         updateBidOffers(view.getBidViewType());
     }
 
+    /**
+     * Get the latest bid offers
+     * @param bidViewType type of bid
+     */
     private void updateBidOffers(int bidViewType) {
         model.setBiddings(bidViewType);
     }
