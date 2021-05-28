@@ -31,9 +31,7 @@ public class ContractCreationController implements ActionListener {
         String month = Utility.contractDuration[index];
         //create contract
         model.setContractDuration(month);
-        model.initiateContract(details.getString("studentId"), details.getString("tutorId"), details.getString(
-                "subjectId"), details.getJSONObject("payInfo"), details.getJSONObject("lessInfo"),
-                details.getJSONObject("addInfo"));
+        model.initiateContract(details);
         view.dispose();
     }
 

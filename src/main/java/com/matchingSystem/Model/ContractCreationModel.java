@@ -16,12 +16,13 @@ public class ContractCreationModel {
         this.contractDuration = month;
     }
 
-    public void initiateContract(String studentId, String tutorId, String subjectId, JSONObject paymentInfo,
-                                 JSONObject lessonInfo, JSONObject additionalInfo) {
+    public void initiateContract(JSONObject details) {
         int months = Integer.parseInt(this.contractDuration);
         LocalDateTime expiryDuration = LocalDate.now().plusMonths(months).atTime(0, 0);
         Timestamp expiry = Timestamp.valueOf(expiryDuration);
-        additionalInfo.put("duration", this.contractDuration);
-        APIFacade.createContract(studentId, tutorId, subjectId, expiry, paymentInfo, lessonInfo, additionalInfo);
+        JSONObject addInfo = details.getJSONObject("addInfo");
+        addInfo.put("duration", this.contractDuration);
+        APIFacade.createContract(details.getString("studentId"), details.getString("tutorId"), details.getString("subjectId"), expiry, details.getJSONObject("payInfo"),
+                details.getJSONObject("lessInfo"), addInfo);
     }
 }
