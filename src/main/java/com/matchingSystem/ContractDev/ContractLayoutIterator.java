@@ -90,6 +90,10 @@ public class ContractLayoutIterator implements Iterator {
         return panel;
     }
 
+    public void refreshCurrentPosition() {
+        currentPosition = 0;
+    }
+
     public boolean isEmpty() {
         lazyLoad();
         return contracts.isEmpty();
