@@ -1,8 +1,6 @@
 package com.matchingSystem.Model;
 
 import com.matchingSystem.API.APIFacade;
-import com.matchingSystem.BiddingSystem.Bid;
-import com.matchingSystem.ContractDev.Contract;
 import org.json.JSONObject;
 
 import java.sql.Timestamp;
@@ -16,6 +14,10 @@ public class ContractCreationModel {
         this.contractDuration = month;
     }
 
+    /**
+     * initiate a new contract
+     * @param details contract details
+     */
     public void initiateContract(JSONObject details) {
         int months = Integer.parseInt(this.contractDuration);
         LocalDateTime expiryDuration = LocalDate.now().plusMonths(months).atTime(0, 0);

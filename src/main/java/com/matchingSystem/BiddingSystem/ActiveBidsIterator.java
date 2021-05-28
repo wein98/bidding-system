@@ -32,6 +32,9 @@ public class ActiveBidsIterator implements Iterator {
         this.bidViewType = bidViewType;
     }
 
+    /**
+     * Load the active bids
+     */
     private void lazyload() {
         if (bids.size() == 0) {
             if (bidViewType == Constant.TUTOR_OFFER_BIDS_VIEW) {
@@ -62,12 +65,20 @@ public class ActiveBidsIterator implements Iterator {
         }
     }
 
+    /**
+     * Function required for Iterator pattern
+     * @return True if there is still element in the collection, otherwise False
+     */
     @Override
     public boolean hasNext() {
         lazyload();
         return currentPosition < bids.size();
     }
 
+    /**
+     * Function required for Iterator pattern (for iterating in the collection)
+     * @return object for displaying in panel
+     */
     @Override
     public Object next() {
         if (!hasNext()) {
@@ -108,6 +119,13 @@ public class ActiveBidsIterator implements Iterator {
         return bids.isEmpty();
     }
 
+    /**
+     * Add representation for OpenBid element into the created JPanel
+     * @param b the bid
+     * @param c grid bag constraints
+     * @param panel the panel to add the created JPanel component
+     * @return the updated JPanel
+     */
     private JPanel getOpenBidLayout(Bid b, GridBagConstraints c, JPanel panel) {
         // Buy out button
         c.gridheight = 1;
@@ -131,7 +149,13 @@ public class ActiveBidsIterator implements Iterator {
 
         return panel;
     }
-
+    /**
+     * Add representation for CloseBid element into the created JPanel
+     * @param b the bid
+     * @param c grid bag constraints
+     * @param panel the panel to add the created JPanel component
+     * @return the updated JPanel
+     */
     private JPanel getCloseBidLayout(Bid b, GridBagConstraints c, JPanel panel) {
         // Message button
         c.gridheight = 1;
@@ -143,6 +167,11 @@ public class ActiveBidsIterator implements Iterator {
         return panel;
     }
 
+    /**
+     * Add representation for OpenBid element into a JTable
+     * @param b the bid
+     * @return the created JTable
+     */
     private JTable getActiveBidsTable(Bid b) {
         String[][] rec = null;
         if (b instanceof OpenBid) {
@@ -222,10 +251,7 @@ public class ActiveBidsIterator implements Iterator {
                 ContractCreationModel contractModel = new ContractCreationModel();
                 ContractCreationView contractView = new ContractCreationView(contractModel);
                 new ContractCreationController(contractView,contractModel,details);
-                // remove the bid after trigger buy out
-                //                            panel1.remove(btn1);
-                //                            panel1.remove(btn2);
-                //                            panel1.remove(table);
+
                 System.out.println("BUY OUT: " + b.getInitiator().toString());
             }
         });
@@ -254,6 +280,11 @@ public class ActiveBidsIterator implements Iterator {
         return btn;
     }
 
+    /**
+     * Function to create a subscribe button (OpenBid)
+     * @param b the bid linked
+     * @return the created JButton
+     */
     private JButton getSubscribeBidBtn(Bid b) {
         JButton btn = new JButton("Subscribe");
 
@@ -261,7 +292,6 @@ public class ActiveBidsIterator implements Iterator {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Subsribed to: " + b.getInitiator().toString());
-                // TODO: observe this bid
                 b.addObserver((Tutor)UserCookie.getUser());
                 ((OpenBid) b).tutorSubscribeBid(UserCookie.getUser().getId());
 
@@ -272,13 +302,17 @@ public class ActiveBidsIterator implements Iterator {
         return btn;
     }
 
+    /**
+     * Function to create a Message bid button (CloseBid)
+     * @param b the bid
+     * @return the created JButton
+     */
     private JButton getMessageBidBtn(Bid b) {
         JButton btn = new JButton("Message bid");
 
         btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO: opens Reply Bid window
                 BidOfferModel bidOfferModel = new BidOfferModel(b);
                 BidOfferView bidOfferView = new BidOfferView(bidOfferModel, "close");
                 BidOfferController bidOfferController = new BidOfferController(bidOfferView, bidOfferModel);

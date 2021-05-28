@@ -36,10 +36,6 @@ public abstract class BiddingsView extends JFrame{
         return BidDurationText;
     }
 
-    public JPanel getOpenBidDetailsPanel() {
-        return OpenBidDetailsPanel;
-    }
-
     public JButton getOfferButton() {
         return offerButton;
     }

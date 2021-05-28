@@ -33,13 +33,16 @@ public class BidOfferController implements Observer {
         });
     }
 
+    /**
+     * Update the bid with the offer send by a tutor
+     */
     public void sendOffer(){
         JSONObject jsonObject = view.getFields();
         model.sendOffer(jsonObject);
     }
     /**
      * Get view linked to this controller
-     * @return
+     * @return the view object
      */
     public BidOfferView getView() {
         return this.view;

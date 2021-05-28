@@ -71,7 +71,6 @@ public class BidOfferModel extends Observable {
         jsonObj.put("offerTutorId", this.offerTutorId);
         jsonObj.put("offerRate", this.offerRate);
         jsonObj.put("numOfLesson", this.numOfLesson);
-//        jsonObj.put("freeLesson", this.freeLesson);
         return jsonObj;
     }
 
@@ -88,9 +87,6 @@ public class BidOfferModel extends Observable {
             ((OpenBid) this.bid).tutorOfferBid(jsonObj);
 
         } else if(jsonObj.getString("type").equals("close")) {
-            /*
-               TODO: make sure jsonObj contains message property! Refer tutorObj.sendMessage to get the message property's key
-             */
             jsonObj.remove("type");
             ((CloseBid) this.bid).tutorOfferBid(jsonObj);
         }

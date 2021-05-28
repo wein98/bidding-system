@@ -1,7 +1,6 @@
 package com.matchingSystem.View;
 
 import com.matchingSystem.Constant;
-import com.matchingSystem.ContractDev.Contract;
 import com.matchingSystem.Controller.CloseBidMsgController;
 import com.matchingSystem.Controller.ContractCreationController;
 import com.matchingSystem.LoginSystem.UserCookie;
@@ -50,13 +49,16 @@ public class OpenCloseBidView extends BiddingsView {
         pack();
     }
 
+    /**
+     * add in components
+     * @param bidOffers
+     */
     public void setPanel(ArrayList<BidOfferModel> bidOffers) {
         panel.removeAll();
         scrollPane.getViewport().setView(panel);
 
         if (bidOffers.size() != 0) {
             for (BidOfferModel b: bidOffers) {
-//        for (int i=0; i<4; i++) {
                 JPanel panel1 = new JPanel();
                 panel1.getInsets().set(20, 20, 20, 20);
                 panel1.setLayout(new GridBagLayout());
@@ -170,7 +172,6 @@ public class OpenCloseBidView extends BiddingsView {
                     {"Day & Time", b.getDayTime()},
                     {"Duration (hours per session)", b.getDuration()},
                     {"Rate (per hour)", b.getOfferRate()},
-//                    {"Free lesson?",}
                     {"Tutor message", b.getMsg().getContent()},
                     {"Your reply", b.getMsg().getStudentReply()}
             };

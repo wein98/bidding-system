@@ -51,8 +51,6 @@ public class OpenBid extends Bid {
         Long interval = now.getTime() - creation.getTime();
         long minutes = 30 - ((interval / 1000) / 60);
         return minutes + " minutes";
-
-        // TODO: do something if duration is negative
     }
 
     /**
@@ -88,20 +86,6 @@ public class OpenBid extends Bid {
         additionalInfo.put("bidOffers",offersArr);
         // call api to update details
         APIFacade.updateBidById(getId(), getAdditionalInfo());
-        // create the contract
-//        int months = Integer.parseInt(contractDuration);
-//        LocalDateTime expiryDuration = LocalDate.now().plusMonths(months).atTime(0, 0);
-//        Timestamp expiry = Timestamp.valueOf(expiryDuration);
-//        JSONObject lessonInfo = new JSONObject();
-//        lessonInfo.put("time",additionalInfo.getString("time"));
-//        lessonInfo.put("dayNight",additionalInfo.getString("dayNight"));
-//        lessonInfo.put("prefDay",additionalInfo.getString("prefDay"));
-//        lessonInfo.put("numOfLesson",getNoLessons());
-//        lessonInfo.put("duration",getDuration());
-//        JSONObject additionalInfo = new JSONObject();
-//        additionalInfo.put("rate",getRate());
-//        APIFacade.createContract(this.initiator.getId(), tutorId, this.getSubject().getId()
-//                ,expiry,new JSONObject(),lessonInfo,additionalInfo);
 
         close();
         System.out.println("Buy out successful.");

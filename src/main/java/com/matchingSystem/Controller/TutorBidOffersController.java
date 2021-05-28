@@ -25,6 +25,9 @@ public class TutorBidOffersController implements Observer, ActionListener {
         updateBids();
     }
 
+    /**
+     * get the latest bids
+     */
     private void updateBids() {
         model.setBiddings(view.getBidViewType());
     }
