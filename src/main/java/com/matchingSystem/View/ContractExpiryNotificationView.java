@@ -1,7 +1,5 @@
 package com.matchingSystem.View;
 
-import com.matchingSystem.Constant;
-import com.matchingSystem.ContractDev.Contract;
 import com.matchingSystem.ContractDev.ContractExpiryIterator;
 
 import javax.swing.*;

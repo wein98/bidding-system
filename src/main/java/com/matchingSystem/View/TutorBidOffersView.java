@@ -32,6 +32,10 @@ public class TutorBidOffersView extends BiddingsView {
         pack();
     }
 
+    /**
+     * add in components
+     * @param iterator
+     */
     public void setPanel(ActiveBidsIterator iterator) {
         panel.removeAll();
         scrollPane.getViewport().setView(panel);

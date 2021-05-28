@@ -37,6 +37,10 @@ public class LoginController {
         }
     }
 
+    /**
+     * Opens the user type view to enable the user to select the account type to access
+     * @param jwtCode jwt code obtained
+     */
     private void loginSuccess(String jwtCode) {
         // Create user cookie
         UserCookie userCookie = UserCookie.getInstance();

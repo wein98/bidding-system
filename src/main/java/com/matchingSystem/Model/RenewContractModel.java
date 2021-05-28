@@ -30,6 +30,9 @@ public class RenewContractModel extends Observable {
         }
     }
 
+    /**
+     * load previous contracts
+     */
     public void loadPreviousContracts() {
         contracts = UserCookie.getUser().getContracts();
 
@@ -37,6 +40,9 @@ public class RenewContractModel extends Observable {
         notifyObservers();
     }
 
+    /**
+     * load matching tutors
+     */
     public void loadMatchingTutors() {
         tutors = contract.getTutors();
 
@@ -71,6 +77,10 @@ public class RenewContractModel extends Observable {
         return contract.getSubject();
     }
 
+    /**
+     * create the renewed contract
+     * @param details
+     */
     public void renewContract(JSONObject details) {
         int months = Integer.parseInt(details.getString("contractDuration"));
         LocalDateTime expiryDuration = LocalDate.now().plusMonths(months).atTime(0, 0);

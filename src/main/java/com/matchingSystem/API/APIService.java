@@ -20,6 +20,11 @@ public class APIService {
     public static final int PUT = 2;
     public static final int POST = 3;
 
+    /**
+     * Function used for GET request call
+     * @param route url route
+     * @return response
+     */
     public static String GETRequest(String route) {
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
@@ -61,9 +66,9 @@ public class APIService {
 
     /**
      * Function used for POST, PUT and PATCH request
-     * @param url
-     * @param params
-     * @return
+     * @param url the url route
+     * @param params request parameters
+     * @return response
      */
     public static String UpdateRequest(String url, StringBuilder params, int requestType) {
         String result = null;
@@ -100,6 +105,11 @@ public class APIService {
         return result;
     }
 
+    /**
+     * Function used for DELETE request
+     * @param url the route url
+     * @return return status code
+     */
     public static int DELETERequest(String url){
         try {
             HttpDelete deleteRequest = new HttpDelete(HOST + url);

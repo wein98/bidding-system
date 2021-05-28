@@ -107,39 +107,6 @@ public class CloseBid extends Bid {
         APIFacade.updateBidById(getId(), getAdditionalInfo());
     }
 
-    public void updateTutorMsg(String content){
-        this.tutorMessage.tutorUpdateMessageContent(content);
-    }
-
-    public void updateStudentMsg(String content){
-        this.studentMessage.tutorUpdateMessageContent(content);
-    }
-
-    public void setTutorMessage(Message message){
-        this.tutorMessage = message;
-    }
-
-    public void setStudentMessage(Message message) {
-        this.studentMessage = message;
-    }
-
-    /**
-     * Retrieve the offer attached in a conversation
-     * @param message the message referred to
-     * @return the offer attached to this message
-     */
-    public BidOfferModel getOfferFromMessage(Message message){
-        return message.getLinkedOffer();
-    }
-
-    public Message getTutorMessage(){
-        return this.tutorMessage;
-    }
-
-    public Message getStudentMessage() {
-        return studentMessage;
-    }
-
     @Override
     public String toString() {
         return "CloseBid{" +

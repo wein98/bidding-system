@@ -38,6 +38,7 @@ public class DashboardModel extends Observable {
         notifyObservers();
     }
 
+
     public void checkPostedBid() {
         ((Student) user).setInitiatedBid();
         setChanged();

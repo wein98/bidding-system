@@ -140,10 +140,21 @@ public class APIFacade {
         return retVal;
     }
 
+    /**
+     * User login
+     * @param username user input username
+     * @param password user input password
+     * @return the response
+     */
     public static JSONObject userLogin(String username, String password) {
         return userAPI.userLogin(username, password);
     }
 
+    /**
+     * Get the user's competency by user id
+     * @param id the user's id
+     * @return arraylist of compentecy
+     */
     public static ArrayList<Competency> getUserCompetenciesById(String id) {
         JSONObject response = (JSONObject) userAPI.getById(id, Constant.COMPETENCIES_SUBJECT);
         JSONArray arr = response.getJSONArray("competencies");
@@ -164,6 +175,11 @@ public class APIFacade {
         return retVal;
     }
 
+    /**
+     * Get the user's qualification by user id
+     * @param id the user id
+     * @return arraylist of qualification
+     */
     public static ArrayList<Qualification> getUserQualificationsById(String id) {
         JSONObject response = (JSONObject) userAPI.getById(id, Constant.QUALIFICATIONS);
         JSONArray arr = response.getJSONArray("qualifications");
@@ -185,6 +201,11 @@ public class APIFacade {
         return retVal;
     }
 
+    /**
+     * Get the current active bid initiated by this user id
+     * @param id the user id
+     * @return the bid
+     */
     public static Bid getUserInitiatedBidById(String id) {
         JSONObject response = (JSONObject) userAPI.getById(id, Constant.INITIATEDBIDS);
         JSONArray arr = response.getJSONArray("initiatedBids");
@@ -212,10 +233,23 @@ public class APIFacade {
         return (ArrayList<Bid>) bidAPI.getAll(Constant.NONE);
     }
 
+    /**
+     * Get a bid by bid id
+     * @param id the bid id
+     * @return the bid
+     */
     public static Bid getBidById(String id) {
         return (Bid) bidAPI.getById(id, Constant.NONE);
     }
 
+    /**
+     * Call the api to create a new Bid
+     * @param type bid type
+     * @param id student id
+     * @param subjectId subject id
+     * @param addtionalInfo addtional info regarding the bid
+     * @return the created bid
+     */
     public static Bid createBid(String type, String id, String subjectId, JSONObject addtionalInfo) {
         return (Bid) bidAPI.create(bidAPI.parseToJsonForCreate(
                 type,
@@ -225,19 +259,42 @@ public class APIFacade {
         ));
     }
 
+    /**
+     * Update a bid by id
+     * @param id the bid id
+     * @param requestBody items to update
+     */
     public static void updateBidById(String id, JSONObject requestBody) {
         bidAPI.updatePartialById(id, bidAPI.parseToJsonForPartialUpdate(requestBody));
     }
 
+    /**
+     * Call API to close down a bid
+     * @param id id of bid to close down
+     * @param closeDownTime the timestamp of operation
+     */
     public static void closeDownBidById(String id, Timestamp closeDownTime) {
         bidAPI.closeDownBidById(id, closeDownTime);
     }
 
     // Message APIs
+
+    /**
+     * Get a message by id
+     * @param id the message id
+     * @return the message
+     */
     public static Message getMessageById(String id) {
         return (Message) messageAPI.getById(id, Constant.NONE);
     }
 
+    /**
+     * Call API to create a new message
+     * @param bidId the linked bid id
+     * @param posterId the poster id
+     * @param content message content
+     * @return the message
+     */
     public static Message createMessage(String bidId, String posterId, String content) {
         return (Message) messageAPI.create(messageAPI.parseToJsonForCreate(
                 bidId,
@@ -246,17 +303,41 @@ public class APIFacade {
         ));
     }
 
+    /**
+     * Update an existing message by id
+     * @param id the message id
+     * @param content the new content
+     * @param requestBody request body
+     */
     public static void updateMessageById(String id, String content, JSONObject requestBody) {
         messageAPI.updatePartialById(id, messageAPI.parseToJsonForPartialUpdate(content, requestBody));
     }
 
     // Contract APIs
     // only Tutor need to call this
+
+    /**
+     * API called when tutor sign a contract
+     * @param id the contract id
+     * @return True, if successfully signed, otherwise False
+     */
     public static boolean signContractById(String id) {
         return contractAPI.sign(id);
     }
 
     // only a Student can initiate a contract
+
+    /**
+     * Call the API to create a new contract initiated by a student
+     * @param studentId the student id
+     * @param tutorId tutor id
+     * @param subjectId subject id
+     * @param expiry contract expiry
+     * @param paymentInfo payment information
+     * @param lessonInfo lesson information
+     * @param additionalInfo additional information
+     * @return the created contract
+     */
     public static Contract createContract(String studentId, String tutorId, String subjectId, Timestamp expiry,
                                           JSONObject paymentInfo,
                                           JSONObject lessonInfo, JSONObject additionalInfo){
@@ -264,6 +345,11 @@ public class APIFacade {
                 subjectId, expiry, paymentInfo, lessonInfo, additionalInfo));
     }
 
+    /**
+     * Get the contracts of a specific user by user id
+     * @param userId user id
+     * @return arraylist of contracts
+     */
     public static ArrayList<Contract> getContractsByUserId(String userId) {
         ArrayList<Contract> contracts = (ArrayList<Contract>) contractAPI.getAll(Constant.NONE);
         ArrayList<Contract> retVal = new ArrayList<>();

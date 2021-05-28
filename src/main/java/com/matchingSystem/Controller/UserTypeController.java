@@ -37,6 +37,9 @@ public class UserTypeController {
         });
     }
 
+    /**
+     * Display the dashboard to the user
+     */
     private void userTypeSelected() {
         // Create dashboard model
         DashboardModel dashboardModel = new DashboardModel();

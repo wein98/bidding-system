@@ -30,10 +30,16 @@ public class RenewContractController implements Observer, ActionListener {
         }
     }
 
+    /**
+     * populate previous contracts
+     */
     private void populatePreviousContracts() {
         model.loadPreviousContracts();
     }
 
+    /**
+     * populate matching tutor for renewing this contract with
+     */
     private void populateMatchingTutors() {
         model.loadMatchingTutors();
     }

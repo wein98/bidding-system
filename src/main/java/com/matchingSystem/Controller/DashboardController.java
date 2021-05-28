@@ -37,10 +37,16 @@ public class DashboardController implements Observer, ActionListener {
         ContractExpiryNotificationView view =  new ContractExpiryNotificationView(iterator);
     }
 
+    /**
+     * Update the user's profile on dashboard
+     */
     public void updateProfile() {
         model.setProfile();
     }
 
+    /**
+     * Update the contract shown on dashboard
+     */
     public void updateContracts() {
         model.updateContractList();
     }
@@ -93,6 +99,11 @@ public class DashboardController implements Observer, ActionListener {
         }
     }
 
+    /**
+     * Required function for Observer pattern
+     * @param o the observable
+     * @param arg args
+     */
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof DashboardModel) {
