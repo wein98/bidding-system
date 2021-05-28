@@ -75,6 +75,7 @@ public class DashboardModel extends Observable {
     }
 
     public ContractLayoutIterator getIterator() {
+        iterator.refreshCurrentPosition();
         return iterator;
     }
 }
