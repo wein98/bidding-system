@@ -1,10 +1,7 @@
 package com.matchingSystem.Model;
 
 import com.matchingSystem.API.APIFacade;
-import com.matchingSystem.BiddingSystem.Bid;
-import com.matchingSystem.BiddingSystem.CloseBid;
-import com.matchingSystem.BiddingSystem.Message;
-import com.matchingSystem.BiddingSystem.OpenBid;
+import com.matchingSystem.BiddingSystem.*;
 import com.matchingSystem.LoginSystem.Tutor;
 import com.matchingSystem.LoginSystem.UserCookie;
 import org.json.JSONObject;
@@ -13,35 +10,31 @@ import java.util.Observable;
 
 public class BidOfferModel extends Observable {
     private String bidId;
-    private boolean freeLesson;
 
     private Bid bid;
     private String tutorName;
     private String offerTutorId;
     private int tutorCompLvl;
-    private String numOfLesson;
-    private String day;
-    private String time;
-    private String dayNight;
-    private String duration;
-    private String offerRate;
     private String msgId;
     private JSONObject bidOfferObj;
+    private LessonInfo lessonInfo;
 
     public BidOfferModel(Bid b, JSONObject o){
         this.bid = b;
         this.bidId = b.getId();
 
+        lessonInfo = new LessonInfo(
+                o.getString("duration"),
+                o.getString("numOfLesson"),
+                o.getString("dayNight"),
+                o.getString("rate"),
+                o.getString("prefDay"),
+                o.getString("time")
+        );
         // unpack JSONObject o
-        this.duration = o.getString("duration");
         this.tutorCompLvl = o.getInt("tutorCompLvl");
         this.offerTutorId = o.getString("offerTutorId");
         this.tutorName = o.getString("tutorName");
-        this.numOfLesson = o.getString("numOfLesson");
-        this.day = o.getString("prefDay");
-        this.time = o.getString("time");
-        this.dayNight = o.getString("dayNight");
-        this.offerRate = o.getString("rate");
 
         if (this.bid.getType().equals("close")) {
             this.msgId = o.getString("msgId");
@@ -59,20 +52,10 @@ public class BidOfferModel extends Observable {
         return offerTutorId;
     }
 
-    public void updateDDL(){
+    public void updateDDL() {
         // notify observers
         setChanged();
         notifyObservers();
-    };
-
-    public JSONObject toJSONObj() {
-        JSONObject jsonObj = new JSONObject();
-        jsonObj.put("bidId", this.bidId);
-        jsonObj.put("offerTutorId", this.offerTutorId);
-        jsonObj.put("offerRate", this.offerRate);
-        jsonObj.put("numOfLesson", this.numOfLesson);
-//        jsonObj.put("freeLesson", this.freeLesson);
-        return jsonObj;
     }
 
     public void sendOffer(JSONObject jsonObj) {
@@ -114,33 +97,6 @@ public class BidOfferModel extends Observable {
         return tutorCompLvl;
     }
 
-    public String getNumOfLesson() {
-        return numOfLesson;
-    }
-
-    public String getDayTime() {
-        return this.day + "," + this.time + this.dayNight;
-    }
-
-    public String getDuration() {
-        return duration;
-    }
-
-    public String getOfferRate() {
-        return offerRate;
-    }
-
-    public String getDay() {
-        return day;
-    }
-
-    public String getTime() {
-        return this.time;
-    }
-
-    public String getDayNight() {
-        return this.dayNight;
-    }
     public String getMsgId() {
         return msgId;
     }
@@ -153,7 +109,7 @@ public class BidOfferModel extends Observable {
         return bidOfferObj;
     }
 
-    public String getSubjectName(){
-        return this.bid.getSubject().getName();
+    public LessonInfo getLessonInfo() {
+        return lessonInfo;
     }
 }

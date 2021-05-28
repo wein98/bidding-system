@@ -1,5 +1,6 @@
 package com.matchingSystem.View;
 
+import com.matchingSystem.BiddingSystem.LessonInfo;
 import com.matchingSystem.Model.BiddingCreationModel;
 import com.matchingSystem.LoginSystem.Qualification;
 import com.matchingSystem.BiddingSystem.Subject;
@@ -76,25 +77,20 @@ public class BiddingCreationView extends javax.swing.JFrame implements Observer 
      * @return the json object including all field values
      */
     public JSONObject getFields(){
-        JSONObject jsonObj = new JSONObject();
-        jsonObj.put("subjectIndex", this.subjects.getSelectedIndex());
-//        jsonObj.put("qualification", (String)this.qualifications.getSelectedItem());
+        LessonInfo lessonInfo = new LessonInfo(
+                (String)duration.getSelectedItem(),
+                (String)numOfLesson.getSelectedItem(),
+                (String)dayNight.getSelectedItem(),
+                inputRate.getText(),
+                (String)days.getSelectedItem(),
+                (String)timeVal.getSelectedItem()
+        );
+
         if(openBiddingRadioButton.isSelected()){
-            jsonObj.put("type","open");
+            return lessonInfo.getBiddingCreationJSONObj(subjects.getSelectedIndex(), "open");
         }else{
-            jsonObj.put("type","close");
+            return lessonInfo.getBiddingCreationJSONObj(subjects.getSelectedIndex(), "close");
         }
-
-        JSONObject additionalInfo = new JSONObject();
-        additionalInfo.put("time",(String)this.timeVal.getSelectedItem());
-        additionalInfo.put("dayNight",(String)this.dayNight.getSelectedItem());
-        additionalInfo.put("prefDay",(String)this.days.getSelectedItem());
-        additionalInfo.put("numOfLesson",(String)this.numOfLesson.getSelectedItem());
-        additionalInfo.put("rate",(String)this.inputRate.getText());
-        additionalInfo.put("duration", (String)this.duration.getSelectedItem());
-
-        jsonObj.put("additionalInfo", additionalInfo);
-        return jsonObj;
     }
 
     public JButton getBtnInitiateBiddingSubmit() {

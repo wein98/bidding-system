@@ -149,9 +149,9 @@ public class ActiveBidsIterator implements Iterator {
             rec = new String[][]{{"Bid Type", b.getType()},
                     {"Student name", b.getInitiator().getName()},
                     {"Subject", b.getSubject().getName()},
-                    {"No. of sessions", b.getNoLessons()},
-                    {"Day & Time", b.getDayTime()},
-                    {"Rate (per hour)", b.getRate()},};
+                    {"No. of sessions", b.getLessonInfo().getNumOfLesson()},
+                    {"Day & Time", b.getLessonInfo().getDayTime()},
+                    {"Rate (per hour)", b.getLessonInfo().getRate()}};
         } else {
             BidOfferModel bidoffer = null;
             for (BidOfferModel offer : b.getBidOffers()) {
@@ -163,18 +163,18 @@ public class ActiveBidsIterator implements Iterator {
                 rec = new String[][]{{"Bid Type", b.getType()},
                         {"Student name", b.getInitiator().getName()},
                         {"Subject", b.getSubject().getName()},
-                        {"No. of sessions", b.getNoLessons()},
-                        {"Day & Time", b.getDayTime()},
-                        {"Rate (per hour)", b.getRate()},
+                        {"No. of sessions", b.getLessonInfo().getNumOfLesson()},
+                        {"Day & Time", b.getLessonInfo().getDayTime()},
+                        {"Rate (per hour)", b.getLessonInfo().getRate()},
                         {"Tutor message", ""},
                         {"Student's reply:", ""}};
             } else {
                 rec = new String[][]{{"Bid Type", b.getType()},
                         {"Student name", b.getInitiator().getName()},
                         {"Subject", b.getSubject().getName()},
-                        {"No. of sessions", bidoffer.getNumOfLesson()},
-                        {"Day & Time", bidoffer.getDayTime()},
-                        {"Rate (per hour)", bidoffer.getOfferRate()},
+                        {"No. of sessions", bidoffer.getLessonInfo().getNumOfLesson()},
+                        {"Day & Time", bidoffer.getLessonInfo().getDayTime()},
+                        {"Rate (per hour)", bidoffer.getLessonInfo().getRate()},
                         {"Tutor message", bidoffer.getMsg().getContent()},
                         {"Student's reply:", bidoffer.getMsg().getStudentReply()}};
             }
@@ -198,22 +198,16 @@ public class ActiveBidsIterator implements Iterator {
                 System.out.println("Pressed");
 
                 ((OpenBid) b).buyOut(UserCookie.getUser().getId());
-                // TODO: let the tutor select contract duration
+
+                // get Contract's info to json
                 JSONObject details = new JSONObject();
                 details.put("studentId",b.getInitiator());
                 details.put("tutorId",UserCookie.getUser().getId());
                 details.put("subjectId",b.getSubject().getId());
-
-                JSONObject lessonInfo = new JSONObject();
-                lessonInfo.put("time",b.getAdditionalInfo().getString("time"));
-                lessonInfo.put("dayNight",b.getAdditionalInfo().getString("dayNight"));
-                lessonInfo.put("prefDay",b.getAdditionalInfo().getString("prefDay"));
-                lessonInfo.put("numOfLesson",b.getNoLessons());
-                lessonInfo.put("duration",b.getDuration());
-                details.put("lessInfo",lessonInfo);
+                details.put("lessInfo",b.getLessonInfo().getContractLessonInfo());
 
                 JSONObject addInfo = new JSONObject();
-                addInfo.put("rate",b.getRate());
+                addInfo.put("rate",b.getLessonInfo().getRate());
                 details.put("addInfo",addInfo);
 
                 JSONObject payInfo = new JSONObject();
@@ -222,10 +216,7 @@ public class ActiveBidsIterator implements Iterator {
                 ContractCreationModel contractModel = new ContractCreationModel();
                 ContractCreationView contractView = new ContractCreationView(contractModel);
                 new ContractCreationController(contractView,contractModel,details);
-                // remove the bid after trigger buy out
-                //                            panel1.remove(btn1);
-                //                            panel1.remove(btn2);
-                //                            panel1.remove(table);
+
                 System.out.println("BUY OUT: " + b.getInitiator().toString());
             }
         });
@@ -278,10 +269,10 @@ public class ActiveBidsIterator implements Iterator {
         btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO: opens Reply Bid window
+                // opens Reply Bid window
                 BidOfferModel bidOfferModel = new BidOfferModel(b);
                 BidOfferView bidOfferView = new BidOfferView(bidOfferModel, "close");
-                BidOfferController bidOfferController = new BidOfferController(bidOfferView, bidOfferModel);
+                new BidOfferController(bidOfferView, bidOfferModel);
 
             }
         });

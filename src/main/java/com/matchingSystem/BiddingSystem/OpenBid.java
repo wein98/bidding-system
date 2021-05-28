@@ -69,39 +69,16 @@ public class OpenBid extends Bid {
                 break;
             }
         }
-        JSONObject bidInfo = new JSONObject();
-        bidInfo.put("offerTutorId", tutorId);
-        bidInfo.put("tutorName", UserCookie.getUser().getFullName());
-        bidInfo.put("tutorCompLvl",compLvl);
-        bidInfo.put("duration", getDuration());
-        bidInfo.put("numOfLesson", getNoLessons());
-        bidInfo.put("prefDay", additionalInfo.getString("prefDay"));
-        bidInfo.put("time", additionalInfo.getString("time"));
-        bidInfo.put("dayNight", additionalInfo.getString("dayNight"));
-        bidInfo.put("rate", getRate());
+
         // update the bid obj
         additionalInfo.put("successfulBidder", tutorId);
         this.bidders = getBidOffers();
         JSONArray offersArr = new JSONArray(this.bidders);
-        offersArr.put(bidInfo);
+        offersArr.put(getLessonInfo().getBuyOutBidJSONObj(tutorId, compLvl));
         additionalInfo.remove("bidOffers");
         additionalInfo.put("bidOffers",offersArr);
         // call api to update details
         APIFacade.updateBidById(getId(), getAdditionalInfo());
-        // create the contract
-//        int months = Integer.parseInt(contractDuration);
-//        LocalDateTime expiryDuration = LocalDate.now().plusMonths(months).atTime(0, 0);
-//        Timestamp expiry = Timestamp.valueOf(expiryDuration);
-//        JSONObject lessonInfo = new JSONObject();
-//        lessonInfo.put("time",additionalInfo.getString("time"));
-//        lessonInfo.put("dayNight",additionalInfo.getString("dayNight"));
-//        lessonInfo.put("prefDay",additionalInfo.getString("prefDay"));
-//        lessonInfo.put("numOfLesson",getNoLessons());
-//        lessonInfo.put("duration",getDuration());
-//        JSONObject additionalInfo = new JSONObject();
-//        additionalInfo.put("rate",getRate());
-//        APIFacade.createContract(this.initiator.getId(), tutorId, this.getSubject().getId()
-//                ,expiry,new JSONObject(),lessonInfo,additionalInfo);
 
         close();
         System.out.println("Buy out successful.");

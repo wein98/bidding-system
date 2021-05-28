@@ -47,16 +47,11 @@ public class BiddingCreationModel extends Observable {
 
 
     public void initiateBid(JSONObject jsonObj) {
-        JSONObject additionalInfo = jsonObj.getJSONObject("additionalInfo");
-        int competencyLevel = UserCookie.getUser().getCompetencies().get(jsonObj.getInt("subjectIndex")).getLevel();
-        additionalInfo.put("competencyLevel", competencyLevel);
-        additionalInfo.put("bidOffers",new JSONArray()); // list of bid offers
-
         Student studentObj = (Student) UserCookie.getUser();
         studentObj.postBid(
                 jsonObj.getString("type"),
                 getSubjectId(jsonObj.getInt("subjectIndex")),
-                additionalInfo
+                jsonObj.getJSONObject("additionalInfo")
         );
     }
 }
