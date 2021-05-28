@@ -82,6 +82,10 @@ public class RenewContractModel extends Observable {
      * @param details
      */
     public void renewContract(JSONObject details) {
+        // call delete contract to delete the old contract
+        APIFacade.deleteContractById(contract.getId());
+
+        // call create new contract api
         int months = Integer.parseInt(details.getString("contractDuration"));
         LocalDateTime expiryDuration = LocalDate.now().plusMonths(months).atTime(0, 0);
         Timestamp expiry = Timestamp.valueOf(expiryDuration);

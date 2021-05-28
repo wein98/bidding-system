@@ -28,6 +28,16 @@ public class LessonInfo {
 
     private JSONObject parseToJSONObj;
 
+    public LessonInfo() {};
+
+    public LessonInfo(String lessonDuration, String numOfLesson, String dayNight, String prefDay, String time) {
+        this.lessonDuration = lessonDuration;
+        this.numOfLesson = numOfLesson;
+        this.dayNight = dayNight;
+        this.prefDay = prefDay;
+        this.time = time;
+    }
+
     public LessonInfo(String lessonDuration, String numOfLesson, String dayNight, String rate, String prefDay, String time) {
         this.lessonDuration = lessonDuration;
         this.numOfLesson = numOfLesson;

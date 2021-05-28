@@ -3,6 +3,7 @@ package com.matchingSystem.ContractDev;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.matchingSystem.API.APIFacade;
+import com.matchingSystem.BiddingSystem.LessonInfo;
 import com.matchingSystem.BiddingSystem.Subject;
 import com.matchingSystem.BiddingSystem.Poster;
 import com.matchingSystem.LoginSystem.Tutor;
@@ -31,11 +32,11 @@ public class Contract {
     private Timestamp expiryDate;
     @JsonProperty("paymentInfo")
     private JSONObject paymentInfo;
-    @JsonProperty("lessonInfo")
-    private JSONObject lessonInfo;
     @JsonProperty("additionalInfo")
     private JSONObject additionalInfo;
     private Timestamp dateSigned;
+
+    private LessonInfo lessonInfo;
 
     public Contract () {}
 
@@ -106,9 +107,17 @@ public class Contract {
     @JsonProperty("lessonInfo")
     private void unpackLessonInfo(Map<String, Object> lessonInfo) {
         if(lessonInfo.size() > 0) {
-            this.lessonInfo = new JSONObject(lessonInfo);
+            JSONObject lessonObj = new JSONObject(lessonInfo);
+
+            this.lessonInfo = new LessonInfo(
+                    lessonObj.getString("duration"),
+                    lessonObj.getString("numOfLesson"),
+                    lessonObj.getString("dayNight"),
+                    lessonObj.getString("prefDay"),
+                    lessonObj.getString("time")
+            );
         }else{
-            this.lessonInfo = new JSONObject();
+            this.lessonInfo = new LessonInfo();
         }
     }
 
@@ -147,18 +156,8 @@ public class Contract {
         return secondParty;
     }
 
-    public JSONObject getLessonInfo() {
+    public LessonInfo getLessonInfo() {
         return this.lessonInfo;
-    }
-
-    public String getDayTime() {
-        if(lessonInfo!=null) {
-            String retVal = lessonInfo.getString("prefDay") + ",";
-            retVal += lessonInfo.getString("time");
-            retVal += lessonInfo.getString("dayNight");
-            return retVal;
-        }
-        return null;
     }
 
     public JSONObject getAdditionalInfo() {
@@ -173,30 +172,6 @@ public class Contract {
         return getFirstParty().getName();
     }
 
-    public String getTime() {
-        return getLessonInfo().getString("time");
-    }
-
-    public String getDayNight() {
-        return getLessonInfo().getString("dayNight");
-    }
-
-    public String getPrefDay() {
-        return getLessonInfo().getString("prefDay");
-    }
-
-    public String getNumOfLesson() {
-        return getLessonInfo().getString("numOfLesson");
-    }
-
-    public String getLessonDuration() {
-        return getLessonInfo().getString("duration");
-    }
-
-    public String getRate() {
-        return getAdditionalInfo().getString("rate");
-    }
-
     public String getContractDuration() {
         return getAdditionalInfo().getString("duration");
     }
@@ -206,6 +181,10 @@ public class Contract {
         Date date = new Date();
         date.setTime(expiryDate.getTime());
         return new SimpleDateFormat("dd/MM/yyyy").format(date);
+    }
+
+    public String getRate() {
+        return getAdditionalInfo().getString("rate");
     }
 
     public String getStatus() {

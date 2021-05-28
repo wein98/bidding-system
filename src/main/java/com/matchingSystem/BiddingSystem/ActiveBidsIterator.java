@@ -230,7 +230,7 @@ public class ActiveBidsIterator implements Iterator {
 
                 // get Contract's info to json
                 JSONObject details = new JSONObject();
-                details.put("studentId",b.getInitiator());
+                details.put("studentId",b.getInitiator().getId());
                 details.put("tutorId",UserCookie.getUser().getId());
                 details.put("subjectId",b.getSubject().getId());
                 details.put("lessInfo",b.getLessonInfo().getContractLessonInfo());

@@ -3,14 +3,11 @@ package com.matchingSystem.ContractDev;
 import com.matchingSystem.Constant;
 import com.matchingSystem.Controller.RenewContractController;
 import com.matchingSystem.Controller.SignContractController;
-import com.matchingSystem.LoginSystem.User;
 import com.matchingSystem.LoginSystem.UserCookie;
 import com.matchingSystem.Model.RenewContractModel;
 import com.matchingSystem.View.RenewContractView;
 import com.matchingSystem.View.SignContractView;
-import org.json.JSONObject;
 
-import javax.jws.soap.SOAPBinding;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

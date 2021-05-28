@@ -30,6 +30,7 @@ public class RenewContractView extends JFrame  {
     private JComboBox contractDurationOptions;
     private JLabel subjectNameLabel;
     private JLabel subjectDescLabel;
+    private JLabel panelTitle;
 
     private final RenewContractModel model;
 
@@ -43,9 +44,11 @@ public class RenewContractView extends JFrame  {
         if(model.isNewTutor()) {
             reuseLabel.setVisible(false);
             reuseContractsScroll.setVisible(false);
+            panelTitle.setText("Renew Contract with New Tutor");
         } else {
             newTutorLabel.setVisible(false);
             newTutorOptions.setVisible(false);
+            panelTitle.setText("Renew Contract with Same Tutor");
         }
         setContentPane(window);
         updateFieldsOptions();
@@ -121,20 +124,20 @@ public class RenewContractView extends JFrame  {
     }
 
     private void loadInputs (Contract c) {
-        timeValOptions.setSelectedItem(c.getTime());
-        dayNightOptions.setSelectedItem(c.getDayNight());
-        prefDayOptions.setSelectedItem(c.getPrefDay());
-        numOfLessonOptions.setSelectedItem(c.getNumOfLesson());
-        durationOptions.setSelectedItem(c.getLessonDuration());
-        rateInput.setText(c.getRate());
+        timeValOptions.setSelectedItem(c.getLessonInfo().getTime());
+        dayNightOptions.setSelectedItem(c.getLessonInfo().getDayNight());
+        prefDayOptions.setSelectedItem(c.getLessonInfo().getPrefDay());
+        numOfLessonOptions.setSelectedItem(c.getLessonInfo().getNumOfLesson());
+        durationOptions.setSelectedItem(c.getLessonInfo().getLessonDuration());
+        rateInput.setText(c.getLessonInfo().getRate());
     }
 
     private JTable getTable(Contract c) {
         String [][] rec = {
                 {"Tutor name", c.getTutorName()},
-                {"No. of sessions", c.getNumOfLesson()},
-                {"Day & Time", c.getDayTime()},
-                {"Duration (hours per session)", c.getLessonDuration()},
+                {"No. of sessions", c.getLessonInfo().getNumOfLesson()},
+                {"Day & Time", c.getLessonInfo().getDayTime()},
+                {"Duration (hours per session)", c.getLessonInfo().getLessonDuration()},
                 {"Rate (per hour)", c.getRate()},
                 {"Contract duration (months)", c.getContractDuration()}
         };

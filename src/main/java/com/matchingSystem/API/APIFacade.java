@@ -366,4 +366,12 @@ public class APIFacade {
 
         return retVal;
     }
+
+    /**
+     * Delete this contract.
+     * @param id the contract id to be deleted
+     */
+    public static void deleteContractById(String id) {
+        contractAPI.deleteById(id);
+    }
 }

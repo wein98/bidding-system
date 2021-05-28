@@ -44,9 +44,9 @@ public class SignContractView extends JFrame {
         this.studentNameField.setText(contract.getStudentName());
         this.tutorNameField.setText(contract.getTutorName());
         this.subjectNameField.setText(contract.getSubject().getName());
-        this.lessonDayTimeField.setText(contract.getDayTime());
-        this.rateField.setText(contract.getRate());
-        this.numOfLessonField.setText(contract.getNumOfLesson());
+        this.lessonDayTimeField.setText(contract.getLessonInfo().getDayTime());
+        this.rateField.setText(contract.getLessonInfo().getRate());
+        this.numOfLessonField.setText(contract.getLessonInfo().getNumOfLesson());
         this.expiryField.setText(contract.getExpiryDate());
     }
 
