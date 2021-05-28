@@ -74,6 +74,10 @@ public class UserAPI extends APIRouter implements UserAPIInterface {
         return new JSONObject(response);
     }
 
+    /**
+     * Parsing the param to update an existing user
+     * @return the parsed json
+     */
     @Override
     public StringBuilder parseToJsonForPartialUpdate(JSONObject additionalInfo) {
         StringBuilder jsonParam = new StringBuilder();

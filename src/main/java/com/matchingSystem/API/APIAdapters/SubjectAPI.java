@@ -44,10 +44,17 @@ public class SubjectAPI extends APIRouter implements SubjectAPIInterface {
         return null;
     }
 
+    /**
+     * Retreive a subject object by its id
+     * @param id the target object id
+     * @param queryParam the query parameter constant
+     *                   pass in Constant.NONE_S if it's the default param
+     *                   refer to //field type string section in Constant.class
+     * @return the subject object
+     */
     @Override
     public Object getById(String id, String queryParam) {
         String urlRoute = route + "/" + id + queryParam;
-//            String jsonResponse = APIService.GETRequest(urlRoute);
         return new JSONObject(APIService.GETRequest(urlRoute));
     }
 
@@ -55,7 +62,7 @@ public class SubjectAPI extends APIRouter implements SubjectAPIInterface {
      * Function that parses variables to json needed for the request body
      * @param name name of the subject
      * @param desc description of the subject
-     * @return
+     * @return the parsed string
      */
     public StringBuilder parseToJson(String name, String desc) {
         StringBuilder retVal = new StringBuilder();

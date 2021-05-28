@@ -38,6 +38,14 @@ public class BidAPI extends APIRouter implements BidAPIInterface {
             return bids;
     }
 
+    /**
+     * Get a bid by bid id
+     * @param id the target object id
+     * @param queryParam the query parameter constant
+     *                   pass in Constant.NONE_S if it's the default param
+     *                   refer to //field type string section in Constant.class
+     * @return the bid
+     */
     @Override
     public Bid getById(String id, String queryParam){
         String urlRoute = route + "/" + id + queryParam;
@@ -48,6 +56,11 @@ public class BidAPI extends APIRouter implements BidAPIInterface {
         return bid;
     }
 
+    /**
+     * Call API to create a new Bid
+     * @param params params for the request body
+     * @return the bid
+     */
     @Override
     public Bid create(StringBuilder params){
         String jsonResponse = APIService.UpdateRequest(route, params, APIService.POST);
@@ -57,6 +70,12 @@ public class BidAPI extends APIRouter implements BidAPIInterface {
         return bid;
     }
 
+    /**
+     * Update the details of an existing bid
+     * @param id the target object id
+     * @param params params for the request body
+     * @return the updated bid
+     */
     @Override
     public Bid updatePartialById(String id, StringBuilder params) {
         String jsonResponse = APIService.UpdateRequest(route + "/" + id, params, APIService.PATCH);

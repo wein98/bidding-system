@@ -32,11 +32,9 @@ public class ContractAPI extends APIRouter implements ContractAPIInterface {
             JSONArray arr = new JSONArray(response);
             for (int i = 0; i < arr.length(); i++) {
                 JSONObject jsonObj = arr.getJSONObject(i);
-//                System.out.println(jsonObj);
                 Object dateSigned = jsonObj.get("dateSigned");
                 String dateSignedString = dateSigned.toString();
                 jsonObj.remove("dateSigned");
-//                System.out.println(jsonObj);
                 String jsonStr = jsonObj.toString();
                 Contract contract = objMapper.readValue(jsonStr, Contract.class);
                 if (!dateSignedString.equals("null")) {
@@ -104,13 +102,6 @@ public class ContractAPI extends APIRouter implements ContractAPIInterface {
             String response = UpdateRequest(route, jsonParam, APIService.POST);
             System.out.println(response);
             return true;
-//            JSONObject resObj = new JSONObject(response);
-//            System.out.println(resObj.toString());
-//            if (resObj.getInt("statusCode") == 200){
-//                return true;
-//            }else{
-//                return false;
-//            }
         } catch (Exception e){
             e.printStackTrace();
         }
