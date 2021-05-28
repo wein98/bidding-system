@@ -4,10 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matchingSystem.API.APIService;
-import com.matchingSystem.Constant;
-
 import java.lang.Object;
-import java.util.ArrayList;
 
 import static com.matchingSystem.API.APIService.DELETERequest;
 
@@ -68,7 +65,6 @@ public abstract class APIRouter {
     public boolean deleteById(String id){
         try {
             int responseCode = DELETERequest(route + "/" + id);
-            // TODO: think on how to display message of different status code of a failed request
             return responseCode == 204 || responseCode == 200;
         } catch (Exception e){
             e.printStackTrace();

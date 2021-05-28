@@ -64,7 +64,7 @@ public class MessageAPI extends APIRouter implements MessageAPIInterface {
 
     /**
      * Parsing the param to update an existing message
-     * @return the updated message
+     * @return the parsed parameters
      */
     public StringBuilder parseToJsonForPartialUpdate(String content, JSONObject additionalInfo){
         StringBuilder jsonParam = new StringBuilder();

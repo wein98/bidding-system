@@ -54,11 +54,8 @@ public class ContractExpiryIterator implements Iterator {
             LocalDateTime oneMonth = LocalDate.now().plusMonths(1).atTime(0, 0);
             Timestamp oneMonthAhead = Timestamp.valueOf(oneMonth);
             Timestamp expiry = c.getExpiryTimestamp();
-            // Set both times to 0:00:00
-            long time1 = oneMonthAhead.getTime() % Constant.MILLIS_PER_DAY;
-            long time2 = expiry.getTime() % Constant.MILLIS_PER_DAY;
-            long days = TimeUnit.DAYS.convert(time1 - time2, TimeUnit.MILLISECONDS);
-            System.out.println(days);
+
+            int isExpiringInOneMonth = oneMonthAhead.compareTo(expiry);
 
             JPanel panel = new JPanel();
             panel.getInsets().set(20, 20, 20, 20);
@@ -66,7 +63,7 @@ public class ContractExpiryIterator implements Iterator {
             GridBagConstraints gbc = new GridBagConstraints();
 
             // contract is not expired and is expiring in one month or less
-            if (days < 1) {
+            if (isExpiringInOneMonth >= 0) {
 
                 JTable table = getTable(c);
                 // resize table columns

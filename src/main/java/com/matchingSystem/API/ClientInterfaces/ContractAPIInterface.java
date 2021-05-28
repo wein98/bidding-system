@@ -1,7 +1,6 @@
 package com.matchingSystem.API.ClientInterfaces;
 
 import org.json.JSONObject;
-
 import java.sql.Timestamp;
 
 public interface ContractAPIInterface extends BaseAPIInterface {
