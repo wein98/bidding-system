@@ -37,7 +37,7 @@ public class ContractExpiryNotificationView extends javax.swing.JFrame{
             while (iterator.hasNext()){
 
                 JPanel itemPanel = (JPanel) iterator.next();
-                if (iterator.isLast() && count == 0 && itemPanel!= null){
+                if (iterator.isLast() && count == 0 && itemPanel== null){
                     this.message.setText("No contract is expiring in a month.");
                 }
 
