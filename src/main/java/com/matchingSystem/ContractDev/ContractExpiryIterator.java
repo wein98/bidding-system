@@ -11,12 +11,13 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
 public class ContractExpiryIterator implements Iterator {
     private int currentPosition = 0;
-    private ArrayList<Contract> contracts = new ArrayList<>();
+    private List<Contract> contracts = new ArrayList<>();
 
     public ContractExpiryIterator() {}
 
