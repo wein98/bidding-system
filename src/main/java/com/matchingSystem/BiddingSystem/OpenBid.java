@@ -67,21 +67,12 @@ public class OpenBid extends Bid {
                 break;
             }
         }
-        JSONObject bidInfo = new JSONObject();
-        bidInfo.put("offerTutorId", tutorId);
-        bidInfo.put("tutorName", UserCookie.getUser().getFullName());
-        bidInfo.put("tutorCompLvl",compLvl);
-        bidInfo.put("duration", getDuration());
-        bidInfo.put("numOfLesson", getNoLessons());
-        bidInfo.put("prefDay", additionalInfo.getString("prefDay"));
-        bidInfo.put("time", additionalInfo.getString("time"));
-        bidInfo.put("dayNight", additionalInfo.getString("dayNight"));
-        bidInfo.put("rate", getRate());
+
         // update the bid obj
         additionalInfo.put("successfulBidder", tutorId);
         this.bidders = getBidOffers();
         JSONArray offersArr = new JSONArray(this.bidders);
-        offersArr.put(bidInfo);
+        offersArr.put(getLessonInfo().getBuyOutBidJSONObj(tutorId, compLvl));
         additionalInfo.remove("bidOffers");
         additionalInfo.put("bidOffers",offersArr);
         // call api to update details

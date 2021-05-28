@@ -30,7 +30,6 @@ public class BiddingCreationController implements Observer {
         // Initialise action listeners in view to interpret user input.
         getView().getBtnInitiateBiddingSubmit().addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                System.out.println("HAHA button is hit!");
                 postBid();
                 parentModel.checkPostedBid();
                 view.dispose();

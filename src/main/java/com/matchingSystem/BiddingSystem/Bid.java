@@ -29,9 +29,10 @@ public abstract class Bid extends Observable implements BidInterface {
     protected Subject subject;
     @JsonProperty("additionalInfo")
     protected JSONObject additionalInfo;
-
     @JsonProperty(value = "messages",required = false)
     protected List<Message> messages;
+
+    protected LessonInfo lessonInfo;
 
     protected boolean closed = false;
     @SuppressWarnings("unchecked")
@@ -39,6 +40,15 @@ public abstract class Bid extends Observable implements BidInterface {
     private void unpackNested(Map<String,Object> addInfo) {
         if(addInfo.size() > 0){
             this.additionalInfo = new JSONObject(addInfo);
+
+            lessonInfo = new LessonInfo(
+                    additionalInfo.getString("duration"),
+                    additionalInfo.getString("numOfLesson"),
+                    additionalInfo.getString("dayNight"),
+                    additionalInfo.getString("rate"),
+                    additionalInfo.getString("prefDay"),
+                    additionalInfo.getString("time")
+            );
         }
     }
 
@@ -102,40 +112,8 @@ public abstract class Bid extends Observable implements BidInterface {
         return additionalInfo;
     }
 
-    @Override
-    public String getDuration() {
-        if (additionalInfo != null) {
-            return additionalInfo.getString("duration");
-        }
-        return null;
-    }
-
-    @Override
-    public String getNoLessons() {
-        if (additionalInfo != null) {
-            return additionalInfo.getString("numOfLesson");
-        }
-        return null;
-    }
-
-    @Override
-    public String getDayTime() {
-        if (additionalInfo != null) {
-            String retVal = additionalInfo.getString("prefDay") + ",";
-            retVal += additionalInfo.getString("time");
-            retVal += additionalInfo.getString("dayNight");
-            return retVal;
-        }
-        return null;
-
-    }
-
-    @Override
-    public String getRate() {
-        if (additionalInfo != null) {
-            return additionalInfo.getString("rate");
-        }
-        return null;
+    public LessonInfo getLessonInfo() {
+        return lessonInfo;
     }
 
     @Override

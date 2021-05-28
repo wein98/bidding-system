@@ -33,14 +33,11 @@ public interface BidInterface {
     // getters
     String getId();
     String getType();
-    String getDuration();
     Poster getInitiator();
     Subject getSubject();
     JSONObject getAdditionalInfo();
-    String getNoLessons();
-    String getRate();
-    String getDayTime();
     String getDateCreated();
     int getCompetencyLevel();
     ArrayList<BidOfferModel> getBidOffers();
+    LessonInfo getLessonInfo();
 }

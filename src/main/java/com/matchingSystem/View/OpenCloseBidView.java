@@ -95,16 +95,10 @@ public class OpenCloseBidView extends BiddingsView {
                             details.put("tutorId", b.getOfferTutorId());
                             details.put("subjectId", model.getBid().getSubject().getId());
 
-                            JSONObject lessonInfo = new JSONObject();
-                            lessonInfo.put("time",b.getTime());
-                            lessonInfo.put("dayNight",b.getDayNight());
-                            lessonInfo.put("prefDay",b.getDay());
-                            lessonInfo.put("numOfLesson",b.getNumOfLesson());
-                            lessonInfo.put("duration",b.getDuration());
-                            details.put("lessInfo",lessonInfo);
+                            details.put("lessInfo",b.getLessonInfo().getContractLessonInfo());
 
                             JSONObject addInfo = new JSONObject();
-                            addInfo.put("rate",b.getOfferRate());
+                            addInfo.put("rate",b.getLessonInfo().getRate());
                             details.put("addInfo",addInfo);
 
                             JSONObject payInfo = new JSONObject();
@@ -158,20 +152,19 @@ public class OpenCloseBidView extends BiddingsView {
             rec = new String[][] {
                 {"Tutor name", b.getTutorName()},
                 {"Tutor competency level", String.valueOf(b.getTutorCompLvl())},
-                {"No. of sessions", String.valueOf(b.getNumOfLesson())},
-                {"Day & Time", b.getDayTime()},
-                {"Duration (hours per session)", b.getDuration()},
-                {"Rate (per hour)", b.getOfferRate()}
-            };
+                {"No. of sessions", b.getLessonInfo().getNumOfLesson()},
+                {"Day & Time", b.getLessonInfo().getDayTime()},
+                {"Duration (hours per session)", b.getLessonInfo().getLessonDuration()},
+                {"Rate (per hour)", b.getLessonInfo().getRate()}};
         } else {
             // close bid offer table view
             rec = new String[][]{
                     {"Tutor name", b.getTutorName()},
                     {"Tutor competency level", String.valueOf(b.getTutorCompLvl())},
-                    {"No. of sessions", String.valueOf(b.getNumOfLesson())},
-                    {"Day & Time", b.getDayTime()},
-                    {"Duration (hours per session)", b.getDuration()},
-                    {"Rate (per hour)", b.getOfferRate()},
+                    {"No. of sessions", b.getLessonInfo().getNumOfLesson()},
+                    {"Day & Time", b.getLessonInfo().getDayTime()},
+                    {"Duration (hours per session)", b.getLessonInfo().getLessonDuration()},
+                    {"Rate (per hour)", b.getLessonInfo().getRate()},
                     {"Tutor message", b.getMsg().getContent()},
                     {"Your reply", b.getMsg().getStudentReply()}
             };
